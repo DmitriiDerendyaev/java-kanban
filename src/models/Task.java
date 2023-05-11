@@ -5,6 +5,10 @@ public class Task   {
     private String taskDescription;
     private int taskID;
 
+    public void setTaskID(int taskID) {
+        this.taskID = taskID;
+    }
+
     private TaskStatus taskStatus;
 
     public Task(String taskName, String taskDescription, int taskID, TaskStatus taskStatus) {
