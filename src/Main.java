@@ -1,6 +1,17 @@
+import models.SubTask;
+import models.Task;
+import service.TaskManager;
+
+import java.util.ArrayList;
+
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Поехали!");
+        TaskManager taskManager = new TaskManager();
+
+        taskManager.addEpic();
+
+        ArrayList<Task> gotSubTasks = taskManager.getTaskList();
+        System.out.println("All test passed");
     }
 }
