@@ -1,6 +1,6 @@
 package models;
 
-enum TaskStatus {
+public enum TaskStatus {
     NEW("Новая"),
     IN_PROGRESS("В процессе"),
     DONE("Завершенная");
