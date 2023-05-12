@@ -23,4 +23,19 @@ public class Epic extends Task{
     public void addSubTaskID(Integer subTaskID){
         taskCollection.add(subTaskID);
     }
+
+    public void setStatus(TaskStatus status){
+        super.taskStatus = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Epic{" +
+                "taskCollection=" + taskCollection +
+                ", taskName='" + taskName + '\'' +
+                ", taskDescription='" + taskDescription + '\'' +
+                ", taskID=" + taskID +
+                ", taskStatus=" + taskStatus +
+                '}' + "\n";
+    }
 }

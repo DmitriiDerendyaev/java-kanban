@@ -44,4 +44,14 @@ public class Task   {
     public TaskStatus getTaskStatus() {
         return taskStatus;
     }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "taskName='" + taskName + '\'' +
+                ", taskDescription='" + taskDescription + '\'' +
+                ", taskID=" + taskID +
+                ", taskStatus=" + taskStatus +
+                '}' + "\n";
+    }
 }
