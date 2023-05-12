@@ -9,6 +9,12 @@ public class SubTask extends Task{
         this.epicID = epicID;
     }
 
+    @Deprecated
+    public SubTask(String taskName, String taskDescription, int taskID, TaskStatus taskStatus, Integer epicID) {
+        super(taskName, taskDescription, taskID, taskStatus);
+        this.epicID = epicID;
+    }
+
     public Integer getEpicID() {
         return epicID;
     }

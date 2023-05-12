@@ -18,6 +18,14 @@ public class Task   {
         this.taskStatus = taskStatus;
     }
 
+    @Deprecated
+    public Task(String taskName, String taskDescription, int taskID, TaskStatus taskStatus) {
+        this.taskName = taskName;
+        this.taskDescription = taskDescription;
+        this.taskID = taskID;
+        this.taskStatus = taskStatus;
+    }
+
     public Task() {
     }
 

@@ -11,6 +11,11 @@ public class Epic extends Task{
         super(taskName, taskDescription, /*taskID,*/ taskStatus);
     }
 
+    @Deprecated
+    public Epic(String taskName, String taskDescription, int taskID, TaskStatus taskStatus) {
+        super(taskName, taskDescription, taskID, taskStatus);
+    }
+
     public ArrayList<Integer> getTaskCollection() {
         return taskCollection;
     }
