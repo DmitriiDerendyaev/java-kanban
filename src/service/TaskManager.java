@@ -10,9 +10,9 @@ import java.util.HashMap;
 
 public class TaskManager {
 
-    public HashMap<Integer, Epic> epic = new HashMap<>();
-    public HashMap<Integer, Task> task = new HashMap<>();
-    public HashMap<Integer, SubTask> subTask = new HashMap<>();
+    protected HashMap<Integer, Epic> epic = new HashMap<>();
+    protected HashMap<Integer, Task> task = new HashMap<>();
+    protected HashMap<Integer, SubTask> subTask = new HashMap<>();
 
     int currentId = 1;
 
@@ -32,6 +32,7 @@ public class TaskManager {
 
     public int createSubTask(SubTask newSubTask){
         newSubTask.setTaskID(currentId++);
+        epic.get(newSubTask.getEpicID()).addSubTaskID(newSubTask.getTaskID());
         subTask.put(newSubTask.getEpicID(), newSubTask);
 
         return newSubTask.getTaskID();

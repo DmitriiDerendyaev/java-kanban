@@ -11,10 +11,10 @@ public class Task   {
 
     private TaskStatus taskStatus;
 
-    public Task(String taskName, String taskDescription, int taskID, TaskStatus taskStatus) {
+    public Task(String taskName, String taskDescription, /*int taskID,*/ TaskStatus taskStatus) {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
-        this.taskID = taskID;
+//        this.taskID = taskID;
         this.taskStatus = taskStatus;
     }
 
