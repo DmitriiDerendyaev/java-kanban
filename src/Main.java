@@ -12,6 +12,6 @@ public class Main {
         taskManager.addEpic();
 
         ArrayList<Task> gotSubTasks = taskManager.getTaskList();
-        System.out.println("All test passed");
+        System.out.println("All test failed");
     }
 }
