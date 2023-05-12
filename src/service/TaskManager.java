@@ -3,6 +3,7 @@ package service;
 import models.Epic;
 import models.SubTask;
 import models.Task;
+import models.TaskStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,6 +36,8 @@ public class TaskManager {
         epic.get(newSubTask.getEpicID()).addSubTaskID(newSubTask.getTaskID());
         subTask.put(newSubTask.getTaskID(), newSubTask);
 
+        updateEpicStatus();
+
         return newSubTask.getTaskID();
     }
 
@@ -46,6 +49,7 @@ public class TaskManager {
 
     public int updateSubTask(SubTask updatedSubTask){
         subTask.put(updatedSubTask.getTaskID(), updatedSubTask);
+        updateEpicStatus();
 
         return updatedSubTask.getTaskID();
     }
@@ -75,6 +79,8 @@ public class TaskManager {
             if(epic.get(currentEpic).getTaskCollection().remove(subTaskID))
                 break;
         }
+
+        updateEpicStatus();
         return subTaskID;
     }
 
@@ -100,6 +106,8 @@ public class TaskManager {
         for(Integer currentEpic: epic.keySet()){
             epic.get(currentEpic).getTaskCollection().clear();
         }
+
+        updateEpicStatus();
     }
 
     public void clearEpic(){
@@ -129,7 +137,29 @@ public class TaskManager {
     }
 
     private void updateEpicStatus(){
-
+        for(Integer currentEpic: epic.keySet()){
+            boolean isEverythingNew = true;
+            boolean isEverythingDone = true;
+            if(epic.get(currentEpic).getTaskCollection().isEmpty()){
+                epic.get(currentEpic).setStatus(TaskStatus.NEW);
+                continue;
+            }
+            for (Integer currentSubTask : epic.get(currentEpic).getTaskCollection()) {
+                if(!subTask.get(currentSubTask).getTaskStatus().equals(TaskStatus.NEW)){
+                    isEverythingNew = false;
+                }
+                if(!subTask.get(currentSubTask).getTaskStatus().equals(TaskStatus.DONE)){
+                    isEverythingDone = false;
+                }
+            }
+            if(isEverythingNew){
+                epic.get(currentEpic).setStatus(TaskStatus.NEW);
+            } else if (isEverythingDone) {
+                epic.get(currentEpic).setStatus(TaskStatus.DONE);
+            } else {
+                epic.get(currentEpic).setStatus(TaskStatus.IN_PROGRESS);
+            }
+        }
     }
 
 }
