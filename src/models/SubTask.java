@@ -1,7 +1,7 @@
 package models;
 
 public class SubTask extends Task{
-    private Integer epicID;
+    protected Integer epicID;
 
 
     public SubTask(String taskName, String taskDescription, /*int taskID,*/ TaskStatus taskStatus, Integer epicID) {
