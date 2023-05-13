@@ -96,11 +96,11 @@ public class TaskManager {
     }
 
 
-    public void clearTask(){
+    public void clearTasks(){
         tasks.clear();
     }
 
-    public void clearSubTask(){
+    public void clearSubTasks(){
         subTasks.clear();
 
         for(Integer currentEpic: epics.keySet()){
@@ -110,7 +110,7 @@ public class TaskManager {
         updateEpicStatus();
     }
 
-    public void clearEpic(){
+    public void clearEpics(){
         epics.clear();
         subTasks.clear();
     }
