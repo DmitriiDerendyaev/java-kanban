@@ -11,10 +11,9 @@ public class Task   {
 
     protected TaskStatus taskStatus;
 
-    public Task(String taskName, String taskDescription, /*int taskID,*/ TaskStatus taskStatus) {
+    public Task(String taskName, String taskDescription, TaskStatus taskStatus) {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
-//        this.taskID = taskID;
         this.taskStatus = taskStatus;
     }
 
