@@ -116,27 +116,18 @@ public class TaskManager {
     }
 
     public ArrayList<Task> getTaskList() {
-        ArrayList<Task> newTaskList = new ArrayList<>();
-        for(Integer currentTask: tasks.keySet()){
-            newTaskList.add(tasks.get(currentTask));
-        }
-        return newTaskList;
+        ArrayList<Task> tasksList = new ArrayList<>(tasks.values());
+        return tasksList;
     }
 
     public ArrayList<SubTask> getSubTaskList(){
-        ArrayList<SubTask> newSubTaskList = new ArrayList<>();
-        for(Integer currentSubTask: subTasks.keySet()){
-            newSubTaskList.add(subTasks.get(currentSubTask));
-        }
-        return newSubTaskList;
+        ArrayList<SubTask> subTasksList = new ArrayList<>(subTasks.values());
+        return subTasksList;
     }
 
     public ArrayList<Epic> getEpicList(){
-        ArrayList<Epic> newEpicList = new ArrayList<>();
-        for(Integer currentEpic: epics.keySet()){
-            newEpicList.add(epics.get(currentEpic));
-        }
-        return newEpicList;
+        ArrayList<Epic> epicsList = new ArrayList<>(epics.values());
+        return epicsList;
     }
 
     public ArrayList<SubTask> getSubTaskListByEpicID(Integer epicId){
