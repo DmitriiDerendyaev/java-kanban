@@ -73,12 +73,8 @@ public class TaskManager {
     }
 
     public int removeSubTaskByID(Integer subTaskID){
-        subTasks.remove(subTaskID);
-
-        for(Integer currentEpic: epics.keySet()){
-            if(epics.get(currentEpic).getTaskCollection().remove(subTaskID))
-                break;
-        }
+        SubTask subtask = subTasks.remove(subTaskID);
+        epics.get(subtask.getEpicID()).getTaskCollection().remove(subTaskID);
 
         updateEpicStatus();
         return subTaskID;
