@@ -1,32 +1,32 @@
 package models;
 
 public class SubTask extends Task{
-    protected Integer epicID;
+    protected Integer epicId;
 
 
-    public SubTask(String taskName, String taskDescription, /*int taskID,*/ TaskStatus taskStatus, Integer epicID) {
+    public SubTask(String taskName, String taskDescription, /*int taskID,*/ TaskStatus taskStatus, Integer epicId) {
         super(taskName, taskDescription, /*taskID,*/ taskStatus);
-        this.epicID = epicID;
+        this.epicId = epicId;
     }
 
     @Deprecated
-    public SubTask(String taskName, String taskDescription, int taskID, TaskStatus taskStatus, Integer epicID) {
+    public SubTask(String taskName, String taskDescription, int taskID, TaskStatus taskStatus, Integer epicId) {
         super(taskName, taskDescription, taskID, taskStatus);
-        this.epicID = epicID;
+        this.epicId = epicId;
     }
 
     public Integer getEpicID() {
-        return epicID;
+        return epicId;
     }
 
-    public void setEpicID(Integer epicID) {
-        this.epicID = epicID;
+    public void setEpicID(Integer epicId) {
+        this.epicId = epicId;
     }
 
     @Override
     public String toString() {
         return "SubTask{" +
-                "epicID=" + epicID +
+                "epicId=" + epicId +
                 ", taskName='" + taskName + '\'' +
                 ", taskDescription='" + taskDescription + '\'' +
                 ", taskID=" + taskID +

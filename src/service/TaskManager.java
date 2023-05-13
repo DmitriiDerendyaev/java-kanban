@@ -62,8 +62,8 @@ public class TaskManager {
         return subTask.get(subTaskID);
     }
 
-    public Epic getEpicByID(Integer epicID){
-        return epic.get(epicID);
+    public Epic getEpicByID(Integer epicId){
+        return epic.get(epicId);
     }
 
     public int removeTaskByID(Integer taskID){
@@ -84,12 +84,12 @@ public class TaskManager {
         return subTaskID;
     }
 
-    public void removeEpicByID(Integer epicID){
-        epic.remove(epicID);
+    public void removeEpicByID(Integer epicId){
+        epic.remove(epicId);
         Iterator<Integer> subTaskIterator = subTask.keySet().iterator();
         while(subTaskIterator.hasNext()){
             Integer currentSubTask = subTaskIterator.next();
-            if(subTask.get(currentSubTask).getEpicID() == epicID){
+            if(subTask.get(currentSubTask).getEpicID() == epicId){
                 subTaskIterator.remove();
             }
         }
@@ -139,10 +139,10 @@ public class TaskManager {
         return newEpicList;
     }
 
-    public ArrayList<SubTask> getSubTaskListByEpicID(Integer epicID){
+    public ArrayList<SubTask> getSubTaskListByEpicID(Integer epicId){
         ArrayList<SubTask> newSubTaskList = new ArrayList<>();
 
-        for(Integer currentSubTask: epic.get(epicID).getTaskCollection()){
+        for(Integer currentSubTask: epic.get(epicId).getTaskCollection()){
             newSubTaskList.add(subTask.get(currentSubTask));
         }
         return newSubTaskList;
