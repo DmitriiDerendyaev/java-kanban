@@ -8,32 +8,15 @@ import models.TaskStatus;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
 public class InMemoryTaskManager implements TaskManager {
 
-    private static final int HISTORY_SIZE = 10;
     protected HashMap<Integer, Epic> epics = new HashMap<>();
     protected HashMap<Integer, Task> tasks = new HashMap<>();
     protected HashMap<Integer, SubTask> subTasks = new HashMap<>();
-    protected List<Task> historyTask = new ArrayList<>();
 
     int currentId = 1;
 
-
-    @Override
-    public List<Task> getHistory() {
-        return historyTask;
-    }
-
-    private void updateHistory(Task newTask) {
-        if (historyTask.size() < HISTORY_SIZE) {
-            historyTask.add(newTask);
-        } else {
-            historyTask.remove(0);
-            historyTask.add(newTask);
-        }
-    }
 
     @Override
     public int createEpic(Epic newEpic) {
@@ -79,18 +62,18 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Task getTaskByID(Integer taskID) {
-        updateHistory(tasks.get(taskID));
+
         return tasks.get(taskID);
     }
 
     public SubTask getSubTaskByID(Integer subTaskID) {
-        updateHistory(subTasks.get(subTaskID));
+
         return subTasks.get(subTaskID);
     }
 
     @Override
     public Epic getEpicByID(Integer epicId) {
-        updateHistory(epics.get(epicId));
+
         return epics.get(epicId);
     }
 
