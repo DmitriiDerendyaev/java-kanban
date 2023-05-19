@@ -2,15 +2,14 @@ import models.Epic;
 import models.SubTask;
 import models.Task;
 import models.TaskStatus;
-import service.InMemoryTaskManager;
-import service.Manager;
+import service.HistoryManager;
+import util.Manager;
 import service.TaskManager;
 
 public class Main {
 
     public static void main(String[] args) {
 
-//        InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
         TaskManager inMemoryTaskManager = Manager.getDefault();
 
         //Основной блок теста по ТЗ #1
@@ -81,22 +80,25 @@ public class Main {
         System.out.println("All test passed");
 
         ///////////////////////////////////////////////////////
+        // Тестирование ТЗ 4го спринта
         // Запись в историю
+        HistoryManager inMemoryHistoryManager = Manager.getDefaultHistory();
 
-        System.out.println(inMemoryTaskManager.getTaskByID(2));
-        System.out.println(inMemoryTaskManager.getEpicByID(4));
-        System.out.println(inMemoryTaskManager.getTaskByID(2));
-        System.out.println(inMemoryTaskManager.getTaskByID(1));
-        System.out.println(inMemoryTaskManager.getTaskByID(2));
-        System.out.println(inMemoryTaskManager.getSubTaskByID(5));
-        System.out.println(inMemoryTaskManager.getTaskByID(1));
-        System.out.println(inMemoryTaskManager.getTaskByID(2));
-        System.out.println(inMemoryTaskManager.getTaskByID(1));
-        System.out.println(inMemoryTaskManager.getTaskByID(2));
-        System.out.println(inMemoryTaskManager.getTaskByID(1));
-        System.out.println(inMemoryTaskManager.getTaskByID(2));
+        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(2));
+        inMemoryHistoryManager.add(inMemoryTaskManager.getSubTaskByID(5));
+        inMemoryHistoryManager.add(inMemoryTaskManager.getEpicByID(4));
+        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(2));
+        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(1));
+        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(2));
+        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(1));
+        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(2));
+        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(1));
+        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(2));
+        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(1));
+        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(2));
 
-        System.out.println(inMemoryTaskManager.getHistory());
+        System.out.println(inMemoryHistoryManager.getHistory());
+
 
     }
 }
