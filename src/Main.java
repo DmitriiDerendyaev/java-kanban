@@ -3,12 +3,15 @@ import models.SubTask;
 import models.Task;
 import models.TaskStatus;
 import service.InMemoryTaskManager;
+import service.Manager;
+import service.TaskManager;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
+//        InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
+        TaskManager inMemoryTaskManager = Manager.getDefault();
 
         //Основной блок теста по ТЗ #1
         ///////////////////////////////////////////////////////
@@ -76,5 +79,24 @@ public class Main {
         System.out.println("\n");
 
         System.out.println("All test passed");
+
+        ///////////////////////////////////////////////////////
+        // Запись в историю
+
+        System.out.println(inMemoryTaskManager.getTaskByID(2));
+        System.out.println(inMemoryTaskManager.getEpicByID(4));
+        System.out.println(inMemoryTaskManager.getTaskByID(2));
+        System.out.println(inMemoryTaskManager.getTaskByID(1));
+        System.out.println(inMemoryTaskManager.getTaskByID(2));
+        System.out.println(inMemoryTaskManager.getSubTaskByID(5));
+        System.out.println(inMemoryTaskManager.getTaskByID(1));
+        System.out.println(inMemoryTaskManager.getTaskByID(2));
+        System.out.println(inMemoryTaskManager.getTaskByID(1));
+        System.out.println(inMemoryTaskManager.getTaskByID(2));
+        System.out.println(inMemoryTaskManager.getTaskByID(1));
+        System.out.println(inMemoryTaskManager.getTaskByID(2));
+
+        System.out.println(inMemoryTaskManager.getHistory());
+
     }
 }
