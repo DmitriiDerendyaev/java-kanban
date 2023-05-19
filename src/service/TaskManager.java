@@ -5,8 +5,10 @@ import models.SubTask;
 import models.Task;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface TaskManager {
+    List<Task> getHistory();
     int createEpic(Epic newEpic);
     int createTask(Task newTask);
     int createSubTask(SubTask newSubTask);
