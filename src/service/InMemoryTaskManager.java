@@ -11,12 +11,13 @@ import java.util.Iterator;
 import java.util.List;
 
 public class InMemoryTaskManager implements TaskManager {
-
     private static final int HISTORY_SIZE = 10;
     protected HashMap<Integer, Epic> epics = new HashMap<>();
     protected HashMap<Integer, Task> tasks = new HashMap<>();
     protected HashMap<Integer, SubTask> subTasks = new HashMap<>();
     protected List<Task> historyTask = new ArrayList<>();
+
+//    private HistoryManager inMemoryHistoryManager = Manager.getDefaultHistory();
 
     int currentId = 1;
 
@@ -80,17 +81,20 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Task getTaskByID(Integer taskID) {
         updateHistory(tasks.get(taskID));
+//        inMemoryHistoryManager.add(tasks.get(taskID));
         return tasks.get(taskID);
     }
 
     public SubTask getSubTaskByID(Integer subTaskID) {
         updateHistory(subTasks.get(subTaskID));
+//        inMemoryHistoryManager.add(subTasks.get(subTaskID));
         return subTasks.get(subTaskID);
     }
 
     @Override
     public Epic getEpicByID(Integer epicId) {
         updateHistory(epics.get(epicId));
+//        inMemoryHistoryManager.add(epics.get(epicId));
         return epics.get(epicId);
     }
 

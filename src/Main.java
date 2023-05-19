@@ -2,6 +2,7 @@ import models.Epic;
 import models.SubTask;
 import models.Task;
 import models.TaskStatus;
+import service.HistoryManager;
 import service.InMemoryTaskManager;
 import service.Manager;
 import service.TaskManager;
@@ -78,7 +79,7 @@ public class Main {
         System.out.println(inMemoryTaskManager.getEpicList());
         System.out.println("\n");
 
-        System.out.println("All test passed");
+        System.out.println("Tests of the 3rd sprint passed successfully");
 
         ///////////////////////////////////////////////////////
         // Запись в историю
@@ -98,5 +99,6 @@ public class Main {
 
         System.out.println(inMemoryTaskManager.getHistory());
 
+        System.out.println("Tests of the 4th sprint passed successfully");
     }
 }
