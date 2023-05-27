@@ -7,13 +7,13 @@ public class Epic extends Task{
 
     protected ArrayList<Integer> taskCollection = new ArrayList<>();
 
-    public Epic(String taskName, String taskDescription, TaskStatus taskStatus) {
-        super(taskName, taskDescription, taskStatus);
+    public Epic(String taskName, String taskDescription) {
+        super(taskName, taskDescription, TaskStatus.NEW);
     }
 
     @Deprecated
-    public Epic(String taskName, String taskDescription, int taskID, TaskStatus taskStatus) {
-        super(taskName, taskDescription, taskID, taskStatus);
+    public Epic(String taskName, String taskDescription, int taskID) {
+        super(taskName, taskDescription, taskID, TaskStatus.NEW);
     }
 
     public ArrayList<Integer> getTaskCollection() {
