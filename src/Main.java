@@ -77,27 +77,25 @@ public class Main {
         System.out.println(inMemoryTaskManager.getEpicList());
         System.out.println("\n");
 
-        System.out.println("All test passed");
-
-        ///////////////////////////////////////////////////////
+          ///////////////////////////////////////////////////////
         // Тестирование ТЗ 4го спринта
         // Запись в историю
         HistoryManager inMemoryHistoryManager = Manager.getDefaultHistory();
 
-        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(2));
-        inMemoryHistoryManager.add(inMemoryTaskManager.getSubTaskByID(5));
-        inMemoryHistoryManager.add(inMemoryTaskManager.getEpicByID(4));
-        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(2));
-        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(1));
-        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(2));
-        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(1));
-        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(2));
-        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(1));
-        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(2));
-        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(1));
-        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(2));
+        System.out.println(inMemoryTaskManager.getTaskByID(2));
+        System.out.println(inMemoryTaskManager.getSubTaskByID(5));
+        System.out.println(inMemoryTaskManager.getEpicByID(4));
+        System.out.println(inMemoryTaskManager.getTaskByID(2));
+        System.out.println(inMemoryTaskManager.getTaskByID(1));
+        System.out.println(inMemoryTaskManager.getTaskByID(2));
+        System.out.println(inMemoryTaskManager.getTaskByID(1));
+        System.out.println(inMemoryTaskManager.getTaskByID(2));
+        System.out.println(inMemoryTaskManager.getTaskByID(1));
+        System.out.println(inMemoryTaskManager.getTaskByID(2));
+        System.out.println(inMemoryTaskManager.getTaskByID(1));
+        System.out.println(inMemoryTaskManager.getTaskByID(2));
 
-        System.out.println(inMemoryHistoryManager.getHistory());
+        System.out.println(inMemoryTaskManager.getHistory());
 
 
     }
