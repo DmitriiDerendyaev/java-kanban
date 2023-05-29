@@ -4,18 +4,21 @@ import models.Epic;
 import models.SubTask;
 import models.Task;
 import models.TaskStatus;
+import util.Manager;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
 
-    protected HashMap<Integer, Epic> epics = new HashMap<>();
-    protected HashMap<Integer, Task> tasks = new HashMap<>();
-    protected HashMap<Integer, SubTask> subTasks = new HashMap<>();
+    protected Map<Integer, Epic> epics = new HashMap<>();
+    protected Map<Integer, Task> tasks = new HashMap<>();
+    protected Map<Integer, SubTask> subTasks = new HashMap<>();
 
-    int currentId = 1;
+    HistoryManager historyManager = Manager.getDefaultHistory();
+
+
+
+    protected int currentId = 1;
 
 
     @Override
@@ -62,18 +65,18 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Task getTaskByID(Integer taskID) {
-
+        historyManager.add(tasks.get(taskID));
         return tasks.get(taskID);
     }
 
     public SubTask getSubTaskByID(Integer subTaskID) {
-
+        historyManager.add(subTasks.get(subTaskID));
         return subTasks.get(subTaskID);
     }
 
     @Override
     public Epic getEpicByID(Integer epicId) {
-
+        historyManager.add(epics.get(epicId));
         return epics.get(epicId);
     }
 
@@ -128,31 +131,36 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public ArrayList<Task> getTaskList() {
-        ArrayList<Task> tasksList = new ArrayList<>(tasks.values());
+    public List<Task> getTaskList() {
+        List<Task> tasksList = new ArrayList<>(tasks.values());
         return tasksList;
     }
 
     @Override
-    public ArrayList<SubTask> getSubTaskList() {
-        ArrayList<SubTask> subTasksList = new ArrayList<>(subTasks.values());
+    public List<SubTask> getSubTaskList() {
+        List<SubTask> subTasksList = new ArrayList<>(subTasks.values());
         return subTasksList;
     }
 
     @Override
-    public ArrayList<Epic> getEpicList() {
-        ArrayList<Epic> epicsList = new ArrayList<>(epics.values());
+    public List<Epic> getEpicList() {
+        List<Epic> epicsList = new ArrayList<>(epics.values());
         return epicsList;
     }
 
     @Override
-    public ArrayList<SubTask> getSubTaskListByEpicID(Integer epicId) {
-        ArrayList<SubTask> newSubTaskList = new ArrayList<>();
+    public List<SubTask> getSubTaskListByEpicID(Integer epicId) {
+        List<SubTask> newSubTaskList = new ArrayList<>();
 
         for (Integer currentSubTask : epics.get(epicId).getTaskCollection()) {
             newSubTaskList.add(subTasks.get(currentSubTask));
         }
         return newSubTaskList;
+    }
+
+    @Override
+    public List<Task> getHistory() {
+        return historyManager.getHistory();
     }
 
     private void updateEpicsStatus() {

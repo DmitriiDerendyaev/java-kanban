@@ -21,14 +21,14 @@ public class Main {
         System.out.println("Добавление задачи: ID = " + inMemoryTaskManager.createTask(secondTask));
         System.out.println("Добавление задачи: ID = " + inMemoryTaskManager.createTask(thirdTask));
 
-        Epic firstEpic = new Epic("Купить дом", "Купить пентхаус в Казани", TaskStatus.NEW);        // ID = 4
+        Epic firstEpic = new Epic("Купить дом", "Купить пентхаус в Казани");        // ID = 4
         System.out.println("Добавление эпика: ID = " + inMemoryTaskManager.createEpic(firstEpic));
 
         SubTask firstSubTask = new SubTask("Материал для пола", "Покупка расходников для пола",
                 TaskStatus.NEW, 4);                                                                                // ID = 5
         System.out.println("Добавление подзадачи: ID = " + inMemoryTaskManager.createSubTask(firstSubTask));
 
-        Epic secondEpic = new Epic("Купить машину", "Купить Porsche 911", TaskStatus.NEW);          // ID = 6
+        Epic secondEpic = new Epic("Купить машину", "Купить Porsche 911");          // ID = 6
         System.out.println("Добавление эпика: ID = " + inMemoryTaskManager.createEpic(secondEpic));
 
         SubTask secondSubTask = new SubTask("Купить материал для потолка",
@@ -77,27 +77,25 @@ public class Main {
         System.out.println(inMemoryTaskManager.getEpicList());
         System.out.println("\n");
 
-        System.out.println("All test passed");
-
-        ///////////////////////////////////////////////////////
+          ///////////////////////////////////////////////////////
         // Тестирование ТЗ 4го спринта
         // Запись в историю
         HistoryManager inMemoryHistoryManager = Manager.getDefaultHistory();
 
-        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(2));
-        inMemoryHistoryManager.add(inMemoryTaskManager.getSubTaskByID(5));
-        inMemoryHistoryManager.add(inMemoryTaskManager.getEpicByID(4));
-        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(2));
-        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(1));
-        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(2));
-        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(1));
-        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(2));
-        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(1));
-        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(2));
-        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(1));
-        inMemoryHistoryManager.add(inMemoryTaskManager.getTaskByID(2));
+        System.out.println(inMemoryTaskManager.getTaskByID(2));
+        System.out.println(inMemoryTaskManager.getSubTaskByID(5));
+        System.out.println(inMemoryTaskManager.getEpicByID(4));
+        System.out.println(inMemoryTaskManager.getTaskByID(2));
+        System.out.println(inMemoryTaskManager.getTaskByID(1));
+        System.out.println(inMemoryTaskManager.getTaskByID(2));
+        System.out.println(inMemoryTaskManager.getTaskByID(1));
+        System.out.println(inMemoryTaskManager.getTaskByID(2));
+        System.out.println(inMemoryTaskManager.getTaskByID(1));
+        System.out.println(inMemoryTaskManager.getTaskByID(2));
+        System.out.println(inMemoryTaskManager.getTaskByID(1));
+        System.out.println(inMemoryTaskManager.getTaskByID(2));
 
-        System.out.println(inMemoryHistoryManager.getHistory());
+        System.out.println(inMemoryTaskManager.getHistory());
 
 
     }

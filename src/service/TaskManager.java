@@ -22,10 +22,11 @@ public interface TaskManager {
     void clearTasks();
     void clearSubTasks();
     void clearEpics();
-    ArrayList<Task> getTaskList();
-    ArrayList<SubTask> getSubTaskList();
-    ArrayList<Epic> getEpicList();
-    ArrayList<SubTask> getSubTaskListByEpicID(Integer epicId);
+    List<Task> getTaskList();
+    List<SubTask> getSubTaskList();
+    List<Epic> getEpicList();
+    List<SubTask> getSubTaskListByEpicID(Integer epicId);
+    List<Task> getHistory();
 
 
 }
