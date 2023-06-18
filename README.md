@@ -64,3 +64,7 @@ Repository for homework project.
 
 All test passed
 ```
+
+## Спринт №5
+- [ ] Добавить в интерфейс HistoryManager `void remove(int id)`
+- [ ] 

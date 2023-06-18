@@ -5,11 +5,11 @@ public class Task   {
     protected String taskDescription;
     protected int taskID;
 
+    protected TaskStatus taskStatus;
+
     public void setTaskID(int taskID) {
         this.taskID = taskID;
     }
-
-    protected TaskStatus taskStatus;
 
     public Task(String taskName, String taskDescription, TaskStatus taskStatus) {
         this.taskName = taskName;
