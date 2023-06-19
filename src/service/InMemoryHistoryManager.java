@@ -19,10 +19,7 @@ public class InMemoryHistoryManager implements HistoryManager{
 
     private Node head;
     private Node tail;
-    protected List<Task> historyTask = new ArrayList<>();
     private final HashMap<Integer, Node> nodeMap = new HashMap<>();
-    private static final int HISTORY_SIZE = 10;
-
 
     @Override
     public void remove(int id) {
@@ -92,11 +89,6 @@ public class InMemoryHistoryManager implements HistoryManager{
         nodeMap.put(id, newNode);
 
         linkLast(newNode);
-
-        if (historyTask.size() >= HISTORY_SIZE) {
-            historyTask.remove(0);
-        }
-        historyTask.add(task);
     }
 
 }
