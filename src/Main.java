@@ -21,6 +21,8 @@ public class Main {
         fileBackedTaskManager.createEpic(new Epic("Купить дом", "Купить пентхаус в Казани"));
         fileBackedTaskManager.createSubTask(new SubTask("Материал для пола", "Покупка расходников для пола",
                 TaskStatus.NEW, 2));
+        fileBackedTaskManager.createSubTask(new SubTask("Купить спойлер", "Купить спойлер белого цвета",         // ID = 8
+                TaskStatus.NEW, 2));
 
         fileBackedTaskManager.getTaskByID(1);
         fileBackedTaskManager.getEpicByID(2);

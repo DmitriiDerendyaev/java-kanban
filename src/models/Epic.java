@@ -2,10 +2,11 @@ package models;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Epic extends Task{
 
-    protected ArrayList<Integer> taskCollection = new ArrayList<>();
+    protected List<Integer> taskCollection = new ArrayList<>();
 
     public Epic(String taskName, String taskDescription) {
         super(taskName, taskDescription, TaskStatus.NEW);
@@ -16,7 +17,13 @@ public class Epic extends Task{
         super(taskName, taskDescription, taskID, TaskStatus.NEW);
     }
 
-    public ArrayList<Integer> getTaskCollection() {
+    @Deprecated
+    public Epic(String taskName, String taskDescription, int taskID, TaskStatus taskStatus, List<Integer> taskCollection) {
+        super(taskName, taskDescription, taskID, taskStatus);
+        this.taskCollection = taskCollection;
+    }
+
+    public List<Integer> getTaskCollection() {
         return taskCollection;
     }
 

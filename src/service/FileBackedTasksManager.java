@@ -1,11 +1,10 @@
 package service;
 
-import models.Epic;
-import models.SubTask;
-import models.Task;
-import models.TaskType;
+import models.*;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileBackedTasksManager extends InMemoryTaskManager{
 
@@ -132,7 +131,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
                     task.getTaskDescription());
         } else if (task instanceof Epic) {
             System.out.println("Epic");
-            return String.format("%d, %s, %s, %s, %s,\n",
+            return String.format("%d, %s, %s, %s, %s,",
                     task.getTaskID(),
                     TaskType.EPIC.toString(),
                     task.getTaskName(),
@@ -149,9 +148,42 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
         }
     }
 
+    private Task fromString(String value){
+        String[] taskString = value.split(",");
+        if(taskString[1].equals("TASK")){
+            int id = Integer.parseInt(taskString[0]);
+            String name = taskString[2];
+            String status = taskString[3];
+            String description = taskString[4];
+            return new Task(name, description, id, TaskStatus.valueOf(status));
+        } else if (taskString[1].equals("SUB_TASK")) {
+            int id = Integer.parseInt(taskString[0]);
+            String name = taskString[2];
+            String status = taskString[3];
+            String description = taskString[4];
+            int epicId = Integer.parseInt(taskString[5]);
+            return new SubTask(name, description, id, TaskStatus.valueOf(status), epicId);
+        } else {
+            int id = Integer.parseInt(taskString[0]);
+            String name = taskString[2];
+            String status = taskString[3];
+            String description = taskString[4];
+            String input = taskString[6];
+            input = input.replaceAll("[\\[\\]]", ""); // ”даление квадратных скобок
+
+            String[] numbers = input.split("\\s+"); // –азделение строки по пробелам
+            List<Integer> subTaskCollection = new ArrayList<>();
+
+            for (String number : numbers) {
+                subTaskCollection.add(Integer.parseInt(number)); // ѕреобразование строки в число и добавление в список
+            }
+            return new Epic(name, description, id, TaskStatus.valueOf(status), subTaskCollection);
+        }
+    }
+
     public void saveTaskToFile() {
         try (FileWriter writer = new FileWriter(pathFile)) {
-            writer.write("id,type,name,status,description,epic\n");
+            writer.write("id,type,name,status,description,epic,subTasks\n");
             for (Task currentTask : getTasks().values()) {
                 writer.write(taskToString(currentTask));
             }
@@ -159,7 +191,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
                 writer.write(String.format("%s, %s,\n",taskToString(currentSubTask), currentSubTask.getEpicID()));
             }
             for (Epic currentEpic: getEpics().values()){
-                writer.write(taskToString(currentEpic));
+                writer.write(String.format("%s, %s,\n",taskToString(currentEpic),
+                        currentEpic.getTaskCollection().toString().replace(',', ' ')));
             }
 
             writer.write("\n");
