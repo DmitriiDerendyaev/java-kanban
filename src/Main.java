@@ -2,15 +2,29 @@ import models.Epic;
 import models.SubTask;
 import models.Task;
 import models.TaskStatus;
+import service.FileBackedTasksManager;
 import service.HistoryManager;
 import util.Manager;
 import service.TaskManager;
 
+import java.io.IOException;
+
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         TaskManager inMemoryTaskManager = Manager.getDefault();
+
+        TaskManager fileBackedTaskManager = new FileBackedTasksManager("src/resources/memory.csv");
+
+        fileBackedTaskManager.createTask(new Task("Просто отвертка", "Купить отвертку", TaskStatus.NEW));
+        fileBackedTaskManager.createEpic(new Epic("Купить дом", "Купить пентхаус в Казани"));
+        fileBackedTaskManager.createSubTask(new SubTask("Материал для пола", "Покупка расходников для пола",
+                TaskStatus.NEW, 2));
+
+        fileBackedTaskManager.getTaskByID(1);
+        fileBackedTaskManager.getEpicByID(2);
+        fileBackedTaskManager.getSubTaskByID(3);
 
         //Основной блок теста по ТЗ #1
         ///////////////////////////////////////////////////////

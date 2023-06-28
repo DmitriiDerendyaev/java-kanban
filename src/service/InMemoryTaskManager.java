@@ -21,6 +21,18 @@ public class InMemoryTaskManager implements TaskManager {
     protected int currentId = 1;
 
 
+    public Map<Integer, Epic> getEpics() {
+        return epics;
+    }
+
+    public Map<Integer, Task> getTasks() {
+        return tasks;
+    }
+
+    public Map<Integer, SubTask> getSubTasks() {
+        return subTasks;
+    }
+
     @Override
     public int createEpic(Epic newEpic) {
         newEpic.setTaskID(currentId++);
