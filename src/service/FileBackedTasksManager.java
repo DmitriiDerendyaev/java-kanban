@@ -1,5 +1,7 @@
 package service;
 
+import exceptions.ManagerLoadException;
+import exceptions.ManagerSaveException;
 import models.*;
 
 import java.io.*;
@@ -8,7 +10,7 @@ import java.util.List;
 
 public class FileBackedTasksManager extends InMemoryTaskManager{
 
-    private String pathFile;
+    private final String pathFile;
 
 
     public FileBackedTasksManager(String pathFile) throws IOException {
@@ -123,7 +125,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
     private String taskToString(Task task){
         if (task instanceof SubTask) {
             System.out.println("SubTask");
-            return String.format("%d, %s, %s, %s, %s",
+            return String.format("%d,%s,%s,%s,%s",
                     task.getTaskID(),
                     TaskType.SUB_TASK.toString(),
                     task.getTaskName(),
@@ -131,7 +133,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
                     task.getTaskDescription());
         } else if (task instanceof Epic) {
             System.out.println("Epic");
-            return String.format("%d, %s, %s, %s, %s,",
+            return String.format("%d,%s,%s,%s,%s,",
                     task.getTaskID(),
                     TaskType.EPIC.toString(),
                     task.getTaskName(),
@@ -139,7 +141,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
                     task.getTaskDescription());
         } else {
             System.out.println("Task");
-            return String.format("%d, %s, %s, %s, %s,\n",
+            return String.format("%d,%s,%s,%s,%s,\n",
                     task.getTaskID(),
                     TaskType.TASK.toString(),
                     task.getTaskName(),
@@ -169,18 +171,38 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
             String status = taskString[3];
             String description = taskString[4];
             String input = taskString[6];
-            input = input.replaceAll("[\\[\\]]", ""); // ”даление квадратных скобок
+            input = input.replaceAll("[\\[\\]]", "");
 
-            String[] numbers = input.split("\\s+"); // –азделение строки по пробелам
+            String[] numbers = input.split("\\s+");
             List<Integer> subTaskCollection = new ArrayList<>();
 
             for (String number : numbers) {
-                subTaskCollection.add(Integer.parseInt(number)); // ѕреобразование строки в число и добавление в список
+                subTaskCollection.add(Integer.parseInt(number));
             }
             return new Epic(name, description, id, TaskStatus.valueOf(status), subTaskCollection);
         }
     }
 
+    static String historyToString(HistoryManager manager){
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for(Task currentTask: manager.getHistory()){
+            stringBuilder.append(currentTask.getTaskID() + ",");
+        }
+
+        return stringBuilder.toString();
+    }
+
+    static List<Integer> historyFromString(String value){
+        List<Integer> historyList = new ArrayList<>();
+        String[] historyArray = value.split(",");
+
+        for (String currentItem : historyArray) {
+            historyList.add(Integer.valueOf(currentItem));
+        }
+
+        return historyList;
+    }
     public void saveTaskToFile() {
         try (FileWriter writer = new FileWriter(pathFile)) {
             writer.write("id,type,name,status,description,epic,subTasks\n");
@@ -188,24 +210,65 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
                 writer.write(taskToString(currentTask));
             }
             for (SubTask currentSubTask : getSubTasks().values()) {
-                writer.write(String.format("%s, %s,\n",taskToString(currentSubTask), currentSubTask.getEpicID()));
+                writer.write(String.format("%s,%s,\n",taskToString(currentSubTask), currentSubTask.getEpicID()));
             }
             for (Epic currentEpic: getEpics().values()){
-                writer.write(String.format("%s, %s,\n",taskToString(currentEpic),
+                writer.write(String.format("%s,%s,\n",taskToString(currentEpic),
                         currentEpic.getTaskCollection().toString().replace(',', ' ')));
             }
 
             writer.write("\n");
 
-            for (Task task : getHistory()) {
-                writer.write(String.format("%d, ", task.getTaskID()));
-            }
+            writer.write(historyToString(historyManager));
+
         } catch (IOException e) {
-            e.getMessage();
-            throw new RuntimeException(e);
+            throw new ManagerSaveException("Failed to save tasks.", e);
         }
     }
     private void loadTasksFromFile(){
+        try (BufferedReader reader = new BufferedReader(new FileReader(pathFile))){
+            String line;
 
+            if(reader.readLine() == null){
+                return;
+            }
+
+            while (!(line = reader.readLine()).equals("")) {
+                String[] taskData = line.split(",");
+
+                int id = Integer.parseInt(taskData[0]);
+                TaskType type = TaskType.valueOf(taskData[1].toUpperCase());
+
+                switch (type) {
+                    case TASK:
+                        super.tasks.put(id, fromString(line));
+                        break;
+                    case SUB_TASK:
+                        super.subTasks.put(id, (SubTask) fromString(line));
+                        break;
+                    case EPIC:
+                        super.epics.put(id, (Epic) fromString(line));
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Unknown task type: " + type);
+                }
+            }
+
+            line = reader.readLine();
+
+            for(Integer currentId: historyFromString(line)){
+                if(tasks.containsKey(currentId))
+                    historyManager.add(tasks.get(currentId));
+                if(subTasks.containsKey(currentId))
+                    historyManager.add(subTasks.get(currentId));
+                if(epics.containsKey(currentId))
+                    historyManager.add(epics.get(currentId));
+            }
+
+        } catch (FileNotFoundException e) {
+            throw new ManagerLoadException("Failed to load tasks. File not found.", e);
+        } catch (IOException e) {
+            throw new ManagerLoadException("Failed to load tasks.", e);
+        }
     }
 }
