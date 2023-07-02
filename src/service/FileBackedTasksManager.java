@@ -234,6 +234,9 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
                 String[] taskData = line.split(",");
 
                 int id = Integer.parseInt(taskData[0]);
+
+                currentId = Math.max(id, currentId);
+
                 TaskType type = TaskType.valueOf(taskData[1].toUpperCase());
 
                 switch (type) {
