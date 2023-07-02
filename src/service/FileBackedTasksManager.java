@@ -247,7 +247,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
                         super.epics.put(id, (Epic) fromString(line));
                         break;
                     default:
-                        throw new IllegalArgumentException("Unknown task type: " + type);
+                        throw new ManagerLoadException("Unknown task type: " + type);
                 }
             }
 
