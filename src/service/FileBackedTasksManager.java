@@ -124,7 +124,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
 
     private String taskToString(Task task){
         if (task instanceof SubTask) {
-            System.out.println("SubTask");
             return String.format("%d,%s,%s,%s,%s",
                     task.getTaskID(),
                     TaskType.SUB_TASK.toString(),
@@ -132,7 +131,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
                     task.getTaskStatus().toString(),
                     task.getTaskDescription());
         } else if (task instanceof Epic) {
-            System.out.println("Epic");
             return String.format("%d,%s,%s,%s,%s,",
                     task.getTaskID(),
                     TaskType.EPIC.toString(),
@@ -140,7 +138,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
                     task.getTaskStatus().toString(),
                     task.getTaskDescription());
         } else {
-            System.out.println("Task");
             return String.format("%d,%s,%s,%s,%s,\n",
                     task.getTaskID(),
                     TaskType.TASK.toString(),
