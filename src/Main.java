@@ -13,8 +13,6 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        TaskManager inMemoryTaskManager = Manager.getDefault();
-
         TaskManager fileBackedTaskManager = new FileBackedTasksManager("src/resources/memory.csv");
 
         fileBackedTaskManager.createTask(new Task("Просто отвертка", "Купить отвертку", TaskStatus.NEW));
