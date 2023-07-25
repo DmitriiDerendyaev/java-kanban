@@ -1,6 +1,7 @@
 package models;
 
 import java.time.Duration;
+import java.time.ZonedDateTime;
 
 public class Task   {
     protected String taskName;
@@ -8,34 +9,59 @@ public class Task   {
     protected int taskID;
     protected TaskStatus taskStatus;
 
-    Duration duration;
+    protected Duration duration;
+    protected ZonedDateTime startTime;
+    protected ZonedDateTime endTime;
 
     public void setTaskID(int taskID) {
         this.taskID = taskID;
     }
 
+    /**
+     * Конструктор для Main и автотестов
+     * @param taskName
+     * @param taskDescription
+     * @param taskStatus
+     * @param duration
+     * @param startTime
+     */
     public Task(String taskName,
                 String taskDescription,
                 TaskStatus taskStatus,
-                Duration duration) {
+                Duration duration,
+                ZonedDateTime startTime) {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.taskStatus = taskStatus;
         this.duration = duration;
+        this.startTime = startTime;
+        endTime = startTime.plus(duration);
     }
 
-    @Deprecated
+    /**
+     * Конструктор для десериализации
+     * @param taskName
+     * @param taskDescription
+     * @param taskID
+     * @param taskStatus
+     * @param duration
+     * @param startTime
+     */
     public Task(String taskName,
                 String taskDescription,
                 int taskID,
                 TaskStatus taskStatus,
-                Duration duration) {
+                Duration duration,
+                ZonedDateTime startTime) {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.taskID = taskID;
         this.taskStatus = taskStatus;
         this.duration = duration;
+        this.startTime = startTime;
+        endTime = startTime.plus(duration);
     }
+
 
     public Task() {
     }
@@ -56,6 +82,26 @@ public class Task   {
         return taskStatus;
     }
 
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public ZonedDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(ZonedDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public ZonedDateTime getEndTime() {
+        return endTime;
+    }
+
     @Override
     public String toString() {
         return "Task{" +
@@ -63,6 +109,9 @@ public class Task   {
                 ", taskDescription='" + taskDescription + '\'' +
                 ", taskID=" + taskID +
                 ", taskStatus=" + taskStatus +
-                '}' + "\n";
+                ", duration=" + duration +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                '}';
     }
 }

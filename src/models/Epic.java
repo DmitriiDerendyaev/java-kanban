@@ -1,5 +1,7 @@
 package models;
 
+import java.time.Duration;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,18 +10,21 @@ public class Epic extends Task{
 
     protected List<Integer> taskCollection = new ArrayList<>();
 
+
     public Epic(String taskName, String taskDescription) {
-        super(taskName, taskDescription, TaskStatus.NEW);
+        super(taskName, taskDescription, TaskStatus.NEW, Duration.ZERO, ZonedDateTime.now());
     }
 
-    @Deprecated
-    public Epic(String taskName, String taskDescription, int taskID) {
-        super(taskName, taskDescription, taskID, TaskStatus.NEW);
-    }
 
     @Deprecated
-    public Epic(String taskName, String taskDescription, int taskID, TaskStatus taskStatus, List<Integer> taskCollection) {
-        super(taskName, taskDescription, taskID, taskStatus);
+    public Epic(String taskName,
+                String taskDescription,
+                int taskID,
+                TaskStatus taskStatus,
+                List<Integer> taskCollection,
+                Duration duration,
+                ZonedDateTime startTime) {
+        super(taskName, taskDescription, taskID, taskStatus, duration, startTime);
         this.taskCollection = taskCollection;
     }
 
@@ -36,6 +41,14 @@ public class Epic extends Task{
     }
 
     @Override
+    public void setStartTime(ZonedDateTime startTime) {
+        super.setStartTime(startTime);
+
+
+
+    }
+
+    @Override
     public String toString() {
         return "Epic{" +
                 "taskCollection=" + taskCollection +
@@ -43,6 +56,9 @@ public class Epic extends Task{
                 ", taskDescription='" + taskDescription + '\'' +
                 ", taskID=" + taskID +
                 ", taskStatus=" + taskStatus +
-                '}' + "\n";
+                ", duration=" + duration +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                '}';
     }
 }

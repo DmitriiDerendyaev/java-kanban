@@ -1,19 +1,28 @@
 package models;
 
+import java.time.Duration;
+import java.time.ZonedDateTime;
+
 public class SubTask extends Task{
     protected Integer epicId;
 
-
-    public SubTask(String taskName, String taskDescription, TaskStatus taskStatus, Integer epicId) {
-        super(taskName, taskDescription, taskStatus);
+    public SubTask(String taskName,
+                   String taskDescription,
+                   TaskStatus taskStatus,
+                   Duration duration,
+                   ZonedDateTime startTime,
+                   Integer epicId) {
+        super(taskName, taskDescription, taskStatus, duration, startTime);
         this.epicId = epicId;
     }
 
-    @Deprecated
-    public SubTask(String taskName, String taskDescription, int taskID, TaskStatus taskStatus, Integer epicId) {
-        super(taskName, taskDescription, taskID, taskStatus);
-        this.epicId = epicId;
-    }
+    //TODO: удалить deprecated классы
+//    @Deprecated
+//    public SubTask(String taskName, String taskDescription, int taskID, TaskStatus taskStatus, Integer epicId) {
+//        super(taskName, taskDescription, taskID, taskStatus);
+//        this.epicId = epicId;
+//    }
+
 
     public Integer getEpicID() {
         return epicId;
@@ -31,6 +40,9 @@ public class SubTask extends Task{
                 ", taskDescription='" + taskDescription + '\'' +
                 ", taskID=" + taskID +
                 ", taskStatus=" + taskStatus +
-                '}' + "\n";
+                ", duration=" + duration +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                '}';
     }
 }
