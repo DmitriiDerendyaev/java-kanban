@@ -2,6 +2,7 @@ package models;
 
 import java.time.Duration;
 import java.time.ZonedDateTime;
+import java.util.Comparator;
 
 public class SubTask extends Task{
     protected Integer epicId;
@@ -49,6 +50,19 @@ public class SubTask extends Task{
                 ", duration=" + duration +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
-                '}';
+                "}\n";
     }
+
+    // Переопределяем статический компаратор из класса Task
+    public static final Comparator<SubTask> subTaskComparator = new Comparator<SubTask>() {
+        @Override
+        public int compare(SubTask subTask1, SubTask subTask2) {
+            int startTimeComparison = subTask1.startTime.compareTo(subTask2.startTime);
+            if (startTimeComparison != 0) {
+                return startTimeComparison;
+            }
+            // Если startTime равны, то сравниваем по taskId
+            return Integer.compare(subTask1.taskID, subTask2.taskID);
+        }
+    };
 }

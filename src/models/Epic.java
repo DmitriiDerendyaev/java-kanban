@@ -4,10 +4,7 @@ import service.TaskManager;
 
 import java.time.Duration;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Epic extends Task{
 
@@ -70,9 +67,6 @@ public class Epic extends Task{
         this.duration = Duration.between(startTime, endTime);
     }
 
-
-
-
     @Override
     public String toString() {
         return "Epic{" +
@@ -84,6 +78,19 @@ public class Epic extends Task{
                 ", duration=" + duration +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
-                '}';
+                "}\n";
     }
+
+    // Переопределяем статический компаратор из класса Task
+    public static final Comparator<Epic> epicComparator = new Comparator<Epic>() {
+        @Override
+        public int compare(Epic epic1, Epic epic2) {
+            int startTimeComparison = epic1.startTime.compareTo(epic2.startTime);
+            if (startTimeComparison != 0) {
+                return startTimeComparison;
+            }
+            // Если startTime равны, то сравниваем по taskId
+            return Integer.compare(epic1.taskID, epic2.taskID);
+        }
+    };
 }
