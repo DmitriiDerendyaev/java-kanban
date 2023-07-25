@@ -17,11 +17,17 @@ public class SubTask extends Task{
     }
 
     //TODO: удалить deprecated классы
-//    @Deprecated
-//    public SubTask(String taskName, String taskDescription, int taskID, TaskStatus taskStatus, Integer epicId) {
-//        super(taskName, taskDescription, taskID, taskStatus);
-//        this.epicId = epicId;
-//    }
+    @Deprecated
+    public SubTask(String taskName,
+                   String taskDescription,
+                   int taskID,
+                   TaskStatus taskStatus,
+                   Integer epicId,
+                   Duration duration,
+                   ZonedDateTime startTime) {
+        super(taskName, taskDescription, taskID, taskStatus, duration, startTime);
+        this.epicId = epicId;
+    }
 
 
     public Integer getEpicID() {
