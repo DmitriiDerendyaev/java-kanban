@@ -4,6 +4,7 @@
     import models.TaskStatus;
     import service.FileBackedTasksManager;
     import service.HistoryManager;
+    import service.InMemoryTaskManager;
     import util.Manager;
     import service.TaskManager;
 
@@ -19,6 +20,7 @@
 
             TaskManager fileBackedTaskManager = new FileBackedTasksManager("src/resources/memory.csv");
 
+            //id=1
             fileBackedTaskManager.createTask(new Task("Просто отвертка",
                     "Купить отвертку",
                     TaskStatus.NEW,
@@ -26,8 +28,10 @@
                     ZonedDateTime.of(LocalDateTime.of(2023, 7, 25, 13, 00),
                             ZoneId.of("Europe/Samara")))); // "Europe/Samara -> Correct"
 
+            //id=2
             fileBackedTaskManager.createEpic(new Epic("Купить дом", "Купить пентхаус в Казани"));
 
+            //id=3
             fileBackedTaskManager.createSubTask(new SubTask("Материал для пола",
                     "Покупка расходников для пола",
                     TaskStatus.NEW,
@@ -36,11 +40,12 @@
                             ZoneId.of("Europe/Samara")),
                     2));
 
+            //id=4
             fileBackedTaskManager.createSubTask(new SubTask("Купить спойлер",
                     "Купить спойлер белого цвета",
                     TaskStatus.NEW,
-                    Duration.ofMinutes(180),
-                    ZonedDateTime.of(LocalDateTime.of(2023, 9, 30, 14, 30),
+                    Duration.ofMinutes(200),
+                    ZonedDateTime.of(LocalDateTime.of(2022, 9, 30, 14, 30),
                             ZoneId.of("Europe/Samara")),
                     2));
 
@@ -50,5 +55,7 @@
             fileBackedTaskManager.getTaskByID(1);
             fileBackedTaskManager.getEpicByID(2);
             fileBackedTaskManager.getSubTaskByID(3);
+
+            System.out.println(fileBackedTaskManager.getPrioritizedTask());
         }
     }
