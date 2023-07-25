@@ -1,28 +1,40 @@
 package models;
 
+import java.time.Duration;
+
 public class Task   {
     protected String taskName;
     protected String taskDescription;
     protected int taskID;
-
     protected TaskStatus taskStatus;
+
+    Duration duration;
 
     public void setTaskID(int taskID) {
         this.taskID = taskID;
     }
 
-    public Task(String taskName, String taskDescription, TaskStatus taskStatus) {
+    public Task(String taskName,
+                String taskDescription,
+                TaskStatus taskStatus,
+                Duration duration) {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.taskStatus = taskStatus;
+        this.duration = duration;
     }
 
     @Deprecated
-    public Task(String taskName, String taskDescription, int taskID, TaskStatus taskStatus) {
+    public Task(String taskName,
+                String taskDescription,
+                int taskID,
+                TaskStatus taskStatus,
+                Duration duration) {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.taskID = taskID;
         this.taskStatus = taskStatus;
+        this.duration = duration;
     }
 
     public Task() {
