@@ -3,7 +3,7 @@ package models;
 import java.time.Duration;
 import java.time.ZonedDateTime;
 
-public class Task   {
+public class Task implements Comparable<Task>{
     protected String taskName;
     protected String taskDescription;
     protected int taskID;
@@ -112,6 +112,16 @@ public class Task   {
                 ", duration=" + duration +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
-                '}';
+                "}\n";
+    }
+
+    @Override
+    public int compareTo(Task otherTask) {
+        int startTimeComparison = this.startTime.compareTo(otherTask.startTime);
+        if (startTimeComparison != 0) {
+            return startTimeComparison;
+        }
+        // If startTime is equal, then compare by taskId
+        return Integer.compare(this.taskID, otherTask.taskID);
     }
 }
