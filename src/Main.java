@@ -9,6 +9,8 @@
 
     import java.io.IOException;
     import java.time.Duration;
+    import java.time.LocalDateTime;
+    import java.time.ZoneId;
     import java.time.ZonedDateTime;
 
     public class Main {
@@ -17,15 +19,29 @@
 
             TaskManager fileBackedTaskManager = new FileBackedTasksManager("src/resources/memory.csv");
 
-            Duration duration;
-            ZonedDateTime zonedDateTime;
+            fileBackedTaskManager.createTask(new Task("Просто отвертка",
+                    "Купить отвертку",
+                    TaskStatus.NEW,
+                    Duration.ofMinutes(90),
+                    ZonedDateTime.of(LocalDateTime.of(2023, 7, 25, 13, 00),
+                            ZoneId.of("Europe/Izhevsk")))); // "Europe/Samara -> Correct"
 
-            fileBackedTaskManager.createTask(new Task("Просто отвертка", "Купить отвертку", TaskStatus.NEW));
             fileBackedTaskManager.createEpic(new Epic("Купить дом", "Купить пентхаус в Казани"));
-            fileBackedTaskManager.createSubTask(new SubTask("Материал для пола", "Покупка расходников для пола",
-                    TaskStatus.NEW, 2));
-            fileBackedTaskManager.createSubTask(new SubTask("Купить спойлер", "Купить спойлер белого цвета",
-                    TaskStatus.NEW, 2));
+
+            fileBackedTaskManager.createSubTask(new SubTask("Материал для пола",
+                    "Покупка расходников для пола",
+                    TaskStatus.NEW,
+                    Duration.ofMinutes(180),
+                    ZonedDateTime.of(LocalDateTime.of(2023, 8, 25, 14, 30),
+                            ZoneId.of("Europe/Izhevsk")),
+                    2));
+            fileBackedTaskManager.createSubTask(new SubTask("Купить спойлер",
+                    "Купить спойлер белого цвета",
+                    TaskStatus.NEW,
+                    Duration.ofMinutes(180),
+                    ZonedDateTime.of(LocalDateTime.of(2023, 9, 30, 14, 30),
+                            ZoneId.of("Europe/Izhevsk")),
+                    2));
 
             System.out.println(fileBackedTaskManager.getHistory());
 
