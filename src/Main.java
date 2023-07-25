@@ -49,6 +49,14 @@
                             ZoneId.of("Europe/Samara")),
                     2));
 
+            //id=5 -> для тестирования ошибки по пересечению
+//            fileBackedTaskManager.createTask(new Task("Специально для теста",
+//                    "Протестировать",
+//                    TaskStatus.NEW,
+//                    Duration.ofMinutes(90),
+//                    ZonedDateTime.of(LocalDateTime.of(2023, 7, 25, 13, 30),
+//                            ZoneId.of("Europe/Samara")))); // "Europe/Samara -> Correct"
+
             System.out.println(fileBackedTaskManager.getHistory());
 
 
