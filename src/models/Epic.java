@@ -1,10 +1,13 @@
 package models;
 
+import service.TaskManager;
+
 import java.time.Duration;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Epic extends Task{
 
@@ -14,7 +17,6 @@ public class Epic extends Task{
     public Epic(String taskName, String taskDescription) {
         super(taskName, taskDescription, TaskStatus.NEW, Duration.ZERO, ZonedDateTime.now());
     }
-
 
     @Deprecated
     public Epic(String taskName,
@@ -43,10 +45,33 @@ public class Epic extends Task{
     @Override
     public void setStartTime(ZonedDateTime startTime) {
         super.setStartTime(startTime);
-
-
-
     }
+
+    public void updateStartTime(Map<Integer, SubTask> subTasks) {
+        ZonedDateTime earliestStartTime = subTasks.values()
+                .stream()
+                .filter(subTask -> taskCollection.contains(subTask.getTaskID()))
+                .map(SubTask::getStartTime)
+                .filter(startTime -> startTime != null)
+                .min(ZonedDateTime::compareTo)
+                .orElse(null);
+
+        ZonedDateTime latestStartTime = subTasks.values()
+                .stream()
+                .filter(subTask -> taskCollection.contains(subTask.getTaskID()))
+                .map(SubTask::getEndTime)
+                .filter(endTime -> endTime != null)
+                .max(ZonedDateTime::compareTo)
+                .orElse(null);
+
+        this.startTime = earliestStartTime;
+        this.endTime = latestStartTime;
+        
+        this.duration = Duration.between(startTime, endTime);
+    }
+
+
+
 
     @Override
     public String toString() {
