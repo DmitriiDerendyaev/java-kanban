@@ -11,6 +11,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 public class FileBackedTasksManager extends InMemoryTaskManager{
 
@@ -310,5 +311,10 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
         } catch (IOException e) {
             throw new ManagerLoadException("Failed to load tasks.", e);
         }
+    }
+
+    @Override
+    public TreeSet<Task> getPrioritizedTask() {
+        return super.getPrioritizedTask();
     }
 }
