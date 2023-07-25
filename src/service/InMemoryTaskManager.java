@@ -6,6 +6,7 @@ import models.Task;
 import models.TaskStatus;
 import util.Manager;
 
+import java.time.ZonedDateTime;
 import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
@@ -52,9 +53,31 @@ public class InMemoryTaskManager implements TaskManager {
         return prioritizedTask;
     }
 
+    private boolean hasTimeOverlap(Task newTask) {
+        ZonedDateTime startTimeNewTask = newTask.getStartTime();
+        ZonedDateTime endTimeNewTask = newTask.getEndTime();
+
+        for (Task existingTask : prioritizedTask) {
+            ZonedDateTime startTimeExistingTask = existingTask.getStartTime();
+            ZonedDateTime endTimeExistingTask = existingTask.getEndTime();
+
+            if (startTimeNewTask.isBefore(endTimeExistingTask) && startTimeExistingTask.isBefore(endTimeNewTask)) {
+                return true; // Ќайдено пересечение
+            }
+        }
+        return false; // ѕересечений нет
+    }
+
+
+
     @Override
     public int createEpic(Epic newEpic) {
         newEpic.setTaskID(currentId++);
+
+        if (hasTimeOverlap(newEpic)) {
+            throw new IllegalArgumentException("Ќова€ задача пересекаетс€ по времени выполнени€ с существующими задачами");
+        }
+
         epics.put(newEpic.getTaskID(), newEpic);
 
         // ѕри создании эпика без сабтасков он инициализируетс€ с текущим временем,
@@ -67,6 +90,11 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public int createTask(Task newTask) {
         newTask.setTaskID(currentId++);
+
+        if (hasTimeOverlap(newTask)) {
+            throw new IllegalArgumentException("Ќова€ задача пересекаетс€ по времени выполнени€ с существующими задачами");
+        }
+
         updateTaskIfPresent(newTask);
 
         tasks.put(newTask.getTaskID(), newTask);
@@ -76,6 +104,10 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public int createSubTask(SubTask newSubTask) {
         newSubTask.setTaskID(currentId++);
+
+        if (hasTimeOverlap(newSubTask)) {
+            throw new IllegalArgumentException("Ќова€ подзадача пересекаетс€ по времени выполнени€ с существующими задачами");
+        }
 
         updateTaskIfPresent(newSubTask);
 
