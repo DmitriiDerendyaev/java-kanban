@@ -24,7 +24,7 @@
                     TaskStatus.NEW,
                     Duration.ofMinutes(90),
                     ZonedDateTime.of(LocalDateTime.of(2023, 7, 25, 13, 00),
-                            ZoneId.of("Europe/Izhevsk")))); // "Europe/Samara -> Correct"
+                            ZoneId.of("Europe/Samara")))); // "Europe/Samara -> Correct"
 
             fileBackedTaskManager.createEpic(new Epic("Купить дом", "Купить пентхаус в Казани"));
 
@@ -33,14 +33,15 @@
                     TaskStatus.NEW,
                     Duration.ofMinutes(180),
                     ZonedDateTime.of(LocalDateTime.of(2023, 8, 25, 14, 30),
-                            ZoneId.of("Europe/Izhevsk")),
+                            ZoneId.of("Europe/Samara")),
                     2));
+
             fileBackedTaskManager.createSubTask(new SubTask("Купить спойлер",
                     "Купить спойлер белого цвета",
                     TaskStatus.NEW,
                     Duration.ofMinutes(180),
                     ZonedDateTime.of(LocalDateTime.of(2023, 9, 30, 14, 30),
-                            ZoneId.of("Europe/Izhevsk")),
+                            ZoneId.of("Europe/Samara")),
                     2));
 
             System.out.println(fileBackedTaskManager.getHistory());
