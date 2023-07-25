@@ -198,6 +198,8 @@ public class InMemoryTaskManager implements TaskManager {
             } else {
                 epics.get(currentEpic).setStatus(TaskStatus.IN_PROGRESS);
             }
+
+            epics.get(currentEpic).updateStartTime(subTasks);
         }
     }
 
@@ -222,6 +224,8 @@ public class InMemoryTaskManager implements TaskManager {
         } else {
             currentEpic.setStatus(TaskStatus.IN_PROGRESS);
         }
+
+        currentEpic.updateStartTime(subTasks);
     }
 
 }
