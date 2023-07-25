@@ -282,13 +282,16 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
 
                 switch (type) {
                     case TASK:
-                        super.tasks.put(id, fromString(line));
+//                        super.tasks.put(id, fromString(line));
+                        super.createTask(fromString(line));
                         break;
                     case SUB_TASK:
-                        super.subTasks.put(id, (SubTask) fromString(line));
+//                        super.subTasks.put(id, (SubTask) fromString(line));
+                        super.createSubTask((SubTask) fromString(line));
                         break;
                     case EPIC:
                         super.epics.put(id, (Epic) fromString(line));
+                        super.createEpic((Epic) fromString(line));
                         break;
                     default:
                         throw new ManagerLoadException("Unknown task type: " + type);
