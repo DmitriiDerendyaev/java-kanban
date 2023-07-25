@@ -6,8 +6,10 @@ import models.Task;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 public interface TaskManager {
+    TreeSet<Task> getPrioritizedTask();
     int createEpic(Epic newEpic);
     int createTask(Task newTask);
     int createSubTask(SubTask newSubTask);
