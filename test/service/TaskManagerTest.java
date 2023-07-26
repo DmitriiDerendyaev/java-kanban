@@ -49,7 +49,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         Epic epic = new Epic("Эпик 1", "Описание эпика");
         int epicId = taskManager.createEpic(epic);
 
-        SubTask subTask = new SubTask("Подзадача 1", "Описание подзадачи", TaskStatus.NEW, Duration.ofHours(1), ZonedDateTime.now(), epicId);
+        SubTask subTask = new SubTask("Подзадача 1", "Описание подзадачи", TaskStatus.NEW, Duration.ofHours(1), ZonedDateTime.now().plusHours(10), epicId);
         int subTaskId = taskManager.createSubTask(subTask);
 
         SubTask savedSubTask = taskManager.getSubTaskByID(subTaskId);
