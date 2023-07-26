@@ -128,7 +128,11 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public int updateTask(Task updatedTask) {
-        tasks.put(updatedTask.getTaskID(), updatedTask);
+
+        if(tasks.containsKey(updatedTask.getTaskID()))
+            tasks.put(updatedTask.getTaskID(), updatedTask);
+        else
+            throw new IllegalArgumentException("Отсутствует такой ID");
 
         updateTaskIfPresent(updatedTask);
         return updatedTask.getTaskID();
