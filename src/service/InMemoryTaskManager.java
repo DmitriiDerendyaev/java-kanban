@@ -74,9 +74,11 @@ public class InMemoryTaskManager implements TaskManager {
     public int createEpic(Epic newEpic) {
         newEpic.setTaskID(currentId++);
 
-        if (hasTimeOverlap(newEpic)) {
-            throw new IllegalArgumentException("Новая задача пересекается по времени выполнения с существующими задачами");
-        }
+        //Эпики можно не валидировать, т.к. их временной диапазон напрямую зависит от subTasks
+        // и коллизия будет возникать именно из-за пересечения subTask и epic
+//        if (hasTimeOverlap(newEpic)) {
+//            throw new IllegalArgumentException("Новая задача пересекается по времени выполнения с существующими задачами");
+//        }
 
         epics.put(newEpic.getTaskID(), newEpic);
 
