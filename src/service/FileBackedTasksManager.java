@@ -265,7 +265,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
             throw new ManagerSaveException("Failed to save tasks.", e);
         }
     }
-    private void loadTasksFromFile(){
+    protected void loadTasksFromFile(){
         try (BufferedReader reader = new BufferedReader(new FileReader(pathFile))){
             String line;
 
@@ -299,6 +299,9 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
 
             line = reader.readLine();
 
+            if(line == null){
+                return;
+            }
             for(Integer currentId: historyFromString(line)){
                 if(tasks.containsKey(currentId))
                     historyManager.add(tasks.get(currentId));
@@ -318,5 +321,11 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
     @Override
     public TreeSet<Task> getPrioritizedTask() {
         return super.getPrioritizedTask();
+    }
+
+    public void clearFileContents() throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(pathFile))) {
+
+        }
     }
 }
