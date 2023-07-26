@@ -4,6 +4,7 @@ import service.TaskManager;
 
 import java.time.Duration;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Epic extends Task{
@@ -12,9 +13,15 @@ public class Epic extends Task{
 
 
     public Epic(String taskName, String taskDescription) {
-        super(taskName, taskDescription, TaskStatus.NEW, Duration.ZERO, ZonedDateTime.now());
+        super(taskName, taskDescription, TaskStatus.NEW, Duration.ZERO, getFormattedZonedDateTime());
     }
 
+    private static ZonedDateTime getFormattedZonedDateTime() {
+        ZonedDateTime now = ZonedDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mmXXX'['VV']'");
+        String formattedDateTime = now.format(formatter);
+        return ZonedDateTime.parse(formattedDateTime, formatter);
+    }
     @Deprecated
     public Epic(String taskName,
                 String taskDescription,
@@ -96,4 +103,27 @@ public class Epic extends Task{
             return Integer.compare(epic1.taskID, epic2.taskID);
         }
     };
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Epic epic = (Epic) o;
+
+        if (!this.getTaskName().equals(epic.getTaskName())) return false;
+        if (!this.getTaskDescription().equals(epic.getTaskDescription())) return false;
+        if(this.getTaskID() != epic.getTaskID()) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = this.getTaskName().hashCode();
+        result = 31 * result + this.getTaskDescription().hashCode();
+        // Добавьте другие поля, которые нужно учитывать при вычислении хэш-кода
+
+        return result;
+    }
 }
