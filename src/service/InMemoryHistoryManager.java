@@ -23,10 +23,15 @@ public class InMemoryHistoryManager implements HistoryManager{
 
     @Override
     public void remove(int id) {
-        Node nodeToRemove = nodeMap.get(id);
-        if (nodeToRemove != null) {
-            removeNode(nodeToRemove);
-            nodeMap.remove(id);
+
+        if(nodeMap.containsKey(id)){
+            Node nodeToRemove = nodeMap.get(id);
+            if (nodeToRemove != null) {
+                removeNode(nodeToRemove);
+                nodeMap.remove(id);
+            }
+        } else {
+            throw new IllegalStateException("Задачи с таким ID не существует");
         }
     }
 
