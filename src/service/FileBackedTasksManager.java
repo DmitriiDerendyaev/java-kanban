@@ -208,9 +208,11 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
             String[] numbers = input.split("\\s+");
             List<Integer> subTaskCollection = new ArrayList<>();
 
-            for (String number : numbers) {
-                subTaskCollection.add(Integer.parseInt(number));
-            }
+            //TODO: выяснить, нужно ли считывать массив subTask для epic,
+            // т.к. выбрасывается NPE при обновлении Epic до инициализации SubTasks
+//            for (String number : numbers) {
+//                subTaskCollection.add(Integer.parseInt(number));
+//            }
             return new Epic(name,
                     description,
                     id,
@@ -247,12 +249,12 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
             for (Task currentTask : getTasks().values()) {
                 writer.write(taskToString(currentTask));
             }
-            for (SubTask currentSubTask : getSubTasks().values()) {
-                writer.write(String.format("%s,%s,\n",taskToString(currentSubTask), currentSubTask.getEpicID()));
-            }
             for (Epic currentEpic: getEpics().values()){
                 writer.write(String.format("%s,%s,\n",taskToString(currentEpic),
                         currentEpic.getTaskCollection().toString().replace(',', ' ')));
+            }
+            for (SubTask currentSubTask : getSubTasks().values()) {
+                writer.write(String.format("%s,%s,\n",taskToString(currentSubTask), currentSubTask.getEpicID()));
             }
 
             writer.write("\n");
@@ -282,15 +284,12 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
 
                 switch (type) {
                     case TASK:
-//                        super.tasks.put(id, fromString(line));
                         super.createTask(fromString(line));
                         break;
                     case SUB_TASK:
-//                        super.subTasks.put(id, (SubTask) fromString(line));
                         super.createSubTask((SubTask) fromString(line));
                         break;
                     case EPIC:
-                        super.epics.put(id, (Epic) fromString(line));
                         super.createEpic((Epic) fromString(line));
                         break;
                     default:
