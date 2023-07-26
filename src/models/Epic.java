@@ -32,7 +32,10 @@ public class Epic extends Task{
     }
 
     public void addSubTaskID(Integer subTaskID){
-        taskCollection.add(subTaskID);
+        if(!taskCollection.contains(subTaskID)){
+            taskCollection.add(subTaskID);
+        }
+
     }
 
     public void setStatus(TaskStatus status){
