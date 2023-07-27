@@ -49,8 +49,8 @@ public class InMemoryTaskManager implements TaskManager {
         prioritizedTask.add(newTask);
     }
 
-    public TreeSet<Task> getPrioritizedTask() {
-        return prioritizedTask;
+    public List<Task> getPrioritizedTask() {
+        return new ArrayList<>(prioritizedTask);
     }
 
     private boolean hasTimeOverlap(Task newTask) {

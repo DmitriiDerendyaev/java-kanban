@@ -319,7 +319,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
     }
 
     @Override
-    public TreeSet<Task> getPrioritizedTask() {
+    public List<Task> getPrioritizedTask() {
         return super.getPrioritizedTask();
     }
 
