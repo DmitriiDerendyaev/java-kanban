@@ -65,15 +65,34 @@ public class TaskAdapter extends TypeAdapter<Task> {
                 case "taskStatus":
                     taskStatus = TaskStatus.valueOf(in.nextString());// Assuming valid TaskStatus values
                     break;
+                case "duration":
+                    in.beginObject();
+                    long seconds = 0;
+                    int nanos = 0;
+                    while (in.hasNext()) {
+                        String fieldName = in.nextName();
+                        switch (fieldName) {
+                            case "seconds":
+                                seconds = in.nextLong();
+                                break;
+                            case "nanos":
+                                nanos = in.nextInt();
+                                break;
+                            default:
+                                in.skipValue();
+                                break;
+                        }
+                    }
+                    in.endObject();
+                    duration = Duration.ofSeconds(seconds).plusNanos(nanos);
+                    break;
                 case "startTime":
                     startTime = ZonedDateTime.parse(in.nextString(), ZONED_DATE_TIME_FORMATTER);
                     break;
                 case "endTime":
                     endTime = ZonedDateTime.parse(in.nextString(), ZONED_DATE_TIME_FORMATTER);
                     break;
-                case "duration":
-                    duration = Duration.ofMillis(in.nextLong());
-                    break;
+
                 default:
                     in.skipValue();
                     break;
