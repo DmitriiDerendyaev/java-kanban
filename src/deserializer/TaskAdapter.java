@@ -7,8 +7,7 @@ import models.Task;
 import models.TaskStatus;
 
 import java.io.IOException;
-import java.time.Duration;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 public class TaskAdapter extends TypeAdapter<Task> {
@@ -87,10 +86,51 @@ public class TaskAdapter extends TypeAdapter<Task> {
                     duration = Duration.ofSeconds(seconds).plusNanos(nanos);
                     break;
                 case "startTime":
-                    startTime = ZonedDateTime.parse(in.nextString(), ZONED_DATE_TIME_FORMATTER);
+                    in.beginObject();
+                    ZonedDateTime dateTime = null;
+                    ZoneId zoneId = null;
+                    while (in.hasNext()) {
+                        String fieldName = in.nextName();
+                        switch (fieldName) {
+                            case "dateTime":
+                                dateTime = readDateTime(in);
+                                break;
+                            case "zone":
+                                zoneId = readZoneId(in);
+                                break;
+                            default:
+                                in.skipValue();
+                                break;
+                        }
+                    }
+                    in.endObject();
+                    if (dateTime != null && zoneId != null) {
+                        startTime = dateTime.withZoneSameInstant(zoneId);
+                    }
                     break;
+
                 case "endTime":
-                    endTime = ZonedDateTime.parse(in.nextString(), ZONED_DATE_TIME_FORMATTER);
+                    in.beginObject();
+                    dateTime = null;
+                    zoneId = null;
+                    while (in.hasNext()) {
+                        String fieldName = in.nextName();
+                        switch (fieldName) {
+                            case "dateTime":
+                                dateTime = readDateTime(in);
+                                break;
+                            case "zone":
+                                zoneId = readZoneId(in);
+                                break;
+                            default:
+                                in.skipValue();
+                                break;
+                        }
+                    }
+                    in.endObject();
+                    if (dateTime != null && zoneId != null) {
+                        endTime = dateTime.withZoneSameInstant(zoneId);
+                    }
                     break;
 
                 default:
@@ -109,5 +149,104 @@ public class TaskAdapter extends TypeAdapter<Task> {
         } else {
             throw new IOException("Incomplete or invalid JSON for Task");
         }
+
+
+    }
+
+    private ZonedDateTime readDateTime(JsonReader in) throws IOException {
+        in.beginObject();
+        LocalDate date = null;
+        LocalTime time = null;
+        while (in.hasNext()) {
+            String fieldName = in.nextName();
+            switch (fieldName) {
+                case "date":
+                    date = readLocalDate(in);
+                    break;
+                case "time":
+                    time = readLocalTime(in);
+                    break;
+                default:
+                    in.skipValue();
+                    break;
+            }
+        }
+        in.endObject();
+        if (date != null && time != null) {
+            return ZonedDateTime.of(date, time, ZoneId.systemDefault()); // You might need to adjust the time zone
+        }
+        return null;
+    }
+
+    private LocalDate readLocalDate(JsonReader in) throws IOException {
+        in.beginObject();
+        int year = -1, month = -1, day = -1;
+        while (in.hasNext()) {
+            String fieldName = in.nextName();
+            switch (fieldName) {
+                case "year":
+                    year = in.nextInt();
+                    break;
+                case "month":
+                    month = in.nextInt();
+                    break;
+                case "day":
+                    day = in.nextInt();
+                    break;
+                default:
+                    in.skipValue();
+                    break;
+            }
+        }
+        in.endObject();
+        if (year != -1 && month != -1 && day != -1) {
+            return LocalDate.of(year, month, day);
+        }
+        return null;
+    }
+
+    private LocalTime readLocalTime(JsonReader in) throws IOException {
+        in.beginObject();
+        int hour = -1, minute = -1, second = -1;
+        while (in.hasNext()) {
+            String fieldName = in.nextName();
+            switch (fieldName) {
+                case "hour":
+                    hour = in.nextInt();
+                    break;
+                case "minute":
+                    minute = in.nextInt();
+                    break;
+                case "second":
+                    second = in.nextInt();
+                    break;
+                default:
+                    in.skipValue();
+                    break;
+            }
+        }
+        in.endObject();
+        if (hour != -1 && minute != -1 && second != -1) {
+            return LocalTime.of(hour, minute, second);
+        }
+        return null;
+    }
+
+    private ZoneId readZoneId(JsonReader in) throws IOException {
+        in.beginObject();
+        String zoneName = null;
+        while (in.hasNext()) {
+            String fieldName = in.nextName();
+            if (fieldName.equals("id")) {
+                zoneName = in.nextString();
+            } else {
+                in.skipValue();
+            }
+        }
+        in.endObject();
+        if (zoneName != null) {
+            return ZoneId.of(zoneName);
+        }
+        return null;
     }
 }
