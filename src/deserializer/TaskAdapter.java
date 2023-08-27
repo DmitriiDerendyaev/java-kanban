@@ -34,6 +34,8 @@ public class TaskAdapter extends TypeAdapter<Task> {
 
     @Override
     public Task read(JsonReader in) throws IOException {
+        // TODO: duration также не должен приходить извне,
+        //  иначе его не посчитать никак или убрать конец выполнения, ЧТО БОЛЕЕ ЛОГИЧНО
         if (in.peek() == JsonToken.NULL) {
             in.nextNull();
             return null;
@@ -42,7 +44,7 @@ public class TaskAdapter extends TypeAdapter<Task> {
         in.beginObject();
         String taskName = null;
         String taskDescription = null;
-        int taskID = -1;
+//        int taskID = -1;
         TaskStatus taskStatus = null;
         ZonedDateTime startTime = null;
         ZonedDateTime endTime = null;
@@ -57,9 +59,9 @@ public class TaskAdapter extends TypeAdapter<Task> {
                 case "taskDescription":
                     taskDescription = in.nextString();
                     break;
-                case "taskID":
-                    taskID = in.nextInt();
-                    break;
+//                case "taskID":
+//                    taskID = in.nextInt();
+//                    break;
                 case "taskStatus":
                     taskStatus = TaskStatus.valueOf(in.nextString()); // Assuming valid TaskStatus values
                     break;
@@ -81,8 +83,9 @@ public class TaskAdapter extends TypeAdapter<Task> {
 
         in.endObject();
 
-        if (taskName != null && taskDescription != null && taskID != -1 && startTime != null && endTime != null && duration != null) {
-            Task task = new Task(taskName, taskDescription, taskID, taskStatus, duration, startTime);
+        if (taskName != null && taskDescription != null /*&& taskID != -1*/ && startTime != null && endTime != null && duration != null) {
+//            Task task = new Task(taskName, taskDescription, /*taskID,*/ taskStatus, duration, startTime);
+            Task task = new Task(taskName, taskDescription, taskStatus, duration, startTime);
             task.setStartTime(startTime);
             task.setEndTime(endTime);
             return task;

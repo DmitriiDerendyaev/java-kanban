@@ -50,7 +50,7 @@ public class SubTaskAdapter extends TypeAdapter<SubTask> {
         int epicID = -1;
         String taskName = null;
         String taskDescription = null;
-        int taskID = -1;
+//        int taskID = -1;
         TaskStatus taskStatus = null;
         ZonedDateTime startTime = null;
         ZonedDateTime endTime = null;
@@ -69,9 +69,9 @@ public class SubTaskAdapter extends TypeAdapter<SubTask> {
                 case "taskDescription":
                     taskDescription = jsonReader.nextString();
                     break;
-                case "taskID":
-                    taskID = jsonReader.nextInt();
-                    break;
+//                case "taskID":
+//                    taskID = jsonReader.nextInt();
+//                    break;
                 case "taskStatus":
                     taskStatus = TaskStatus.valueOf(jsonReader.nextString());
                     break;
@@ -92,8 +92,9 @@ public class SubTaskAdapter extends TypeAdapter<SubTask> {
 
         jsonReader.endObject();
 
-        if (taskName != null && taskDescription != null && taskID != -1 && startTime != null && endTime != null && duration != null) {
-            SubTask subTask = new SubTask(taskName, taskDescription, taskID, taskStatus, epicID, duration, startTime);
+        if (taskName != null && taskDescription != null /*&& taskID != -1*/ && startTime != null && endTime != null && duration != null) {
+//            SubTask subTask = new SubTask(taskName, taskDescription, taskID, taskStatus, epicID, duration, startTime);
+            SubTask subTask = new SubTask(taskName, taskDescription, taskStatus, duration, startTime, epicID);
             subTask.setStartTime(startTime);
             subTask.setEndTime(endTime);
             return subTask;
