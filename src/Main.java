@@ -1,3 +1,8 @@
+    import com.google.gson.Gson;
+    import com.google.gson.GsonBuilder;
+    import deserializer.EpicAdapter;
+    import deserializer.SubTaskAdapter;
+    import deserializer.TaskAdapter;
     import models.Epic;
     import models.SubTask;
     import models.Task;
@@ -20,25 +25,43 @@
 
             TaskManager fileBackedTaskManager = new FileBackedTasksManager("src/resources/memory.csv");
 
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Task.class, new TaskAdapter())
+                    .registerTypeAdapter(SubTask.class, new SubTaskAdapter())
+                    .registerTypeAdapter(Epic.class, new EpicAdapter())
+                    .create();
+
             //id=1
-            fileBackedTaskManager.createTask(new Task("Просто отвертка",
+            Task task1 = new Task("Просто отвертка",
                     "Купить отвертку",
                     TaskStatus.NEW,
                     Duration.ofMinutes(90),
                     ZonedDateTime.of(LocalDateTime.of(2023, 7, 25, 13, 00),
-                            ZoneId.of("Europe/Samara")))); // "Europe/Samara -> Correct"
+                            ZoneId.of("Europe/Samara")));
+            fileBackedTaskManager.createTask(task1); // "Europe/Samara -> Correct"
 
+            System.out.println(gson.toJson(task1));
+
+
+            Epic epic1 = new Epic("Купить дом", "Купить пентхаус в Казани");
             //id=2
-            fileBackedTaskManager.createEpic(new Epic("Купить дом", "Купить пентхаус в Казани"));
+            fileBackedTaskManager.createEpic(epic1);
 
-            //id=3
-            fileBackedTaskManager.createSubTask(new SubTask("Материал для пола",
+
+
+            SubTask subTask1 = new SubTask("Материал для пола",
                     "Покупка расходников для пола",
                     TaskStatus.NEW,
                     Duration.ofMinutes(180),
                     ZonedDateTime.of(LocalDateTime.of(2023, 8, 25, 14, 30),
                             ZoneId.of("Europe/Samara")),
-                    2));
+                    2);
+
+            //id=3
+            fileBackedTaskManager.createSubTask(subTask1);
+
+            System.out.println(gson.toJson(epic1));
+            System.out.println(gson.toJson(subTask1));
 
             //id=4
             fileBackedTaskManager.createSubTask(new SubTask("Купить спойлер",
