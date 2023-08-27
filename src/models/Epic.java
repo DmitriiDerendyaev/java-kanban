@@ -38,6 +38,10 @@ public class Epic extends Task{
         return taskCollection;
     }
 
+    public void setTaskCollection(List<Integer> taskCollection) {
+        this.taskCollection = taskCollection;
+    }
+
     public void addSubTaskID(Integer subTaskID){
         if(!taskCollection.contains(subTaskID)){
             taskCollection.add(subTaskID);
