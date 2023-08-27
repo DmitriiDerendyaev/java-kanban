@@ -1,0 +1,20 @@
+POST http://localhost:8080/tasks/epic
+Content-Type: application/json
+
+{"taskName":"Купить дом","taskDescription":"Купить пентхаус в Казани","taskID":2,"taskStatus":"NEW","startTime":"2023-08-25T14:30:00+04:00[Europe/Samara]","endTime":"2023-08-25T17:30:00+04:00[Europe/Samara]","duration":10800000,"subTasksList":[3]}
+
+
+###
+POST http://localhost:8080/tasks/subTask
+Content-Type: application/json
+
+{"epicID":2,"taskName":"Материал для пола","taskDescription":"Покупка расходников для пола","taskID":3,"taskStatus":"NEW","startTime":"2023-08-25T14:30:00+04:00[Europe/Samara]","endTime":"2023-08-25T17:30:00+04:00[Europe/Samara]","duration":10800000}
+
+
+###
+POST http://localhost:8080/tasks/task
+Content-Type: application/json
+
+{"taskName":"Просто отвертка","taskDescription":"Купить отвертку","taskID":1,"taskStatus":"NEW","startTime":"2023-07-25T13:00:00+04:00[Europe/Samara]","endTime":"2023-07-25T14:30:00+04:00[Europe/Samara]","duration":5400000}
+
+
