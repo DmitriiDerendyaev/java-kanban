@@ -41,8 +41,8 @@ public class SubTaskAdapter extends TypeAdapter<SubTask> {
 
     @Override
     public SubTask read(JsonReader jsonReader) throws IOException {
-        if(jsonReader.peek() == JsonToken.NULL){
-            jsonReader.nextNull();;
+        if (jsonReader.peek() == JsonToken.NULL) {
+            jsonReader.nextNull();
             return null;
         }
 
@@ -56,10 +56,10 @@ public class SubTaskAdapter extends TypeAdapter<SubTask> {
         ZonedDateTime endTime = null;
         Duration duration = null;
 
-        while ((jsonReader.hasNext())){
+        while (jsonReader.hasNext()) {
             String name = jsonReader.nextName();
 
-            switch (name){
+            switch (name) {
                 case "epicID":
                     epicID = jsonReader.nextInt();
                     break;
@@ -76,88 +76,30 @@ public class SubTaskAdapter extends TypeAdapter<SubTask> {
                     taskStatus = TaskStatus.valueOf(jsonReader.nextString());
                     break;
                 case "duration":
-                    jsonReader.beginObject();
-                    long seconds = 0;
-                    int nanos = 0;
-                    while (jsonReader.hasNext()){
-                        String fieldName = jsonReader.nextName();
-                        switch (fieldName){
-                            case "seconds":
-                                seconds = jsonReader.nextLong();
-                                break;
-                            case "nanos":
-                                nanos = jsonReader.nextInt();
-                                break;
-                            default:
-                                jsonReader.skipValue();
-                                break;
-                        }
-                    }
-                    jsonReader.endObject();
-                    duration = Duration.ofSeconds(seconds).plusNanos(nanos);
+                    duration = Duration.ofMillis(jsonReader.nextLong());
                     break;
                 case "startTime":
-                    jsonReader.beginObject();
-                    ZonedDateTime dateTime = null;
-                    ZoneId zoneId = null;
-                    while (jsonReader.hasNext()){
-                        String fieldName = jsonReader.nextName();
-                        switch (fieldName){
-                            case "dateTime":
-                                dateTime = UtilAdapter.readDateTime(jsonReader);
-                                break;
-                            case "zone":
-                                zoneId = UtilAdapter.readZoneId(jsonReader);
-                                break;
-                            default:
-                                jsonReader.skipValue();
-                                break;
-                        }
-                    }
-                    jsonReader.endObject();
-                    if (dateTime != null && zoneId != null) {
-                        startTime = dateTime.withZoneSameInstant(zoneId);
-                    }
+                    startTime = ZonedDateTime.parse(jsonReader.nextString());
                     break;
                 case "endTime":
-                    jsonReader.beginObject();
-                    dateTime = null;
-                    zoneId = null;
-                    while (jsonReader.hasNext()) {
-                        String fieldName = jsonReader.nextName();
-                        switch (fieldName) {
-                            case "dateTime":
-                                dateTime = UtilAdapter.readDateTime(jsonReader);
-                                break;
-                            case "zone":
-                                zoneId = UtilAdapter.readZoneId(jsonReader);
-                                break;
-                            default:
-                                jsonReader.skipValue();
-                                break;
-                        }
-                    }
-                    jsonReader.endObject();
-                    if (dateTime != null && zoneId != null) {
-                        endTime = dateTime.withZoneSameInstant(zoneId);
-                    }
+                    endTime = ZonedDateTime.parse(jsonReader.nextString());
                     break;
                 default:
                     jsonReader.skipValue();
                     break;
-
             }
         }
 
         jsonReader.endObject();
 
-        if (taskID != 0 && taskName != null && taskDescription != null && taskID != -1 && startTime != null && endTime != null && duration != null) {
+        if (taskName != null && taskDescription != null && taskID != -1 && startTime != null && endTime != null && duration != null) {
             SubTask subTask = new SubTask(taskName, taskDescription, taskID, taskStatus, epicID, duration, startTime);
             subTask.setStartTime(startTime);
             subTask.setEndTime(endTime);
             return subTask;
         } else {
-            throw new IOException("Incomplete or invalid JSON for Task");
+            throw new IOException("Incomplete or invalid JSON for SubTask");
         }
     }
+
 }

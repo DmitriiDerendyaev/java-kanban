@@ -61,77 +61,18 @@ public class TaskAdapter extends TypeAdapter<Task> {
                     taskID = in.nextInt();
                     break;
                 case "taskStatus":
-                    taskStatus = TaskStatus.valueOf(in.nextString());// Assuming valid TaskStatus values
+                    taskStatus = TaskStatus.valueOf(in.nextString()); // Assuming valid TaskStatus values
                     break;
                 case "duration":
-                    in.beginObject();
-                    long seconds = 0;
-                    int nanos = 0;
-                    while (in.hasNext()) {
-                        String fieldName = in.nextName();
-                        switch (fieldName) {
-                            case "seconds":
-                                seconds = in.nextLong();
-                                break;
-                            case "nanos":
-                                nanos = in.nextInt();
-                                break;
-                            default:
-                                in.skipValue();
-                                break;
-                        }
-                    }
-                    in.endObject();
-                    duration = Duration.ofSeconds(seconds).plusNanos(nanos);
+                    long durationMillis = in.nextLong();
+                    duration = Duration.ofMillis(durationMillis);
                     break;
                 case "startTime":
-                    in.beginObject();
-                    ZonedDateTime dateTime = null;
-                    ZoneId zoneId = null;
-                    while (in.hasNext()) {
-                        String fieldName = in.nextName();
-                        switch (fieldName) {
-                            case "dateTime":
-                                dateTime = UtilAdapter.readDateTime(in);
-                                break;
-                            case "zone":
-                                zoneId = UtilAdapter.readZoneId(in);
-                                break;
-                            default:
-                                in.skipValue();
-                                break;
-                        }
-                    }
-                    in.endObject();
-                    if (dateTime != null && zoneId != null) {
-                        startTime = dateTime.withZoneSameInstant(zoneId);
-                    }
+                    startTime = ZonedDateTime.parse(in.nextString());
                     break;
-
                 case "endTime":
-                    in.beginObject();
-                    dateTime = null;
-                    zoneId = null;
-                    while (in.hasNext()) {
-                        String fieldName = in.nextName();
-                        switch (fieldName) {
-                            case "dateTime":
-                                dateTime = UtilAdapter.readDateTime(in);
-                                break;
-                            case "zone":
-                                zoneId = UtilAdapter.readZoneId(in);
-                                break;
-                            default:
-                                in.skipValue();
-                                break;
-                        }
-                    }
-                    in.endObject();
-                    if (dateTime != null && zoneId != null) {
-                        endTime = dateTime.withZoneSameInstant(zoneId);
-                    }
+                    endTime = ZonedDateTime.parse(in.nextString());
                     break;
-
                 default:
                     in.skipValue();
                     break;
@@ -148,9 +89,8 @@ public class TaskAdapter extends TypeAdapter<Task> {
         } else {
             throw new IOException("Incomplete or invalid JSON for Task");
         }
-
-
     }
+
 
 
 }
