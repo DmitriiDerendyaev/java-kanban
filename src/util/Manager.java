@@ -1,9 +1,8 @@
 package util;
 
-import service.HistoryManager;
-import service.InMemoryHistoryManager;
-import service.InMemoryTaskManager;
-import service.TaskManager;
+import service.*;
+
+import java.io.IOException;
 
 public class Manager {
     public static TaskManager getDefault(){
@@ -12,6 +11,10 @@ public class Manager {
 
     public static HistoryManager getDefaultHistory(){
         return new InMemoryHistoryManager();
+    }
+
+    public static FileBackedTasksManager getDefaultFileTaskManager() throws IOException {
+        return new FileBackedTasksManager("src/resources/memory.csv");
     }
 
 }
