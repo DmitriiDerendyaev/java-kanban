@@ -100,3 +100,40 @@ All test passed
         1. +Пустой список задач.
         2. +Эпик без подзадач.
         3. +Пустой список истории.
+
+## Спринт №8
+- [x] Реализовать KVServer
+  - реализовать метод load
+  - перенести его в основной клиент
+  - написать под него тесты
+- [ ] Проработать логику API
+  - Добавление библиотеки GSON
+  - Создание класса `HttpTaskServer` в пакете Server
+  - Добавление `FileBackedTaskManager` 
+  - Реализация мапинга по эндпоинтам для методов интерфейса `TaskManager`
+  - [x] GET
+  - +GET /tasks/task - getTaskList() ???
+  - +GET /tasks/task/?id= - getTaskById(int id)
+  - +GET /tasks/epic - getEpicList()
+  - +GET /tasks/epic/?id= - getEpicById(int id)
+  - +GET /tasks/epic/subTasks/?id= getSubTaskListByEpicID(int id)
+  - +GET /tasks/subTask - getSubTaskList()
+  - +GET /tasks/subTask/?id= - getSubTaskByID(int id)
+  - +GET /tasks/history - getHistory()
+  - +GET /tasks/ - getPrioritizedTask()
+  - [x] POST
+  - +POST /tasks/task/ Body: {task...} createTask(Task newTask) || updateTask(Task new Task)
+  - +POST /tasks/subTask/ Body: {subTask...} createSubTask(...) || updateSubTask(...)
+  - +POST /tasks/epic/ Body: {epic...} createEpic(...) || updateEpic
+  - [ ] DELETE
+  - DELETE /tasks/task/?id= - removeTaskById(...)
+  - DELETE /tasks/task - clearTasks()
+  - DELETE /tasks/subTask/?id= - removeSubTaskById(...)
+  - DELETE /tasks/subTask - clearSubTask()
+  - DELETE /tasks/epic/?id= - removeEpicById(...)
+  - DELETE /tasks/epic - clearEpic()
+  - 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
