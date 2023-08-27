@@ -98,6 +98,10 @@ public class Task implements Comparable<Task>{
         this.startTime = startTime;
     }
 
+    public void setEndTime(ZonedDateTime endTime){
+        this.endTime = endTime;
+    }
+
     public ZonedDateTime getEndTime() {
         return endTime;
     }
