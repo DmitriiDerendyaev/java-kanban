@@ -34,6 +34,17 @@ public class Epic extends Task{
         this.taskCollection = taskCollection;
     }
 
+    @Deprecated
+    public Epic(String taskName,
+                String taskDescription,
+                TaskStatus taskStatus,
+                List<Integer> taskCollection,
+                Duration duration,
+                ZonedDateTime startTime) {
+        super(taskName, taskDescription, taskStatus, duration, startTime);
+        this.taskCollection = taskCollection;
+    }
+
     public List<Integer> getTaskCollection() {
         return taskCollection;
     }
