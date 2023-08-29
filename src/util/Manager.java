@@ -17,4 +17,8 @@ public class Manager {
         return new FileBackedTasksManager("src/resources/memory.csv");
     }
 
+    public static HttpTaskManager getHttpTaskManger() throws IOException, InterruptedException {
+        return new HttpTaskManager("http://localhost:8070");
+    }
+
 }
