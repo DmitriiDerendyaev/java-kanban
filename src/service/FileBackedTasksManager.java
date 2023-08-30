@@ -6,27 +6,31 @@ import models.*;
 
 import java.io.*;
 import java.time.Duration;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeSet;
 
 public class FileBackedTasksManager extends InMemoryTaskManager{
 
-    private final String pathFile;
+    private String pathFile;
 
 
     public FileBackedTasksManager(String pathFile) throws IOException {
         this.pathFile = pathFile;
-        loadTasksFromFile();
+        load();
     }
+
+    public FileBackedTasksManager(){
+//        loadTasksFromClient();
+    }
+
+//    protected void loadTasksFromClient(){}
 
     @Override
     public int createEpic(Epic newEpic) {
         int epicId = super.createEpic(newEpic);
-        saveTaskToFile();
+        save();
 
         return epicId;
     }
@@ -34,7 +38,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
     @Override
     public int createTask(Task newTask) {
         int taskId = super.createTask(newTask);
-        saveTaskToFile();
+        save();
 
         return taskId;
     }
@@ -42,7 +46,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
     @Override
     public int createSubTask(SubTask newSubTask) {
         int subTaskId = super.createSubTask(newSubTask);
-        saveTaskToFile();
+        save();
 
         return subTaskId;
     }
@@ -50,7 +54,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
     @Override
     public int updateTask(Task updatedTask) {
         int taskId = super.updateTask(updatedTask);;
-        saveTaskToFile();
+        save();
 
         return taskId;
     }
@@ -58,7 +62,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
     @Override
     public int updateSubTask(SubTask updatedSubTask) {
         int subTaskId = super.updateSubTask(updatedSubTask);;
-        saveTaskToFile();
+        save();
 
         return subTaskId;
     }
@@ -66,7 +70,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
     @Override
     public int removeTaskByID(Integer taskID) {
         int taskId = super.removeTaskByID(taskID);
-        saveTaskToFile();
+        save();
 
         return taskId;
     }
@@ -74,7 +78,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
     @Override
     public int removeSubTaskByID(Integer subTaskID) {
         int subTaskId = super.removeSubTaskByID(subTaskID);
-        saveTaskToFile();
+        save();
 
         return subTaskId;
     }
@@ -82,31 +86,31 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
     @Override
     public void removeEpicByID(Integer epicId) {
         super.removeEpicByID(epicId);
-        saveTaskToFile();
+        save();
     }
 
     @Override
     public void clearTasks() {
         super.clearTasks();
-        saveTaskToFile();
+        save();
     }
 
     @Override
     public void clearSubTasks() {
         super.clearSubTasks();
-        saveTaskToFile();
+        save();
     }
 
     @Override
     public void clearEpics() {
         super.clearEpics();
-        saveTaskToFile();
+        save();
     }
 
     @Override
     public Task getTaskByID(Integer taskID) {
         Task task = super.getTaskByID(taskID);
-        saveTaskToFile();
+        save();
 
         return task;
     }
@@ -114,7 +118,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
     @Override
     public SubTask getSubTaskByID(Integer subTaskID) {
         SubTask subTask = super.getSubTaskByID(subTaskID);
-        saveTaskToFile();
+        save();
 
         return subTask;
     }
@@ -122,7 +126,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
     @Override
     public Epic getEpicByID(Integer epicId) {
         Epic epic = super.getEpicByID(epicId);
-        saveTaskToFile();
+        save();
 
         return epic;
     }
@@ -243,7 +247,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
 
         return historyList;
     }
-    public void saveTaskToFile() {
+    protected void save() {
         try (FileWriter writer = new FileWriter(pathFile)) {
             writer.write("id,type,name,status,description,duration,startTime,endTime,epic,subTasks\n");
             for (Task currentTask : getTasks().values()) {
@@ -265,7 +269,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
             throw new ManagerSaveException("Failed to save tasks.", e);
         }
     }
-    protected void loadTasksFromFile(){
+    protected void load(){
         try (BufferedReader reader = new BufferedReader(new FileReader(pathFile))){
             String line;
 
