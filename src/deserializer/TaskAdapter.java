@@ -44,7 +44,7 @@ public class TaskAdapter extends TypeAdapter<Task> {
         in.beginObject();
         String taskName = null;
         String taskDescription = null;
-//        int taskID = -1;
+        int taskID = -1;
         TaskStatus taskStatus = null;
         ZonedDateTime startTime = null;
         ZonedDateTime endTime = null;
@@ -59,9 +59,9 @@ public class TaskAdapter extends TypeAdapter<Task> {
                 case "taskDescription":
                     taskDescription = in.nextString();
                     break;
-//                case "taskID":
-//                    taskID = in.nextInt();
-//                    break;
+                case "taskID":
+                    taskID = in.nextInt();
+                    break;
                 case "taskStatus":
                     taskStatus = TaskStatus.valueOf(in.nextString()); // Assuming valid TaskStatus values
                     break;
@@ -84,8 +84,12 @@ public class TaskAdapter extends TypeAdapter<Task> {
         in.endObject();
 
         if (taskName != null && taskDescription != null /*&& taskID != -1*/ && startTime != null && endTime != null && duration != null) {
-//            Task task = new Task(taskName, taskDescription, /*taskID,*/ taskStatus, duration, startTime);
-            Task task = new Task(taskName, taskDescription, taskStatus, duration, startTime);
+            Task task;
+            if(taskID != -1) {
+                task = new Task(taskName, taskDescription, taskID, taskStatus, duration, startTime);
+            } else {
+                task = new Task(taskName, taskDescription, taskStatus, duration, startTime);
+            }
             task.setStartTime(startTime);
             task.setEndTime(endTime);
             return task;
