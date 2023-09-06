@@ -61,7 +61,7 @@ public class KVTaskClient {
         }
     }
 
-    private String generateApiToken() throws IOException, InterruptedException {
+    private String generateApiToken() throws IOException {
         String currentURI = baseURL + "/register";
 
         HttpRequest httpRequest = HttpRequest.newBuilder()
@@ -69,7 +69,12 @@ public class KVTaskClient {
                 .GET()
                 .build();
 
-        HttpResponse<String> response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = null;
+        try {
+            response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException("Неудалось сделать запрос на генерацию токена" + e);
+        }
 
         if(response.statusCode() == 200){
             return response.body();
