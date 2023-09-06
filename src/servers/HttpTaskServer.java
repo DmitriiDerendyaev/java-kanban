@@ -29,16 +29,16 @@ public class HttpTaskServer {
     private final int PORT = 8080;
     private final String HOST = "localhost";
     private TaskManager taskManager;
-    private final HttpServer httpServer;
+    private HttpServer httpServer;
     private Gson gson;
 
-    public HttpTaskServer() throws IOException {
+    public HttpTaskServer() throws IOException, InterruptedException {
         gson = new GsonBuilder()
                 .registerTypeAdapter(Task.class, new TaskAdapter())
                 .registerTypeAdapter(SubTask.class, new SubTaskAdapter())
                 .registerTypeAdapter(Epic.class, new EpicAdapter())
                 .create();
-        taskManager = Manager.getDefaultFileTaskManager();
+        taskManager = Manager.getDefault();
         httpServer = HttpServer.create(new InetSocketAddress(HOST, PORT), 0);
 
         httpServer.createContext("/tasks", new TaskHandler());
@@ -46,7 +46,33 @@ public class HttpTaskServer {
         httpServer.start();
     }
 
-    public static void main(String[] args) throws IOException {
+    public void start() {
+        gson = new GsonBuilder()
+                .registerTypeAdapter(Task.class, new TaskAdapter())
+                .registerTypeAdapter(SubTask.class, new SubTaskAdapter())
+                .registerTypeAdapter(Epic.class, new EpicAdapter())
+                .create();
+        try {
+            taskManager = Manager.getDefault();
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException("Не удалось получить taskManager" + e);
+        }
+        try {
+            httpServer = HttpServer.create(new InetSocketAddress(HOST, PORT), 0);
+        } catch (IOException e) {
+            throw new RuntimeException("Не удалось запустить сервер через start" + e);
+        }
+
+        httpServer.createContext("/tasks", new TaskHandler());
+
+        httpServer.start();
+    }
+
+    public void stop(){
+        httpServer.stop(1);
+    }
+
+    public static void main(String[] args) throws IOException, InterruptedException {
         HttpTaskServer server = new HttpTaskServer();
         System.out.println("Сервер запущен на порту: " + server.PORT);
     }
@@ -169,8 +195,7 @@ public class HttpTaskServer {
                         throw new IllegalStateException("Неизвестный метод");
                 }
             } catch (Exception e) {
-                e.printStackTrace();
-                // Возможно, стоит отправить ошибку клиенту
+                System.err.println("Ошибка обработки запроса. Path: " + path + "Method: " + method + ' ' + e);
             }
         }
 
