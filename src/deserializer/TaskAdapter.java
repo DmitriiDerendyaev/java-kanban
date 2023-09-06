@@ -83,7 +83,11 @@ public class TaskAdapter extends TypeAdapter<Task> {
 
         in.endObject();
 
-        if (taskName != null && taskDescription != null /*&& taskID != -1*/ && startTime != null && endTime != null && duration != null) {
+        if (taskName != null && taskDescription != null /*&& taskID != -1*/ && startTime != null && duration != null) {
+            if (endTime == null) {
+                endTime = startTime.plus(duration);
+            }
+
             Task task;
             if(taskID != -1) {
                 task = new Task(taskName, taskDescription, taskID, taskStatus, duration, startTime);

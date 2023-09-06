@@ -92,8 +92,12 @@ public class SubTaskAdapter extends TypeAdapter<SubTask> {
 
         jsonReader.endObject();
 
-        if (taskName != null && taskDescription != null /*&& taskID != -1*/ && startTime != null && endTime != null && duration != null) {
-//            SubTask subTask = new SubTask(taskName, taskDescription, taskID, taskStatus, epicID, duration, startTime);
+
+        if (taskName != null && taskDescription != null && startTime != null && duration != null) {
+            if (endTime == null) {
+                endTime = startTime.plus(duration);
+            }
+
             SubTask subTask = new SubTask(taskName, taskDescription, taskStatus, duration, startTime, epicID);
             subTask.setStartTime(startTime);
             subTask.setEndTime(endTime);
