@@ -33,7 +33,6 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(epic.getTaskName(), savedEpic.getTaskName());
         assertEquals(epic.getTaskDescription(), savedEpic.getTaskDescription());
     }
-
     @Test
     public void testCreateTask() {
         Task task = new Task("Задача 1", "Описание задачи", TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
