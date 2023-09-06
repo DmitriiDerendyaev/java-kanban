@@ -11,9 +11,15 @@ import models.Task;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public class HttpTaskManager extends FileBackedTasksManager{
-    private final Gson gson;
+    private final Gson gson = new Gson()
+            .newBuilder()
+            .registerTypeAdapter(Task.class, new TaskAdapter())
+            .registerTypeAdapter(SubTask.class, new SubTaskAdapter())
+            .registerTypeAdapter(Epic.class, new EpicAdapter())
+            .create();
     private final String URL;
     private final KVTaskClient taskClient;
     public HttpTaskManager(String URL) throws IOException, InterruptedException {
@@ -21,12 +27,6 @@ public class HttpTaskManager extends FileBackedTasksManager{
         this.URL = URL;
         taskClient = new KVTaskClient(URL);
         load();
-        gson = new Gson()
-                .newBuilder()
-                .registerTypeAdapter(Task.class, new TaskAdapter())
-                .registerTypeAdapter(SubTask.class, new SubTaskAdapter())
-                .registerTypeAdapter(Epic.class, new EpicAdapter())
-                .create();
     }
 
     private Task deserialize(String json){
@@ -59,6 +59,35 @@ public class HttpTaskManager extends FileBackedTasksManager{
     @Override
     protected void load() {
         //TODO:.............
+
+        try {
+            String tasksJson = taskClient.load("tasks");
+            if (tasksJson != null && !tasksJson.equals("[]")) {
+                Task[] loadedTasks = gson.fromJson(tasksJson, Task[].class);
+                for (Task task : loadedTasks) {
+                    tasks.put(task.getTaskID(), task);
+                }
+            }
+
+            String subTasksJson = taskClient.load("subTasks");
+            if (subTasksJson != null && !tasksJson.equals("[]")) {
+                SubTask[] loadedSubTasks = gson.fromJson(subTasksJson, SubTask[].class);
+                for (SubTask subTask : loadedSubTasks) {
+                    subTasks.put(subTask.getTaskID(), subTask);
+                }
+            }
+
+            String epicsJson = taskClient.load("epics");
+            if (epicsJson != null && !tasksJson.equals("[]")) {
+                Epic[] loadedEpics = gson.fromJson(epicsJson, Epic[].class);
+                for (Epic epic : loadedEpics) {
+                    epics.put(epic.getTaskID(), epic);
+                }
+            }
+        } catch (NullPointerException | IOException | InterruptedException e) {
+            throw new RuntimeException("Ошибка загрузки данных с сервера: " + e.getMessage());
+        }
+
     }
 
 
