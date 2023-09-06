@@ -27,6 +27,10 @@ public class KVServer {
         server.createContext("/load", this::load);
     }
 
+    public void clearStorage(){
+        data.clear();
+    }
+
 
     private void save(HttpExchange h) throws IOException {
         try {
