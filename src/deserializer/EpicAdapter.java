@@ -51,7 +51,7 @@ public class EpicAdapter extends TypeAdapter<Epic> {
         jsonReader.beginObject();
         String taskName = null;
         String taskDescription = null;
-//        int taskID = -1;
+        int taskID = -1;
         TaskStatus taskStatus = null;
         ZonedDateTime startTime = null;
         ZonedDateTime endTime = null;
@@ -68,9 +68,9 @@ public class EpicAdapter extends TypeAdapter<Epic> {
                 case "taskDescription":
                     taskDescription = jsonReader.nextString();
                     break;
-//                case "taskID":
-//                    taskID = jsonReader.nextInt();
-//                    break;
+                case "taskID":
+                    taskID = jsonReader.nextInt();
+                    break;
                 case "taskStatus":
                     taskStatus = TaskStatus.valueOf(jsonReader.nextString());
                     break;
@@ -98,8 +98,11 @@ public class EpicAdapter extends TypeAdapter<Epic> {
 
         jsonReader.endObject();
 
-        if (taskName != null && taskDescription != null /*&& taskID != -1*/ && startTime != null && endTime != null && duration != null) {
-//            Epic epic = new Epic(taskName, taskDescription, taskID, taskStatus, subTasksList, duration, startTime);
+        if (taskName != null && taskDescription != null  && startTime != null && duration != null) {
+            if (endTime == null) {
+                endTime = startTime.plus(duration);
+            }
+
             Epic epic = new Epic(taskName, taskDescription, taskStatus, subTasksList, duration, startTime);
             epic.setStartTime(startTime);
             epic.setEndTime(endTime);
