@@ -31,6 +31,8 @@ public class HttpTaskServerTest {
 
     private static Gson gson;
 
+    HttpTaskServer httpTaskServer;
+
     @BeforeAll
     public static void keyValueServerStart(){
         try {
@@ -40,11 +42,7 @@ public class HttpTaskServerTest {
         }
         kvServer.start();
 
-        try {
-            HttpTaskServer httpTaskServer = new HttpTaskServer();
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException("Ошибка запуска сервера из теста" + e);
-        }
+        //место для сервера
         gson = new Gson()
                 .newBuilder()
                 .registerTypeAdapter(Task.class, new TaskAdapter())
@@ -62,11 +60,19 @@ public class HttpTaskServerTest {
     @BeforeEach
     void setUp() {
         httpClient = HttpClient.newHttpClient();
+
+        try {
+             httpTaskServer = new HttpTaskServer();
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException("Ошибка запуска сервера из теста" + e);
+        }
     }
 
     @AfterEach
     void tearDown(){
         kvServer.clearStorage();
+
+        httpTaskServer.stop();
     }
     private HttpResponse<String> doPostRequest(String uri, String jsonField){
         HttpRequest httpRequest = HttpRequest.newBuilder()
@@ -102,6 +108,22 @@ public class HttpTaskServerTest {
         return response;
     }
 
+    private HttpResponse<String> doDeleteRequest(String uri){
+        HttpRequest httpRequest = HttpRequest.newBuilder()
+                .uri(URI.create(baseUrl + uri))
+                .header("Content-Type", "application/json")
+                .DELETE()
+                .build();
+
+        HttpResponse<String> response = null;
+        try {
+            response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+        } catch (InterruptedException | IOException e) {
+            throw new RuntimeException("Ошибка отправки DELETE-запроса " + e);
+        }
+
+        return response;
+    }
     @Test
     public void testCreateTask() throws IOException {
         String taskJson = "{\"taskName\":\"Просто отвертка НО ЕЩЕ ОДНА\",\"taskDescription\":\"Купить отвертку\",\"taskStatus\":\"NEW\",\"startTime\":\"2023-07-25T13:00:00+04:00[Europe/Samara]\",\"duration\":5400000}";
@@ -167,8 +189,68 @@ public class HttpTaskServerTest {
 
     }
 
+    @Test
+    public void testDeleteTask(){
+        String taskJson = "{\"taskName\":\"Просто отвертка НО ЕЩЕ ОДНА\",\"taskDescription\":\"Купить отвертку\",\"taskStatus\":\"NEW\",\"startTime\":\"2023-07-25T13:00:00+04:00[Europe/Samara]\",\"duration\":5400000}";
 
+        HttpResponse<String> postResponse = doPostRequest("/tasks/task", taskJson);
 
+        assertEquals(200, postResponse.statusCode());
+
+        String responseBody = postResponse.body();
+        assertEquals("{\"status\":\"OK\"}", responseBody);
+
+        HttpResponse<String> deleteResponse = doDeleteRequest("/tasks/task");
+
+        assertEquals(200, deleteResponse.statusCode());
+        assertEquals("{\"status\":\"All tasks cleared\"}", deleteResponse.body());
+
+        String taskFromServer = doGetRequest("/tasks/task").body();
+        assertEquals("Пустой объект", taskFromServer);
+    }
+
+    @Test
+    public void testDeleteEpic(){
+        String taskJson = "{\"taskName\":\"Купить дом\",\"taskDescription\":\"Купить пентхаус в Казани\",\"taskStatus\":\"NEW\",\"startTime\":\"2023-08-25T14:30:00+04:00[Europe/Samara]\",\"duration\":10800000,\"subTasksList\":[]}";
+
+        HttpResponse<String> httpResponse = doPostRequest("/tasks/epic", taskJson);
+
+        assertEquals(200, httpResponse.statusCode());
+        String responseBody = httpResponse.body();
+        assertEquals("{\"status\":\"OK\"}", responseBody);
+
+        HttpResponse<String> deleteResponse = doDeleteRequest("/tasks/epic");
+
+        assertEquals(200, deleteResponse.statusCode());
+        assertEquals("{\"status\":\"All epics cleared\"}", deleteResponse.body());
+
+        String taskFromServer = doGetRequest("/tasks/epic").body();
+        assertEquals("Пустой объект", taskFromServer);
+    }
+
+    @Test
+    public void testDeleteSubTask(){
+        String epicJSON = "{\"taskName\":\"Купить дом\",\"taskDescription\":\"Купить пентхаус в Казани\",\"taskStatus\":\"NEW\",\"startTime\":\"2023-08-25T14:30:00+04:00[Europe/Samara]\",\"duration\":10800000,\"subTasksList\":[]}";
+        String subTaskJSON = "{\"epicID\":1,\"taskName\":\"Материал для пола\",\"taskDescription\":\"Покупка расходников для пола\",\"taskStatus\":\"NEW\",\"startTime\":\"2023-08-25T14:30:00+04:00[Europe/Samara]\",\"duration\":1000}\n";
+
+        HttpResponse<String> httpResponse = doPostRequest("/tasks/epic", epicJSON);
+
+        HttpResponse<String> httpResponseSubTask = doPostRequest("/tasks/subTask", subTaskJSON);
+
+        assertEquals(200, httpResponse.statusCode());
+        assertEquals(200, httpResponseSubTask.statusCode());
+
+        String responseBody = httpResponseSubTask.body();
+        assertEquals("{\"status\":\"OK\"}", responseBody);
+
+        HttpResponse<String> deleteResponse = doDeleteRequest("/tasks/subTask");
+
+        assertEquals(200, deleteResponse.statusCode());
+        assertEquals("{\"status\":\"All subtasks cleared\"}", deleteResponse.body());
+
+        String taskFromServer = doGetRequest("/tasks/subTask").body();
+        assertEquals("Пустой объект", taskFromServer);
+    }
 
 }
 
