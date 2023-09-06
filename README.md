@@ -106,7 +106,7 @@ All test passed
   - реализовать метод load
   - перенести его в основной клиент
   - написать под него тесты
-- [ ] ѕроработать логику API
+- [x] ѕроработать логику API
   - ƒобавление библиотеки GSON
   - —оздание класса `HttpTaskServer` в пакете Server
   - ƒобавление `FileBackedTaskManager` 
@@ -125,15 +125,12 @@ All test passed
   - +POST /tasks/task/ Body: {task...} createTask(Task newTask) || updateTask(Task new Task)
   - +POST /tasks/subTask/ Body: {subTask...} createSubTask(...) || updateSubTask(...)
   - +POST /tasks/epic/ Body: {epic...} createEpic(...) || updateEpic
-  - [ ] DELETE
-  - DELETE /tasks/task/?id= - removeTaskById(...)
-  - DELETE /tasks/task - clearTasks()
-  - DELETE /tasks/subTask/?id= - removeSubTaskById(...)
-  - DELETE /tasks/subTask - clearSubTask()
-  - DELETE /tasks/epic/?id= - removeEpicById(...)
-  - DELETE /tasks/epic - clearEpic()
-  - 
-- [ ] 
-- [ ] 
-- [ ] 
-- [ ] 
+  - [x] DELETE
+  - +DELETE +/tasks/task/?id= - removeTaskById(...)
+  - +DELETE +/tasks/task - clearTasks()
+  - +DELETE +/tasks/subTask/?id= - removeSubTaskById(...)
+  - +DELETE +/tasks/subTask - clearSubTask()
+  - +DELETE +/tasks/epic/?id= - removeEpicById(...)
+  - +DELETE +/tasks/epic - clearEpic()
+- [x] доработка утилитарного класса Manager 
+- [x] налаживание св€зи между Main и HttpTaskServer
