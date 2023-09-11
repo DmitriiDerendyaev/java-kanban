@@ -47,24 +47,6 @@ public class HttpTaskServer {
     }
 
     public void start() {
-        gson = new GsonBuilder()
-                .registerTypeAdapter(Task.class, new TaskAdapter())
-                .registerTypeAdapter(SubTask.class, new SubTaskAdapter())
-                .registerTypeAdapter(Epic.class, new EpicAdapter())
-                .create();
-        try {
-            taskManager = Manager.getDefault();
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException("Не удалось получить taskManager" + e);
-        }
-        try {
-            httpServer = HttpServer.create(new InetSocketAddress(HOST, PORT), 0);
-        } catch (IOException e) {
-            throw new RuntimeException("Не удалось запустить сервер через start" + e);
-        }
-
-        httpServer.createContext("/tasks", new TaskHandler());
-
         httpServer.start();
     }
 
