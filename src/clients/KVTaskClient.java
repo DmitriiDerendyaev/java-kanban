@@ -1,6 +1,8 @@
 package clients;
 
 import com.sun.net.httpserver.HttpServer;
+import exceptions.ManagerLoadException;
+import exceptions.ManagerSaveException;
 
 import java.io.IOException;
 import java.net.URI;
@@ -34,7 +36,7 @@ public class KVTaskClient {
         if(response.statusCode() == 200){
             System.out.println("Successful");
         }  else {
-            System.out.println("Error with data save");
+            throw new ManagerSaveException("Can't do request, status code: " + response.statusCode());
         }
     }
 
@@ -52,8 +54,7 @@ public class KVTaskClient {
             if (response.statusCode() == 200) {
                 return response.body();
             } else {
-                System.out.println("Error loading data, server has returned: " + response.body());
-                return null;
+                throw new ManagerLoadException("Can't do request, status code: " + response.statusCode());
             }
         } finally {
             response.body();  // This ensures the response body is fully consumed and resources are released
