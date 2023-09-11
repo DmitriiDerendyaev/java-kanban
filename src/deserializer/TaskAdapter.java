@@ -34,8 +34,8 @@ public class TaskAdapter extends TypeAdapter<Task> {
 
     @Override
     public Task read(JsonReader in) throws IOException {
-        // TODO: duration также не должен приходить извне,
-        //  иначе его не посчитать никак или убрать конец выполнения, ЧТО БОЛЕЕ ЛОГИЧНО
+        // TODO: duration С‚Р°РєР¶Рµ РЅРµ РґРѕР»Р¶РµРЅ РїСЂРёС…РѕРґРёС‚СЊ РёР·РІРЅРµ,
+        //  РёРЅР°С‡Рµ РµРіРѕ РЅРµ РїРѕСЃС‡РёС‚Р°С‚СЊ РЅРёРєР°Рє РёР»Рё СѓР±СЂР°С‚СЊ РєРѕРЅРµС† РІС‹РїРѕР»РЅРµРЅРёСЏ, Р§РўРћ Р‘РћР›Р•Р• Р›РћР“РР§РќРћ
         if (in.peek() == JsonToken.NULL) {
             in.nextNull();
             return null;

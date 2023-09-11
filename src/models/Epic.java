@@ -106,7 +106,7 @@ public class Epic extends Task{
                 "}\n";
     }
 
-    // Переопределяем статический компаратор из класса Task
+    // РџРµСЂРµРѕРїСЂРµРґРµР»СЏРµРј СЃС‚Р°С‚РёС‡РµСЃРєРёР№ РєРѕРјРїР°СЂР°С‚РѕСЂ РёР· РєР»Р°СЃСЃР° Task
     public static final Comparator<Epic> epicComparator = new Comparator<Epic>() {
         @Override
         public int compare(Epic epic1, Epic epic2) {
@@ -114,7 +114,7 @@ public class Epic extends Task{
             if (startTimeComparison != 0) {
                 return startTimeComparison;
             }
-            // Если startTime равны, то сравниваем по taskId
+            // Р•СЃР»Рё startTime СЂР°РІРЅС‹, С‚Рѕ СЃСЂР°РІРЅРёРІР°РµРј РїРѕ taskId
             return Integer.compare(epic1.taskID, epic2.taskID);
         }
     };
@@ -137,7 +137,7 @@ public class Epic extends Task{
     public int hashCode() {
         int result = this.getTaskName().hashCode();
         result = 31 * result + this.getTaskDescription().hashCode();
-        // Добавьте другие поля, которые нужно учитывать при вычислении хэш-кода
+        // Р”РѕР±Р°РІСЊС‚Рµ РґСЂСѓРіРёРµ РїРѕР»СЏ, РєРѕС‚РѕСЂС‹Рµ РЅСѓР¶РЅРѕ СѓС‡РёС‚С‹РІР°С‚СЊ РїСЂРё РІС‹С‡РёСЃР»РµРЅРёРё С…СЌС€-РєРѕРґР°
 
         return result;
     }

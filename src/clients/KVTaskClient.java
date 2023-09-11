@@ -73,13 +73,13 @@ public class KVTaskClient {
         try {
             response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException("Неудалось сделать запрос на генерацию токена" + e);
+            throw new RuntimeException("РќРµСѓРґР°Р»РѕСЃСЊ СЃРґРµР»Р°С‚СЊ Р·Р°РїСЂРѕСЃ РЅР° РіРµРЅРµСЂР°С†РёСЋ С‚РѕРєРµРЅР°" + e);
         }
 
         if(response.statusCode() == 200){
             return response.body();
         } else {
-            throw new IOException("Ошибка генерации API_TOKEN");
+            throw new IOException("РћС€РёР±РєР° РіРµРЅРµСЂР°С†РёРё API_TOKEN");
         }
     }
 }

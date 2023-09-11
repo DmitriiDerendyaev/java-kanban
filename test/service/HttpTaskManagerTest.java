@@ -22,7 +22,7 @@ public class HttpTaskManagerTest extends TaskManagerTest<HttpTaskManager>{
         try {
             return new HttpTaskManager("http://localhost:8070");
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException("Не удалось создать HttpTaskManager" + e);
+            throw new RuntimeException("РќРµ СѓРґР°Р»РѕСЃСЊ СЃРѕР·РґР°С‚СЊ HttpTaskManager" + e);
         }
     }
 
@@ -35,7 +35,7 @@ public class HttpTaskManagerTest extends TaskManagerTest<HttpTaskManager>{
         try {
             kvServer = new KVServer();
         } catch (IOException e) {
-            throw new RuntimeException("Ошибка создания KVServer" + e);
+            throw new RuntimeException("РћС€РёР±РєР° СЃРѕР·РґР°РЅРёСЏ KVServer" + e);
         }
         kvServer.start();
     }
@@ -60,7 +60,7 @@ public class HttpTaskManagerTest extends TaskManagerTest<HttpTaskManager>{
     @Override
     @Test
     public void testCreateEpic() {
-        Epic epic = new Epic("Тестовый Эпик", "Описание тестового эпика");
+        Epic epic = new Epic("РўРµСЃС‚РѕРІС‹Р№ Р­РїРёРє", "РћРїРёСЃР°РЅРёРµ С‚РµСЃС‚РѕРІРѕРіРѕ СЌРїРёРєР°");
         int epicId = httpTaskManager.createEpic(epic);
         Epic createdEpic = httpTaskManager.getEpicByID(epicId);
         assertNotNull(createdEpic);
@@ -71,7 +71,7 @@ public class HttpTaskManagerTest extends TaskManagerTest<HttpTaskManager>{
     @Override
     @Test
     public void testCreateTask() {
-        Task task = new Task("Тестовая Задача", "Описание тестовой задачи", TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
+        Task task = new Task("РўРµСЃС‚РѕРІР°СЏ Р—Р°РґР°С‡Р°", "РћРїРёСЃР°РЅРёРµ С‚РµСЃС‚РѕРІРѕР№ Р·Р°РґР°С‡Рё", TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
         int taskId = httpTaskManager.createTask(task);
         Task createdTask = httpTaskManager.getTaskByID(taskId);
         assertNotNull(createdTask);
@@ -82,9 +82,9 @@ public class HttpTaskManagerTest extends TaskManagerTest<HttpTaskManager>{
     @Override
     @Test
     public void testCreateSubTask() {
-        Epic epic = new Epic("Тестовый Эпик", "Описание тестового эпика");
+        Epic epic = new Epic("РўРµСЃС‚РѕРІС‹Р№ Р­РїРёРє", "РћРїРёСЃР°РЅРёРµ С‚РµСЃС‚РѕРІРѕРіРѕ СЌРїРёРєР°");
         int epicId = httpTaskManager.createEpic(epic);
-        SubTask subTask = new SubTask("Тестовая Подзадача", "Описание тестовой подзадачи", TaskStatus.NEW, Duration.ofHours(1), ZonedDateTime.now().plusHours(10), epicId);
+        SubTask subTask = new SubTask("РўРµСЃС‚РѕРІР°СЏ РџРѕРґР·Р°РґР°С‡Р°", "РћРїРёСЃР°РЅРёРµ С‚РµСЃС‚РѕРІРѕР№ РїРѕРґР·Р°РґР°С‡Рё", TaskStatus.NEW, Duration.ofHours(1), ZonedDateTime.now().plusHours(10), epicId);
         int subTaskId = httpTaskManager.createSubTask(subTask);
         SubTask createdSubTask = httpTaskManager.getSubTaskByID(subTaskId);
         assertNotNull(createdSubTask);
@@ -95,37 +95,37 @@ public class HttpTaskManagerTest extends TaskManagerTest<HttpTaskManager>{
 
 //    @Test
 //    public void testUpdateTask() {
-//        Task task = new Task("Тестовая Задача", "Описание тестовой задачи", TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
+//        Task task = new Task("РўРµСЃС‚РѕРІР°СЏ Р—Р°РґР°С‡Р°", "РћРїРёСЃР°РЅРёРµ С‚РµСЃС‚РѕРІРѕР№ Р·Р°РґР°С‡Рё", TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
 //        int taskId = httpTaskManager.createTask(task);
-//        Task taskToUpdate = new Task("Обновленная Задача", "Обновленное описание задачи", TaskStatus.IN_PROGRESS, Duration.ofHours(3), ZonedDateTime.now());
+//        Task taskToUpdate = new Task("РћР±РЅРѕРІР»РµРЅРЅР°СЏ Р—Р°РґР°С‡Р°", "РћР±РЅРѕРІР»РµРЅРЅРѕРµ РѕРїРёСЃР°РЅРёРµ Р·Р°РґР°С‡Рё", TaskStatus.IN_PROGRESS, Duration.ofHours(3), ZonedDateTime.now());
 //        taskToUpdate.setTaskID(taskId);
 //        int updatedTaskId = httpTaskManager.updateTask(taskToUpdate);
 //        Task updatedTask = httpTaskManager.getTaskByID(updatedTaskId);
 //        assertNotNull(updatedTask);
-//        assertEquals("Обновленная Задача", updatedTask.getTaskName());
-//        assertEquals("Обновленное описание задачи", updatedTask.getTaskDescription());
+//        assertEquals("РћР±РЅРѕРІР»РµРЅРЅР°СЏ Р—Р°РґР°С‡Р°", updatedTask.getTaskName());
+//        assertEquals("РћР±РЅРѕРІР»РµРЅРЅРѕРµ РѕРїРёСЃР°РЅРёРµ Р·Р°РґР°С‡Рё", updatedTask.getTaskDescription());
 //        assertEquals(TaskStatus.IN_PROGRESS, updatedTask.getTaskStatus());
 //    }
 //
 //    @Test
 //    public void testUpdateSubTask() {
-//        Epic epic = new Epic("Тестовый Эпик", "Описание тестового эпика");
+//        Epic epic = new Epic("РўРµСЃС‚РѕРІС‹Р№ Р­РїРёРє", "РћРїРёСЃР°РЅРёРµ С‚РµСЃС‚РѕРІРѕРіРѕ СЌРїРёРєР°");
 //        int epicId = httpTaskManager.createEpic(epic);
-//        SubTask subTask = new SubTask("Тестовая Подзадача", "Описание тестовой подзадачи", TaskStatus.NEW, Duration.ofHours(1), ZonedDateTime.now().plusHours(10), epicId);
+//        SubTask subTask = new SubTask("РўРµСЃС‚РѕРІР°СЏ РџРѕРґР·Р°РґР°С‡Р°", "РћРїРёСЃР°РЅРёРµ С‚РµСЃС‚РѕРІРѕР№ РїРѕРґР·Р°РґР°С‡Рё", TaskStatus.NEW, Duration.ofHours(1), ZonedDateTime.now().plusHours(10), epicId);
 //        int subTaskId = httpTaskManager.createSubTask(subTask);
-//        SubTask updatedSubTask = new SubTask("Обновленная Подзадача", "Обновленное описание подзадачи", TaskStatus.IN_PROGRESS, Duration.ofHours(2), ZonedDateTime.now().plusHours(5), epicId);
+//        SubTask updatedSubTask = new SubTask("РћР±РЅРѕРІР»РµРЅРЅР°СЏ РџРѕРґР·Р°РґР°С‡Р°", "РћР±РЅРѕРІР»РµРЅРЅРѕРµ РѕРїРёСЃР°РЅРёРµ РїРѕРґР·Р°РґР°С‡Рё", TaskStatus.IN_PROGRESS, Duration.ofHours(2), ZonedDateTime.now().plusHours(5), epicId);
 //        updatedSubTask.setTaskID(subTaskId);
 //        int updatedSubTaskId = httpTaskManager.updateSubTask(updatedSubTask);
 //        SubTask updatedSubTaskGot = httpTaskManager.getSubTaskByID(updatedSubTaskId);
 //        assertNotNull(updatedSubTaskGot);
-//        assertEquals("Обновленная Подзадача", updatedSubTaskGot.getTaskName());
-//        assertEquals("Обновленное описание подзадачи", updatedSubTaskGot.getTaskDescription());
+//        assertEquals("РћР±РЅРѕРІР»РµРЅРЅР°СЏ РџРѕРґР·Р°РґР°С‡Р°", updatedSubTaskGot.getTaskName());
+//        assertEquals("РћР±РЅРѕРІР»РµРЅРЅРѕРµ РѕРїРёСЃР°РЅРёРµ РїРѕРґР·Р°РґР°С‡Рё", updatedSubTaskGot.getTaskDescription());
 //        assertEquals(TaskStatus.IN_PROGRESS, updatedSubTaskGot.getTaskStatus());
 //    }
 //
 //    @Test
 //    public void testRemoveTaskByID() {
-//        Task task = new Task("Тестовая Задача", "Описание тестовой задачи", TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
+//        Task task = new Task("РўРµСЃС‚РѕРІР°СЏ Р—Р°РґР°С‡Р°", "РћРїРёСЃР°РЅРёРµ С‚РµСЃС‚РѕРІРѕР№ Р·Р°РґР°С‡Рё", TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
 //        int taskId = httpTaskManager.createTask(task);
 //        httpTaskManager.removeTaskByID(taskId);
 //        assertNull(httpTaskManager.getTaskByID(taskId));
@@ -133,9 +133,9 @@ public class HttpTaskManagerTest extends TaskManagerTest<HttpTaskManager>{
 //
 //    @Test
 //    public void testRemoveSubTaskByID() {
-//        Epic epic = new Epic("Тестовый Эпик", "Описание тестового эпика");
+//        Epic epic = new Epic("РўРµСЃС‚РѕРІС‹Р№ Р­РїРёРє", "РћРїРёСЃР°РЅРёРµ С‚РµСЃС‚РѕРІРѕРіРѕ СЌРїРёРєР°");
 //        int epicId = httpTaskManager.createEpic(epic);
-//        SubTask subTask = new SubTask("Тестовая Подзадача", "Описание тестовой подзадачи", TaskStatus.NEW, Duration.ofHours(1), ZonedDateTime.now().plusHours(10), epicId);
+//        SubTask subTask = new SubTask("РўРµСЃС‚РѕРІР°СЏ РџРѕРґР·Р°РґР°С‡Р°", "РћРїРёСЃР°РЅРёРµ С‚РµСЃС‚РѕРІРѕР№ РїРѕРґР·Р°РґР°С‡Рё", TaskStatus.NEW, Duration.ofHours(1), ZonedDateTime.now().plusHours(10), epicId);
 //        int subTaskId = httpTaskManager.createSubTask(subTask);
 //        httpTaskManager.removeSubTaskByID(subTaskId);
 //        assertNull(httpTaskManager.getSubTaskByID(subTaskId));
@@ -143,7 +143,7 @@ public class HttpTaskManagerTest extends TaskManagerTest<HttpTaskManager>{
 //
 //    @Test
 //    public void testRemoveEpicByID() {
-//        Epic epic = new Epic("Тестовый Эпик", "Описание тестового эпика");
+//        Epic epic = new Epic("РўРµСЃС‚РѕРІС‹Р№ Р­РїРёРє", "РћРїРёСЃР°РЅРёРµ С‚РµСЃС‚РѕРІРѕРіРѕ СЌРїРёРєР°");
 //        int epicId = httpTaskManager.createEpic(epic);
 //        httpTaskManager.removeEpicByID(epicId);
 //        assertNull(httpTaskManager.getEpicByID(epicId));
@@ -151,8 +151,8 @@ public class HttpTaskManagerTest extends TaskManagerTest<HttpTaskManager>{
 //
 //    @Test
 //    public void testClearTasks() {
-//        Task task1 = new Task("Тестовая Задача 1", "Описание тестовой задачи 1", TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
-//        Task task2 = new Task("Тестовая Задача 2", "Описание тестовой задачи 2", TaskStatus.NEW, Duration.ofHours(1), ZonedDateTime.now().plusHours(5));
+//        Task task1 = new Task("РўРµСЃС‚РѕРІР°СЏ Р—Р°РґР°С‡Р° 1", "РћРїРёСЃР°РЅРёРµ С‚РµСЃС‚РѕРІРѕР№ Р·Р°РґР°С‡Рё 1", TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
+//        Task task2 = new Task("РўРµСЃС‚РѕРІР°СЏ Р—Р°РґР°С‡Р° 2", "РћРїРёСЃР°РЅРёРµ С‚РµСЃС‚РѕРІРѕР№ Р·Р°РґР°С‡Рё 2", TaskStatus.NEW, Duration.ofHours(1), ZonedDateTime.now().plusHours(5));
 //        httpTaskManager.createTask(task1);
 //        httpTaskManager.createTask(task2);
 //        httpTaskManager.clearTasks();
@@ -161,10 +161,10 @@ public class HttpTaskManagerTest extends TaskManagerTest<HttpTaskManager>{
 //
 //    @Test
 //    public void testClearSubTasks() {
-//        Epic epic = new Epic("Тестовый Эпик", "Описание тестового эпика");
+//        Epic epic = new Epic("РўРµСЃС‚РѕРІС‹Р№ Р­РїРёРє", "РћРїРёСЃР°РЅРёРµ С‚РµСЃС‚РѕРІРѕРіРѕ СЌРїРёРєР°");
 //        int epicId = httpTaskManager.createEpic(epic);
-//        SubTask subTask1 = new SubTask("Тестовая Подзадача 1", "Описание тестовой подзадачи 1", TaskStatus.NEW, Duration.ofHours(1), ZonedDateTime.now(), epicId);
-//        SubTask subTask2 = new SubTask("Тестовая Подзадача 2", "Описание тестовой подзадачи 2", TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now().plusDays(2), epicId);
+//        SubTask subTask1 = new SubTask("РўРµСЃС‚РѕРІР°СЏ РџРѕРґР·Р°РґР°С‡Р° 1", "РћРїРёСЃР°РЅРёРµ С‚РµСЃС‚РѕРІРѕР№ РїРѕРґР·Р°РґР°С‡Рё 1", TaskStatus.NEW, Duration.ofHours(1), ZonedDateTime.now(), epicId);
+//        SubTask subTask2 = new SubTask("РўРµСЃС‚РѕРІР°СЏ РџРѕРґР·Р°РґР°С‡Р° 2", "РћРїРёСЃР°РЅРёРµ С‚РµСЃС‚РѕРІРѕР№ РїРѕРґР·Р°РґР°С‡Рё 2", TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now().plusDays(2), epicId);
 //        httpTaskManager.createSubTask(subTask1);
 //        httpTaskManager.createSubTask(subTask2);
 //        httpTaskManager.clearSubTasks();
@@ -173,8 +173,8 @@ public class HttpTaskManagerTest extends TaskManagerTest<HttpTaskManager>{
 //
 //    @Test
 //    public void testClearEpics() {
-//        Epic epic1 = new Epic("Тестовый Эпик 1", "Описание тестового эпика 1");
-//        Epic epic2 = new Epic("Тестовый Эпик 2", "Описание тестового эпика 2");
+//        Epic epic1 = new Epic("РўРµСЃС‚РѕРІС‹Р№ Р­РїРёРє 1", "РћРїРёСЃР°РЅРёРµ С‚РµСЃС‚РѕРІРѕРіРѕ СЌРїРёРєР° 1");
+//        Epic epic2 = new Epic("РўРµСЃС‚РѕРІС‹Р№ Р­РїРёРє 2", "РћРїРёСЃР°РЅРёРµ С‚РµСЃС‚РѕРІРѕРіРѕ СЌРїРёРєР° 2");
 //        httpTaskManager.createEpic(epic1);
 //        httpTaskManager.createEpic(epic2);
 //        httpTaskManager.clearEpics();
@@ -183,19 +183,19 @@ public class HttpTaskManagerTest extends TaskManagerTest<HttpTaskManager>{
 //
 //    @Test
 //    public void testCreateSubTaskWithInvalidEpicID() {
-//        SubTask subTask = new SubTask("Тестовая Подзадача", "Описание тестовой подзадачи", TaskStatus.NEW, Duration.ofHours(1), ZonedDateTime.now(), -1);
+//        SubTask subTask = new SubTask("РўРµСЃС‚РѕРІР°СЏ РџРѕРґР·Р°РґР°С‡Р°", "РћРїРёСЃР°РЅРёРµ С‚РµСЃС‚РѕРІРѕР№ РїРѕРґР·Р°РґР°С‡Рё", TaskStatus.NEW, Duration.ofHours(1), ZonedDateTime.now(), -1);
 //        assertThrows(NullPointerException.class, () -> httpTaskManager.createSubTask(subTask));
 //    }
 //
 //    @Test
 //    public void testUpdateTaskWithInvalidID() {
-//        Task taskToUpdate = new Task("Обновленная Задача", "Обновленное описание задачи", 1, TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
+//        Task taskToUpdate = new Task("РћР±РЅРѕРІР»РµРЅРЅР°СЏ Р—Р°РґР°С‡Р°", "РћР±РЅРѕРІР»РµРЅРЅРѕРµ РѕРїРёСЃР°РЅРёРµ Р·Р°РґР°С‡Рё", 1, TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
 //        assertThrows(IllegalArgumentException.class, () -> httpTaskManager.updateTask(taskToUpdate));
 //    }
 //
 //    @Test
 //    public void testUpdateSubTaskWithInvalidID() {
-//        SubTask updatedSubTask = new SubTask("Обновленная Подзадача", "Обновленное описание подзадачи", 2, TaskStatus.NEW, 1, Duration.ofHours(1), ZonedDateTime.now());
+//        SubTask updatedSubTask = new SubTask("РћР±РЅРѕРІР»РµРЅРЅР°СЏ РџРѕРґР·Р°РґР°С‡Р°", "РћР±РЅРѕРІР»РµРЅРЅРѕРµ РѕРїРёСЃР°РЅРёРµ РїРѕРґР·Р°РґР°С‡Рё", 2, TaskStatus.NEW, 1, Duration.ofHours(1), ZonedDateTime.now());
 //        assertThrows(NullPointerException.class, () -> httpTaskManager.updateSubTask(updatedSubTask));
 //    }
 //
@@ -216,10 +216,10 @@ public class HttpTaskManagerTest extends TaskManagerTest<HttpTaskManager>{
 //
 //    @Test
 //    public void testGetPrioritizedTask() {
-//        // Здесь можно добавить тест для метода getPrioritizedTask, если он реализован в HttpTaskManager
+//        // Р—РґРµСЃСЊ РјРѕР¶РЅРѕ РґРѕР±Р°РІРёС‚СЊ С‚РµСЃС‚ РґР»СЏ РјРµС‚РѕРґР° getPrioritizedTask, РµСЃР»Рё РѕРЅ СЂРµР°Р»РёР·РѕРІР°РЅ РІ HttpTaskManager
 //        List<Task> prioritizedTasks = httpTaskManager.getPrioritizedTask();
 //        assertNotNull(prioritizedTasks);
-//        // Добавьте проверки на корректность полученных задач, если необходимо
+//        // Р”РѕР±Р°РІСЊС‚Рµ РїСЂРѕРІРµСЂРєРё РЅР° РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚СЊ РїРѕР»СѓС‡РµРЅРЅС‹С… Р·Р°РґР°С‡, РµСЃР»Рё РЅРµРѕР±С…РѕРґРёРјРѕ
 //    }
 
 

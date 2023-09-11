@@ -25,7 +25,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
 
     @Test
     public void testCreateEpic() {
-        Epic epic = new Epic("Эпик 1", "Описание эпика");
+        Epic epic = new Epic("Р­РїРёРє 1", "РћРїРёСЃР°РЅРёРµ СЌРїРёРєР°");
 
         int epicId = taskManager.createEpic(epic);
 
@@ -35,7 +35,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
     }
     @Test
     public void testCreateTask() {
-        Task task = new Task("Задача 1", "Описание задачи", TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
+        Task task = new Task("Р—Р°РґР°С‡Р° 1", "РћРїРёСЃР°РЅРёРµ Р·Р°РґР°С‡Рё", TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
         int taskId = taskManager.createTask(task);
 
         Task savedTask = taskManager.getTaskByID(taskId);
@@ -45,10 +45,10 @@ public abstract class TaskManagerTest<T extends TaskManager> {
 
     @Test
     public void testCreateSubTask() {
-        Epic epic = new Epic("Эпик 1", "Описание эпика");
+        Epic epic = new Epic("Р­РїРёРє 1", "РћРїРёСЃР°РЅРёРµ СЌРїРёРєР°");
         int epicId = taskManager.createEpic(epic);
 
-        SubTask subTask = new SubTask("Подзадача 1", "Описание подзадачи", TaskStatus.NEW, Duration.ofHours(1), ZonedDateTime.now().plusHours(10), epicId);
+        SubTask subTask = new SubTask("РџРѕРґР·Р°РґР°С‡Р° 1", "РћРїРёСЃР°РЅРёРµ РїРѕРґР·Р°РґР°С‡Рё", TaskStatus.NEW, Duration.ofHours(1), ZonedDateTime.now().plusHours(10), epicId);
         int subTaskId = taskManager.createSubTask(subTask);
 
         SubTask savedSubTask = taskManager.getSubTaskByID(subTaskId);
@@ -59,11 +59,11 @@ public abstract class TaskManagerTest<T extends TaskManager> {
 
     @Test
     public void testUpdateTask() {
-        Task task = new Task("Задача 1", "Описание задачи", TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
+        Task task = new Task("Р—Р°РґР°С‡Р° 1", "РћРїРёСЃР°РЅРёРµ Р·Р°РґР°С‡Рё", TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
         int taskId = taskManager.createTask(task);
 
 
-        Task taskToUpdate = new Task("UPD", "Описание задачи", 1, TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
+        Task taskToUpdate = new Task("UPD", "РћРїРёСЃР°РЅРёРµ Р·Р°РґР°С‡Рё", 1, TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
         taskManager.updateTask(taskToUpdate);
 
         Task updatedTask = taskManager.getTaskByID(taskId);
@@ -73,11 +73,11 @@ public abstract class TaskManagerTest<T extends TaskManager> {
 
     @Test
     public void testUpdateSubTask() {
-        Epic epic = new Epic("Эпик 1", "Описание эпика");
+        Epic epic = new Epic("Р­РїРёРє 1", "РћРїРёСЃР°РЅРёРµ СЌРїРёРєР°");
         int epicId = taskManager.createEpic(epic);
 
-        SubTask subTask = new SubTask("Подзадача 1",
-                "Описание подзадачи",
+        SubTask subTask = new SubTask("РџРѕРґР·Р°РґР°С‡Р° 1",
+                "РћРїРёСЃР°РЅРёРµ РїРѕРґР·Р°РґР°С‡Рё",
                 TaskStatus.NEW,
                 Duration.ofHours(1),
                 ZonedDateTime.now(),
@@ -85,7 +85,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         int subTaskId = taskManager.createSubTask(subTask);
 
         SubTask updatedSubTask = new SubTask("UPD",
-                "Описание подзадачи",
+                "РћРїРёСЃР°РЅРёРµ РїРѕРґР·Р°РґР°С‡Рё",
                 2,
                 TaskStatus.NEW,
                 1,
@@ -101,7 +101,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
 
     @Test
     public void testRemoveTaskByID() {
-        Task task = new Task("Задача 1", "Описание задачи", TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
+        Task task = new Task("Р—Р°РґР°С‡Р° 1", "РћРїРёСЃР°РЅРёРµ Р·Р°РґР°С‡Рё", TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
         int taskId = taskManager.createTask(task);
 
         taskManager.removeTaskByID(taskId);
@@ -111,11 +111,11 @@ public abstract class TaskManagerTest<T extends TaskManager> {
 
     @Test
     public void testRemoveSubTaskByID() {
-        Epic epic = new Epic("Эпик 1", "Описание эпика");
+        Epic epic = new Epic("Р­РїРёРє 1", "РћРїРёСЃР°РЅРёРµ СЌРїРёРєР°");
         int epicId = taskManager.createEpic(epic);
 
-        SubTask subTask = new SubTask("Подзадача 1", "Описание подзадачи 1", TaskStatus.NEW, Duration.ofHours(1), ZonedDateTime.now(), epicId);
-        SubTask subTaskSecond = new SubTask("Подзадача 2", "Описание подзадачи 2", TaskStatus.NEW, Duration.ofHours(1), ZonedDateTime.now().plusHours(10), epicId);
+        SubTask subTask = new SubTask("РџРѕРґР·Р°РґР°С‡Р° 1", "РћРїРёСЃР°РЅРёРµ РїРѕРґР·Р°РґР°С‡Рё 1", TaskStatus.NEW, Duration.ofHours(1), ZonedDateTime.now(), epicId);
+        SubTask subTaskSecond = new SubTask("РџРѕРґР·Р°РґР°С‡Р° 2", "РћРїРёСЃР°РЅРёРµ РїРѕРґР·Р°РґР°С‡Рё 2", TaskStatus.NEW, Duration.ofHours(1), ZonedDateTime.now().plusHours(10), epicId);
         int subTaskIdFirst = taskManager.createSubTask(subTask);
         int subTaskIdSecond = taskManager.createSubTask(subTaskSecond);
 
@@ -126,7 +126,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
 
     @Test
     public void testRemoveEpicByID() {
-        Epic epic = new Epic("Эпик 1", "Описание эпика");
+        Epic epic = new Epic("Р­РїРёРє 1", "РћРїРёСЃР°РЅРёРµ СЌРїРёРєР°");
         int epicId = taskManager.createEpic(epic);
 
         taskManager.removeEpicByID(epicId);
@@ -136,8 +136,8 @@ public abstract class TaskManagerTest<T extends TaskManager> {
 
     @Test
     public void testClearTasks() {
-        Task task1 = new Task("Задача 1", "Описание задачи", TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
-        Task task2 = new Task("Задача 2", "Описание задачи", TaskStatus.NEW, Duration.ofHours(1), ZonedDateTime.now().plusHours(5));
+        Task task1 = new Task("Р—Р°РґР°С‡Р° 1", "РћРїРёСЃР°РЅРёРµ Р·Р°РґР°С‡Рё", TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
+        Task task2 = new Task("Р—Р°РґР°С‡Р° 2", "РћРїРёСЃР°РЅРёРµ Р·Р°РґР°С‡Рё", TaskStatus.NEW, Duration.ofHours(1), ZonedDateTime.now().plusHours(5));
 
         taskManager.createTask(task1);
         taskManager.createTask(task2);
@@ -149,11 +149,11 @@ public abstract class TaskManagerTest<T extends TaskManager> {
 
     @Test
     public void testClearSubTasks() {
-        Epic epic = new Epic("Эпик 1", "Описание эпика");
+        Epic epic = new Epic("Р­РїРёРє 1", "РћРїРёСЃР°РЅРёРµ СЌРїРёРєР°");
         int epicId = taskManager.createEpic(epic);
 
-        SubTask subTask1 = new SubTask("Подзадача 1", "Описание подзадачи", TaskStatus.NEW, Duration.ofHours(1), ZonedDateTime.now(), epicId);
-        SubTask subTask2 = new SubTask("Подзадача 2", "Описание подзадачи", TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now().plusDays(2), epicId);
+        SubTask subTask1 = new SubTask("РџРѕРґР·Р°РґР°С‡Р° 1", "РћРїРёСЃР°РЅРёРµ РїРѕРґР·Р°РґР°С‡Рё", TaskStatus.NEW, Duration.ofHours(1), ZonedDateTime.now(), epicId);
+        SubTask subTask2 = new SubTask("РџРѕРґР·Р°РґР°С‡Р° 2", "РћРїРёСЃР°РЅРёРµ РїРѕРґР·Р°РґР°С‡Рё", TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now().plusDays(2), epicId);
 
         taskManager.createSubTask(subTask1);
         taskManager.createSubTask(subTask2);
@@ -166,8 +166,8 @@ public abstract class TaskManagerTest<T extends TaskManager> {
 
     @Test
     public void testClearEpics() {
-        Epic epic1 = new Epic("Эпик 1", "Описание эпика");
-        Epic epic2 = new Epic("Эпик 2", "Описание эпика");
+        Epic epic1 = new Epic("Р­РїРёРє 1", "РћРїРёСЃР°РЅРёРµ СЌРїРёРєР°");
+        Epic epic2 = new Epic("Р­РїРёРє 2", "РћРїРёСЃР°РЅРёРµ СЌРїРёРєР°");
 
         taskManager.createEpic(epic1);
         taskManager.createEpic(epic2);
@@ -179,21 +179,21 @@ public abstract class TaskManagerTest<T extends TaskManager> {
 
     @Test
     public void testCreateSubTaskWithInvalidEpicID() {
-        SubTask subTask = new SubTask("Подзадача 1", "Описание подзадачи", TaskStatus.NEW, Duration.ofHours(1), ZonedDateTime.now(), -1);
+        SubTask subTask = new SubTask("РџРѕРґР·Р°РґР°С‡Р° 1", "РћРїРёСЃР°РЅРёРµ РїРѕРґР·Р°РґР°С‡Рё", TaskStatus.NEW, Duration.ofHours(1), ZonedDateTime.now(), -1);
 
         assertThrows(NullPointerException.class, () -> taskManager.createSubTask(subTask));
     }
 
     @Test
     public void testUpdateTaskWithInvalidID() {
-        Task taskToUpdate = new Task("UPD", "Описание задачи", 1, TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
+        Task taskToUpdate = new Task("UPD", "РћРїРёСЃР°РЅРёРµ Р·Р°РґР°С‡Рё", 1, TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
 
         assertThrows(IllegalArgumentException.class, () -> taskManager.updateTask(taskToUpdate));
     }
 
     @Test
     public void testUpdateSubTaskWithInvalidID() {
-        SubTask updatedSubTask = new SubTask("UPD", "Описание подзадачи", 2, TaskStatus.NEW, 1, Duration.ofHours(1), ZonedDateTime.now());
+        SubTask updatedSubTask = new SubTask("UPD", "РћРїРёСЃР°РЅРёРµ РїРѕРґР·Р°РґР°С‡Рё", 2, TaskStatus.NEW, 1, Duration.ofHours(1), ZonedDateTime.now());
 
         assertThrows(NullPointerException.class, () -> taskManager.updateSubTask(updatedSubTask));
     }

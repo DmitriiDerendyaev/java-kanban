@@ -2,11 +2,11 @@ package models;
 
 public enum TaskType {
 
-    EPIC("Эпик"),
+    EPIC("Р­РїРёРє"),
 
-    SUB_TASK("Подзадача"),
+    SUB_TASK("РџРѕРґР·Р°РґР°С‡Р°"),
 
-    TASK("Задача");
+    TASK("Р—Р°РґР°С‡Р°");
     private String typeDescription;
 
     TaskType(String typeDescription){

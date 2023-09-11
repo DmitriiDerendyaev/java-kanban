@@ -1,9 +1,9 @@
 package models;
 
 public enum TaskStatus {
-    NEW("Новая"),
-    IN_PROGRESS("В процессе"),
-    DONE("Завершенная");
+    NEW("РќРѕРІР°СЏ"),
+    IN_PROGRESS("Р’ РїСЂРѕС†РµСЃСЃРµ"),
+    DONE("Р—Р°РІРµСЂС€РµРЅРЅР°СЏ");
 
     private final String description;
 

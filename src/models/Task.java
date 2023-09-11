@@ -18,7 +18,7 @@ public class Task implements Comparable<Task>{
     }
 
     /**
-     * Конструктор для Main и автотестов
+     * РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ Main Рё Р°РІС‚РѕС‚РµСЃС‚РѕРІ
      * @param taskName
      * @param taskDescription
      * @param taskStatus
@@ -39,7 +39,7 @@ public class Task implements Comparable<Task>{
     }
 
     /**
-     * Конструктор для десериализации
+     * РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ РґРµСЃРµСЂРёР°Р»РёР·Р°С†РёРё
      * @param taskName
      * @param taskDescription
      * @param taskID

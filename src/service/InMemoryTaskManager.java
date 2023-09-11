@@ -62,10 +62,10 @@ public class InMemoryTaskManager implements TaskManager {
             ZonedDateTime endTimeExistingTask = existingTask.getEndTime();
 
             if (startTimeNewTask.isBefore(endTimeExistingTask) && startTimeExistingTask.isBefore(endTimeNewTask)) {
-                return true; // Найдено пересечение
+                return true; // РќР°Р№РґРµРЅРѕ РїРµСЂРµСЃРµС‡РµРЅРёРµ
             }
         }
-        return false; // Пересечений нет
+        return false; // РџРµСЂРµСЃРµС‡РµРЅРёР№ РЅРµС‚
     }
 
 
@@ -74,17 +74,17 @@ public class InMemoryTaskManager implements TaskManager {
     public int createEpic(Epic newEpic) {
         newEpic.setTaskID(currentId++);
 
-        //Эпики можно не валидировать, т.к. их временной диапазон напрямую зависит от subTasks
-        // и коллизия будет возникать именно из-за пересечения subTask и epic
+        //Р­РїРёРєРё РјРѕР¶РЅРѕ РЅРµ РІР°Р»РёРґРёСЂРѕРІР°С‚СЊ, С‚.Рє. РёС… РІСЂРµРјРµРЅРЅРѕР№ РґРёР°РїР°Р·РѕРЅ РЅР°РїСЂСЏРјСѓСЋ Р·Р°РІРёСЃРёС‚ РѕС‚ subTasks
+        // Рё РєРѕР»Р»РёР·РёСЏ Р±СѓРґРµС‚ РІРѕР·РЅРёРєР°С‚СЊ РёРјРµРЅРЅРѕ РёР·-Р·Р° РїРµСЂРµСЃРµС‡РµРЅРёСЏ subTask Рё epic
 //        if (hasTimeOverlap(newEpic)) {
-//            throw new IllegalArgumentException("Новая задача пересекается по времени выполнения с существующими задачами");
+//            throw new IllegalArgumentException("РќРѕРІР°СЏ Р·Р°РґР°С‡Р° РїРµСЂРµСЃРµРєР°РµС‚СЃСЏ РїРѕ РІСЂРµРјРµРЅРё РІС‹РїРѕР»РЅРµРЅРёСЏ СЃ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёРјРё Р·Р°РґР°С‡Р°РјРё");
 //        }
 
         epics.put(newEpic.getTaskID(), newEpic);
 
-        // При создании эпика без сабтасков он инициализируется с текущим временем,
-        // что приводит к некорректной сортировке при добавлении в TreeSet
-        // Потенциальное решение заключается в том, чтобы каждый раз добавлять эпик, но уже после добавления первого сабтаска
+        // РџСЂРё СЃРѕР·РґР°РЅРёРё СЌРїРёРєР° Р±РµР· СЃР°Р±С‚Р°СЃРєРѕРІ РѕРЅ РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµС‚СЃСЏ СЃ С‚РµРєСѓС‰РёРј РІСЂРµРјРµРЅРµРј,
+        // С‡С‚Рѕ РїСЂРёРІРѕРґРёС‚ Рє РЅРµРєРѕСЂСЂРµРєС‚РЅРѕР№ СЃРѕСЂС‚РёСЂРѕРІРєРµ РїСЂРё РґРѕР±Р°РІР»РµРЅРёРё РІ TreeSet
+        // РџРѕС‚РµРЅС†РёР°Р»СЊРЅРѕРµ СЂРµС€РµРЅРёРµ Р·Р°РєР»СЋС‡Р°РµС‚СЃСЏ РІ С‚РѕРј, С‡С‚РѕР±С‹ РєР°Р¶РґС‹Р№ СЂР°Р· РґРѕР±Р°РІР»СЏС‚СЊ СЌРїРёРє, РЅРѕ СѓР¶Рµ РїРѕСЃР»Рµ РґРѕР±Р°РІР»РµРЅРёСЏ РїРµСЂРІРѕРіРѕ СЃР°Р±С‚Р°СЃРєР°
 //        updateTaskIfPresent(newEpic);
         return newEpic.getTaskID();
     }
@@ -94,7 +94,7 @@ public class InMemoryTaskManager implements TaskManager {
         newTask.setTaskID(currentId++);
 
         if (hasTimeOverlap(newTask)) {
-            throw new IllegalArgumentException("Новая задача пересекается по времени выполнения с существующими задачами");
+            throw new IllegalArgumentException("РќРѕРІР°СЏ Р·Р°РґР°С‡Р° РїРµСЂРµСЃРµРєР°РµС‚СЃСЏ РїРѕ РІСЂРµРјРµРЅРё РІС‹РїРѕР»РЅРµРЅРёСЏ СЃ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёРјРё Р·Р°РґР°С‡Р°РјРё");
         }
 
         updateTaskIfPresent(newTask);
@@ -108,7 +108,7 @@ public class InMemoryTaskManager implements TaskManager {
         newSubTask.setTaskID(currentId++);
 
         if (hasTimeOverlap(newSubTask)) {
-            throw new IllegalArgumentException("Новая подзадача пересекается по времени выполнения с существующими задачами");
+            throw new IllegalArgumentException("РќРѕРІР°СЏ РїРѕРґР·Р°РґР°С‡Р° РїРµСЂРµСЃРµРєР°РµС‚СЃСЏ РїРѕ РІСЂРµРјРµРЅРё РІС‹РїРѕР»РЅРµРЅРёСЏ СЃ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёРјРё Р·Р°РґР°С‡Р°РјРё");
         }
 
         updateTaskIfPresent(newSubTask);
@@ -132,7 +132,7 @@ public class InMemoryTaskManager implements TaskManager {
         if(tasks.containsKey(updatedTask.getTaskID()))
             tasks.put(updatedTask.getTaskID(), updatedTask);
         else
-            throw new IllegalArgumentException("Отсутствует такой ID");
+            throw new IllegalArgumentException("РћС‚СЃСѓС‚СЃС‚РІСѓРµС‚ С‚Р°РєРѕР№ ID");
 
         updateTaskIfPresent(updatedTask);
         return updatedTask.getTaskID();

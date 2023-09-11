@@ -55,12 +55,12 @@ public class HttpTaskServer {
         try {
             taskManager = Manager.getDefault();
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException("Не удалось получить taskManager" + e);
+            throw new RuntimeException("РќРµ СѓРґР°Р»РѕСЃСЊ РїРѕР»СѓС‡РёС‚СЊ taskManager" + e);
         }
         try {
             httpServer = HttpServer.create(new InetSocketAddress(HOST, PORT), 0);
         } catch (IOException e) {
-            throw new RuntimeException("Не удалось запустить сервер через start" + e);
+            throw new RuntimeException("РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РїСѓСЃС‚РёС‚СЊ СЃРµСЂРІРµСЂ С‡РµСЂРµР· start" + e);
         }
 
         httpServer.createContext("/tasks", new TaskHandler());
@@ -74,7 +74,7 @@ public class HttpTaskServer {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         HttpTaskServer server = new HttpTaskServer();
-        System.out.println("Сервер запущен на порту: " + server.PORT);
+        System.out.println("РЎРµСЂРІРµСЂ Р·Р°РїСѓС‰РµРЅ РЅР° РїРѕСЂС‚Сѓ: " + server.PORT);
     }
 
     class TaskHandler implements HttpHandler {
@@ -91,7 +91,7 @@ public class HttpTaskServer {
                                 String json = readText(exchange);
                                 Task newTask = gson.fromJson(json, Task.class);
                                 taskManager.createTask(newTask);
-                                System.out.println("Задача успешно добавлена!");
+                                System.out.println("Р—Р°РґР°С‡Р° СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅР°!");
                                 sendText(exchange, "{\"status\":\"OK\"}");
 
                                 break;
@@ -100,7 +100,7 @@ public class HttpTaskServer {
                                 String json = readText(exchange);
                                 SubTask newSubTask = gson.fromJson(json, SubTask.class);
                                 taskManager.createSubTask(newSubTask);
-                                System.out.println("Подзадача успешно добавлена!");
+                                System.out.println("РџРѕРґР·Р°РґР°С‡Р° СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅР°!");
                                 sendText(exchange, "{\"status\":\"OK\"}");
 
                                 break;
@@ -109,7 +109,7 @@ public class HttpTaskServer {
                                 String json = readText(exchange);
                                 Epic newEpic = gson.fromJson(json, Epic.class);
                                 taskManager.createEpic(newEpic);
-                                System.out.println("Эпик успешно добавлен!");
+                                System.out.println("Р­РїРёРє СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅ!");
                                 sendText(exchange, "{\"status\":\"OK\"}");
                                 break;
                             }
@@ -137,23 +137,23 @@ public class HttpTaskServer {
                         } else {
                             switch (path) {
                                 case "/tasks/task":
-                                    System.out.println("Список задач отправлен на клиент!");
+                                    System.out.println("РЎРїРёСЃРѕРє Р·Р°РґР°С‡ РѕС‚РїСЂР°РІР»РµРЅ РЅР° РєР»РёРµРЅС‚!");
                                     sendText(exchange, gson.toJson(taskManager.getTaskList()));
                                     break;
                                 case "/tasks/subTask":
-                                    System.out.println("Список подзадач отправлен на клиент!");
+                                    System.out.println("РЎРїРёСЃРѕРє РїРѕРґР·Р°РґР°С‡ РѕС‚РїСЂР°РІР»РµРЅ РЅР° РєР»РёРµРЅС‚!");
                                     sendText(exchange, gson.toJson(taskManager.getSubTaskList()));
                                     break;
                                 case "/tasks/epic":
-                                    System.out.println("Список эпиков отправлен на клиент!");
+                                    System.out.println("РЎРїРёСЃРѕРє СЌРїРёРєРѕРІ РѕС‚РїСЂР°РІР»РµРЅ РЅР° РєР»РёРµРЅС‚!");
                                     sendText(exchange, gson.toJson(taskManager.getEpicList()));
                                     break;
                                 case "/tasks":
-                                    System.out.println("Задачи отправлены на клиент!");
+                                    System.out.println("Р—Р°РґР°С‡Рё РѕС‚РїСЂР°РІР»РµРЅС‹ РЅР° РєР»РёРµРЅС‚!");
                                     sendText(exchange, gson.toJson(taskManager.getPrioritizedTask()));
                                     break;
                                 case "/tasks/history":
-                                    System.out.println("История отправлена на клиент!");
+                                    System.out.println("РСЃС‚РѕСЂРёСЏ РѕС‚РїСЂР°РІР»РµРЅР° РЅР° РєР»РёРµРЅС‚!");
                                     sendText(exchange, gson.toJson(taskManager.getHistory()));
                                     break;
                             }
@@ -192,10 +192,10 @@ public class HttpTaskServer {
                         break;
 
                     default:
-                        throw new IllegalStateException("Неизвестный метод");
+                        throw new IllegalStateException("РќРµРёР·РІРµСЃС‚РЅС‹Р№ РјРµС‚РѕРґ");
                 }
             } catch (Exception e) {
-                System.err.println("Ошибка обработки запроса. Path: " + path + "Method: " + method + ' ' + e);
+                System.err.println("РћС€РёР±РєР° РѕР±СЂР°Р±РѕС‚РєРё Р·Р°РїСЂРѕСЃР°. Path: " + path + "Method: " + method + ' ' + e);
             }
         }
 
@@ -207,7 +207,7 @@ public class HttpTaskServer {
 
         protected void sendText(HttpExchange h, String text) throws IOException {
             if(text.equals("[]") || text.equals("{}"))
-                text = "Пустой объект";
+                text = "РџСѓСЃС‚РѕР№ РѕР±СЉРµРєС‚";
             byte[] resp = text.getBytes(UTF_8);
             h.getResponseHeaders().add("Content-Type", "application/json");
             h.sendResponseHeaders(200, resp.length);

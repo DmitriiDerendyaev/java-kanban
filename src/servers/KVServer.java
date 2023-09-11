@@ -11,7 +11,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
 /**
- * Постман: <a href="https://www.getpostman.com/collections/a83b61d9e1c81c10575c">...</a>
+ * РџРѕСЃС‚РјР°РЅ: <a href="https://www.getpostman.com/collections/a83b61d9e1c81c10575c">...</a>
  */
 public class KVServer {
     public static final int PORT = 8070;
@@ -36,28 +36,28 @@ public class KVServer {
         try {
             System.out.println("\n/save");
             if (!hasAuth(h)) {
-                System.out.println("Запрос неавторизован, нужен параметр в query API_TOKEN со значением апи-ключа");
+                System.out.println("Р—Р°РїСЂРѕСЃ РЅРµР°РІС‚РѕСЂРёР·РѕРІР°РЅ, РЅСѓР¶РµРЅ РїР°СЂР°РјРµС‚СЂ РІ query API_TOKEN СЃРѕ Р·РЅР°С‡РµРЅРёРµРј Р°РїРё-РєР»СЋС‡Р°");
                 h.sendResponseHeaders(403, 0);
                 return;
             }
             if ("POST".equals(h.getRequestMethod())) {
                 String key = h.getRequestURI().getPath().substring("/save/".length());
                 if (key.isEmpty()) {
-                    System.out.println("Key для сохранения пустой. key указывается в пути: /save/{key}");
+                    System.out.println("Key РґР»СЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ РїСѓСЃС‚РѕР№. key СѓРєР°Р·С‹РІР°РµС‚СЃСЏ РІ РїСѓС‚Рё: /save/{key}");
                     h.sendResponseHeaders(400, 0);
                     return;
                 }
                 String value = readText(h);
                 if (value.isEmpty()) {
-                    System.out.println("Value для сохранения пустой. value указывается в теле запроса");
+                    System.out.println("Value РґР»СЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ РїСѓСЃС‚РѕР№. value СѓРєР°Р·С‹РІР°РµС‚СЃСЏ РІ С‚РµР»Рµ Р·Р°РїСЂРѕСЃР°");
                     h.sendResponseHeaders(400, 0);
                     return;
                 }
                 data.put(key, value);
-                System.out.println("Значение для ключа " + key + " успешно обновлено!");
+                System.out.println("Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РєР»СЋС‡Р° " + key + " СѓСЃРїРµС€РЅРѕ РѕР±РЅРѕРІР»РµРЅРѕ!");
                 h.sendResponseHeaders(200, 0);
             } else {
-                System.out.println("/save ждёт POST-запрос, а получил: " + h.getRequestMethod());
+                System.out.println("/save Р¶РґС‘С‚ POST-Р·Р°РїСЂРѕСЃ, Р° РїРѕР»СѓС‡РёР»: " + h.getRequestMethod());
                 h.sendResponseHeaders(405, 0);
             }
         } finally {
@@ -69,18 +69,18 @@ public class KVServer {
         try{
             System.out.println("\n/load");
             if(!hasAuth(exchange)){
-                System.out.println("Вам необходимо авторизоваться, используйте API_TOKEN");
+                System.out.println("Р’Р°Рј РЅРµРѕР±С…РѕРґРёРјРѕ Р°РІС‚РѕСЂРёР·РѕРІР°С‚СЊСЃСЏ, РёСЃРїРѕР»СЊР·СѓР№С‚Рµ API_TOKEN");
                 exchange.sendResponseHeaders(403, 0);
             }
 
             if(!"GET".equals(exchange.getRequestMethod())){
-                System.out.println("Ожидался метод GET, а использован" + exchange.getRequestMethod());
+                System.out.println("РћР¶РёРґР°Р»СЃСЏ РјРµС‚РѕРґ GET, Р° РёСЃРїРѕР»СЊР·РѕРІР°РЅ" + exchange.getRequestMethod());
                 exchange.sendResponseHeaders(405, 0);
             } else {
                 String key = exchange.getRequestURI().getPath().substring("/load/".length());
 
                 if(key.isEmpty()){
-                    System.out.println("Ключ для получения пуст, /save/API_TOKEN=???");
+                    System.out.println("РљР»СЋС‡ РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РїСѓСЃС‚, /save/API_TOKEN=???");
                     exchange.sendResponseHeaders(400, 0);
                     return;
                 }
@@ -90,7 +90,7 @@ public class KVServer {
                     responseAnswer = data.get(key);
                 }
 
-                System.out.println(String.format("Отправляем с сервера: %s", responseAnswer));
+                System.out.println(String.format("РћС‚РїСЂР°РІР»СЏРµРј СЃ СЃРµСЂРІРµСЂР°: %s", responseAnswer));
                 sendText(exchange, responseAnswer);
             }
         } finally {
@@ -104,7 +104,7 @@ public class KVServer {
             if ("GET".equals(h.getRequestMethod())) {
                 sendText(h, apiToken);
             } else {
-                System.out.println("/register ждёт GET-запрос, а получил " + h.getRequestMethod());
+                System.out.println("/register Р¶РґС‘С‚ GET-Р·Р°РїСЂРѕСЃ, Р° РїРѕР»СѓС‡РёР» " + h.getRequestMethod());
                 h.sendResponseHeaders(405, 0);
             }
         } finally {
@@ -113,15 +113,15 @@ public class KVServer {
     }
 
     public void start() {
-        System.out.println("Запускаем сервер на порту " + PORT);
-        System.out.println("Открой в браузере http://localhost:" + PORT + "/");
+        System.out.println("Р—Р°РїСѓСЃРєР°РµРј СЃРµСЂРІРµСЂ РЅР° РїРѕСЂС‚Сѓ " + PORT);
+        System.out.println("РћС‚РєСЂРѕР№ РІ Р±СЂР°СѓР·РµСЂРµ http://localhost:" + PORT + "/");
         System.out.println("API_TOKEN: " + apiToken);
         server.start();
     }
 
     public void stop() {
         if (server != null) {
-            System.out.println("Останавливаем сервер на порту " + PORT);
+            System.out.println("РћСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЃРµСЂРІРµСЂ РЅР° РїРѕСЂС‚Сѓ " + PORT);
             server.stop(0);
         }
     }

@@ -29,9 +29,9 @@ class EpicTest {
 
     @Test
     public void shouldMakeEmptyEpic() throws IOException {
-        fileBackedTasksManager.createEpic(new Epic("Купить дом", "Купить пентхаус в Казани"));
+        fileBackedTasksManager.createEpic(new Epic("РљСѓРїРёС‚СЊ РґРѕРј", "РљСѓРїРёС‚СЊ РїРµРЅС‚С…Р°СѓСЃ РІ РљР°Р·Р°РЅРё"));
 
-        assertEquals(TaskStatus.NEW, fileBackedTasksManager.getEpics().get(1).taskStatus, "При пустом эпике статус эпика не NEW");
+        assertEquals(TaskStatus.NEW, fileBackedTasksManager.getEpics().get(1).taskStatus, "РџСЂРё РїСѓСЃС‚РѕРј СЌРїРёРєРµ СЃС‚Р°С‚СѓСЃ СЌРїРёРєР° РЅРµ NEW");
 
         fileBackedTasksManager.clearFileContents();
     }
@@ -39,11 +39,11 @@ class EpicTest {
     @Test
     public void shouldMakeEpicWithNewStatus() throws IOException {
         //id=1
-        fileBackedTasksManager.createEpic(new Epic("Купить дом", "Купить пентхаус в Казани"));
+        fileBackedTasksManager.createEpic(new Epic("РљСѓРїРёС‚СЊ РґРѕРј", "РљСѓРїРёС‚СЊ РїРµРЅС‚С…Р°СѓСЃ РІ РљР°Р·Р°РЅРё"));
 
         //id=2
-        fileBackedTasksManager.createSubTask(new SubTask("Материал для пола",
-                "Покупка расходников для пола",
+        fileBackedTasksManager.createSubTask(new SubTask("РњР°С‚РµСЂРёР°Р» РґР»СЏ РїРѕР»Р°",
+                "РџРѕРєСѓРїРєР° СЂР°СЃС…РѕРґРЅРёРєРѕРІ РґР»СЏ РїРѕР»Р°",
                 TaskStatus.NEW,
                 Duration.ofMinutes(180),
                 ZonedDateTime.of(LocalDateTime.of(2023, 8, 25, 14, 30),
@@ -51,15 +51,15 @@ class EpicTest {
                 1));
 
         //id=3
-        fileBackedTasksManager.createSubTask(new SubTask("Купить спойлер",
-                "Купить спойлер белого цвета",
+        fileBackedTasksManager.createSubTask(new SubTask("РљСѓРїРёС‚СЊ СЃРїРѕР№Р»РµСЂ",
+                "РљСѓРїРёС‚СЊ СЃРїРѕР№Р»РµСЂ Р±РµР»РѕРіРѕ С†РІРµС‚Р°",
                 TaskStatus.NEW,
                 Duration.ofMinutes(200),
                 ZonedDateTime.of(LocalDateTime.of(2022, 9, 30, 14, 30),
                         ZoneId.of("Europe/Samara")),
                 1));
 
-        assertEquals(TaskStatus.NEW, fileBackedTasksManager.getEpics().get(1).taskStatus, "При заполненном эпике статус эпика не NEW");
+        assertEquals(TaskStatus.NEW, fileBackedTasksManager.getEpics().get(1).taskStatus, "РџСЂРё Р·Р°РїРѕР»РЅРµРЅРЅРѕРј СЌРїРёРєРµ СЃС‚Р°С‚СѓСЃ СЌРїРёРєР° РЅРµ NEW");
 
         fileBackedTasksManager.clearFileContents();
     }
@@ -67,11 +67,11 @@ class EpicTest {
     @Test
     public void shouldMakeEpicWithDoneStatus() throws IOException {
         //id=1
-        fileBackedTasksManager.createEpic(new Epic("Купить дом", "Купить пентхаус в Казани"));
+        fileBackedTasksManager.createEpic(new Epic("РљСѓРїРёС‚СЊ РґРѕРј", "РљСѓРїРёС‚СЊ РїРµРЅС‚С…Р°СѓСЃ РІ РљР°Р·Р°РЅРё"));
 
         //id=2
-        fileBackedTasksManager.createSubTask(new SubTask("Материал для пола",
-                "Покупка расходников для пола",
+        fileBackedTasksManager.createSubTask(new SubTask("РњР°С‚РµСЂРёР°Р» РґР»СЏ РїРѕР»Р°",
+                "РџРѕРєСѓРїРєР° СЂР°СЃС…РѕРґРЅРёРєРѕРІ РґР»СЏ РїРѕР»Р°",
                 TaskStatus.DONE,
                 Duration.ofMinutes(180),
                 ZonedDateTime.of(LocalDateTime.of(2023, 8, 25, 14, 30),
@@ -79,15 +79,15 @@ class EpicTest {
                 1));
 
         //id=3
-        fileBackedTasksManager.createSubTask(new SubTask("Купить спойлер",
-                "Купить спойлер белого цвета",
+        fileBackedTasksManager.createSubTask(new SubTask("РљСѓРїРёС‚СЊ СЃРїРѕР№Р»РµСЂ",
+                "РљСѓРїРёС‚СЊ СЃРїРѕР№Р»РµСЂ Р±РµР»РѕРіРѕ С†РІРµС‚Р°",
                 TaskStatus.DONE,
                 Duration.ofMinutes(200),
                 ZonedDateTime.of(LocalDateTime.of(2022, 9, 30, 14, 30),
                         ZoneId.of("Europe/Samara")),
                 1));
 
-        assertEquals(TaskStatus.DONE, fileBackedTasksManager.getEpics().get(1).taskStatus, "При заполненном эпике все задачи DONE, а статус эпика не DONE");
+        assertEquals(TaskStatus.DONE, fileBackedTasksManager.getEpics().get(1).taskStatus, "РџСЂРё Р·Р°РїРѕР»РЅРµРЅРЅРѕРј СЌРїРёРєРµ РІСЃРµ Р·Р°РґР°С‡Рё DONE, Р° СЃС‚Р°С‚СѓСЃ СЌРїРёРєР° РЅРµ DONE");
 
         fileBackedTasksManager.clearFileContents();
     }
@@ -95,11 +95,11 @@ class EpicTest {
     @Test
     public void shouldMakeEpicWithInProgressStatusContainsNewDone() throws IOException {
         //id=1
-        fileBackedTasksManager.createEpic(new Epic("Купить дом", "Купить пентхаус в Казани"));
+        fileBackedTasksManager.createEpic(new Epic("РљСѓРїРёС‚СЊ РґРѕРј", "РљСѓРїРёС‚СЊ РїРµРЅС‚С…Р°СѓСЃ РІ РљР°Р·Р°РЅРё"));
 
         //id=2
-        fileBackedTasksManager.createSubTask(new SubTask("Материал для пола",
-                "Покупка расходников для пола",
+        fileBackedTasksManager.createSubTask(new SubTask("РњР°С‚РµСЂРёР°Р» РґР»СЏ РїРѕР»Р°",
+                "РџРѕРєСѓРїРєР° СЂР°СЃС…РѕРґРЅРёРєРѕРІ РґР»СЏ РїРѕР»Р°",
                 TaskStatus.NEW,
                 Duration.ofMinutes(180),
                 ZonedDateTime.of(LocalDateTime.of(2023, 8, 25, 14, 30),
@@ -107,15 +107,15 @@ class EpicTest {
                 1));
 
         //id=3
-        fileBackedTasksManager.createSubTask(new SubTask("Купить спойлер",
-                "Купить спойлер белого цвета",
+        fileBackedTasksManager.createSubTask(new SubTask("РљСѓРїРёС‚СЊ СЃРїРѕР№Р»РµСЂ",
+                "РљСѓРїРёС‚СЊ СЃРїРѕР№Р»РµСЂ Р±РµР»РѕРіРѕ С†РІРµС‚Р°",
                 TaskStatus.DONE,
                 Duration.ofMinutes(200),
                 ZonedDateTime.of(LocalDateTime.of(2022, 9, 30, 14, 30),
                         ZoneId.of("Europe/Samara")),
                 1));
 
-        assertEquals(TaskStatus.IN_PROGRESS, fileBackedTasksManager.getEpics().get(1).taskStatus, "При заполненном эпике все задачи DONE, а статус эпика не DONE");
+        assertEquals(TaskStatus.IN_PROGRESS, fileBackedTasksManager.getEpics().get(1).taskStatus, "РџСЂРё Р·Р°РїРѕР»РЅРµРЅРЅРѕРј СЌРїРёРєРµ РІСЃРµ Р·Р°РґР°С‡Рё DONE, Р° СЃС‚Р°С‚СѓСЃ СЌРїРёРєР° РЅРµ DONE");
 
         fileBackedTasksManager.clearFileContents();
     }
@@ -124,11 +124,11 @@ class EpicTest {
     @Test
     public void shouldMakeEpicWithInProgressStatusContainsNewProgress() throws IOException {
         //id=1
-        fileBackedTasksManager.createEpic(new Epic("Купить дом", "Купить пентхаус в Казани"));
+        fileBackedTasksManager.createEpic(new Epic("РљСѓРїРёС‚СЊ РґРѕРј", "РљСѓРїРёС‚СЊ РїРµРЅС‚С…Р°СѓСЃ РІ РљР°Р·Р°РЅРё"));
 
         //id=2
-        fileBackedTasksManager.createSubTask(new SubTask("Материал для пола",
-                "Покупка расходников для пола",
+        fileBackedTasksManager.createSubTask(new SubTask("РњР°С‚РµСЂРёР°Р» РґР»СЏ РїРѕР»Р°",
+                "РџРѕРєСѓРїРєР° СЂР°СЃС…РѕРґРЅРёРєРѕРІ РґР»СЏ РїРѕР»Р°",
                 TaskStatus.NEW,
                 Duration.ofMinutes(180),
                 ZonedDateTime.of(LocalDateTime.of(2023, 8, 25, 14, 30),
@@ -136,15 +136,15 @@ class EpicTest {
                 1));
 
         //id=3
-        fileBackedTasksManager.createSubTask(new SubTask("Купить спойлер",
-                "Купить спойлер белого цвета",
+        fileBackedTasksManager.createSubTask(new SubTask("РљСѓРїРёС‚СЊ СЃРїРѕР№Р»РµСЂ",
+                "РљСѓРїРёС‚СЊ СЃРїРѕР№Р»РµСЂ Р±РµР»РѕРіРѕ С†РІРµС‚Р°",
                 TaskStatus.IN_PROGRESS,
                 Duration.ofMinutes(200),
                 ZonedDateTime.of(LocalDateTime.of(2022, 9, 30, 14, 30),
                         ZoneId.of("Europe/Samara")),
                 1));
 
-        assertEquals(TaskStatus.IN_PROGRESS, fileBackedTasksManager.getEpics().get(1).taskStatus, "При заполненном эпике все задачи DONE, а статус эпика не DONE");
+        assertEquals(TaskStatus.IN_PROGRESS, fileBackedTasksManager.getEpics().get(1).taskStatus, "РџСЂРё Р·Р°РїРѕР»РЅРµРЅРЅРѕРј СЌРїРёРєРµ РІСЃРµ Р·Р°РґР°С‡Рё DONE, Р° СЃС‚Р°С‚СѓСЃ СЌРїРёРєР° РЅРµ DONE");
 
         fileBackedTasksManager.clearFileContents();
     }

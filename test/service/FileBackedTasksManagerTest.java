@@ -25,7 +25,7 @@ public class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksM
         try {
             return new FileBackedTasksManager("src/resources/memory.csv");
         } catch (IOException e) {
-            throw new RuntimeException("Не удалось создать FileBackedTasksManager.", e);
+            throw new RuntimeException("РќРµ СѓРґР°Р»РѕСЃСЊ СЃРѕР·РґР°С‚СЊ FileBackedTasksManager.", e);
         }
     }
 
@@ -44,31 +44,31 @@ public class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksM
 
     @Test
     public void testSaveAndLoadEmptyTaskList() throws IOException {
-        Task task1 = new Task("Задача 1", "Описание задачи", TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
+        Task task1 = new Task("Р—Р°РґР°С‡Р° 1", "РћРїРёСЃР°РЅРёРµ Р·Р°РґР°С‡Рё", TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
 
         taskManager.createTask(task1);
         taskManager.removeTaskByID(task1.getTaskID());
         taskManager.clearFileContents();
-        //после этих операций файл будет пуст
+        //РїРѕСЃР»Рµ СЌС‚РёС… РѕРїРµСЂР°С†РёР№ С„Р°Р№Р» Р±СѓРґРµС‚ РїСѓСЃС‚
 
-        // Загружаем состояние задач из файла через создание нового объекта менеджера, при инициализации объект сам идет в файл
+        // Р—Р°РіСЂСѓР¶Р°РµРј СЃРѕСЃС‚РѕСЏРЅРёРµ Р·Р°РґР°С‡ РёР· С„Р°Р№Р»Р° С‡РµСЂРµР· СЃРѕР·РґР°РЅРёРµ РЅРѕРІРѕРіРѕ РѕР±СЉРµРєС‚Р° РјРµРЅРµРґР¶РµСЂР°, РїСЂРё РёРЅРёС†РёР°Р»РёР·Р°С†РёРё РѕР±СЉРµРєС‚ СЃР°Рј РёРґРµС‚ РІ С„Р°Р№Р»
         FileBackedTasksManager newFileManager = new FileBackedTasksManager("src/resources/memory.csv");
 
-        // Проверяем, что список задач пустой после загрузки
+        // РџСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ СЃРїРёСЃРѕРє Р·Р°РґР°С‡ РїСѓСЃС‚РѕР№ РїРѕСЃР»Рµ Р·Р°РіСЂСѓР·РєРё
         List<Task> taskList = newFileManager.getTaskList();
         assertTrue(taskList.isEmpty());
     }
 
     @Test
     public void testSaveAndLoadEpicWithoutSubTasks() throws IOException {
-        Epic epic = new Epic("Эпик 1", "Описание эпика");
+        Epic epic = new Epic("Р­РїРёРє 1", "РћРїРёСЃР°РЅРёРµ СЌРїРёРєР°");
         fileBackedTasksManager.createEpic(epic);
         fileBackedTasksManager.getEpicByID(1);
 
         FileBackedTasksManager newFileManager = new FileBackedTasksManager("src/resources/memory.csv");
 
 
-        // Проверяем, что эпик без подзадач был сохранен и восстановлен корректно
+        // РџСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ СЌРїРёРє Р±РµР· РїРѕРґР·Р°РґР°С‡ Р±С‹Р» СЃРѕС…СЂР°РЅРµРЅ Рё РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅ РєРѕСЂСЂРµРєС‚РЅРѕ
         List<Epic> taskList = newFileManager.getEpicList();
         assertEquals(1, taskList.size());
         assertTrue(taskList.contains(epic));
@@ -76,12 +76,12 @@ public class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksM
 
     @Test
     public void testSaveAndLoadEmptyHistory() throws IOException {
-        Epic epic = new Epic("Эпик 1", "Описание эпика");
+        Epic epic = new Epic("Р­РїРёРє 1", "РћРїРёСЃР°РЅРёРµ СЌРїРёРєР°");
         fileBackedTasksManager.createEpic(epic);
 
         FileBackedTasksManager newFileManager = new FileBackedTasksManager("src/resources/memory.csv");
 
-        // Проверяем, что история задач пуста после загрузки
+        // РџСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ РёСЃС‚РѕСЂРёСЏ Р·Р°РґР°С‡ РїСѓСЃС‚Р° РїРѕСЃР»Рµ Р·Р°РіСЂСѓР·РєРё
         List<Task> historyTasks = newFileManager.getHistory();
         assertTrue(historyTasks.isEmpty());
     }

@@ -29,13 +29,6 @@ public class HttpTaskManager extends FileBackedTasksManager{
         load();
     }
 
-    private Task deserialize(String json){
-        return null;
-    }
-
-    private void serialize(){
-    }
-
     @Override
     protected void save() {
         String tasksJSON = gson.toJson(tasks.values());
@@ -47,7 +40,7 @@ public class HttpTaskManager extends FileBackedTasksManager{
             taskClient.put("subTasks", subTasksJSON);
             taskClient.put("epics", epicsJSON);
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException("Ошибка добавления задач в KVServer: " + e.getMessage());
+            throw new RuntimeException("РћС€РёР±РєР° РґРѕР±Р°РІР»РµРЅРёСЏ Р·Р°РґР°С‡ РІ KVServer: " + e.getMessage());
         }
 
 
@@ -84,16 +77,20 @@ public class HttpTaskManager extends FileBackedTasksManager{
                     epics.put(epic.getTaskID(), epic);
                 }
             }
-        } catch (NullPointerException | IOException | InterruptedException e) {
-            throw new RuntimeException("Ошибка загрузки данных с сервера: " + e.getMessage());
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException("РћС€РёР±РєР° Р·Р°РіСЂСѓР·РєРё РґР°РЅРЅС‹С… СЃ СЃРµСЂРІРµСЂР°: " + e.getMessage());
         }
 
     }
 
 
+
+
     @Override
     public int createEpic(Epic newEpic) {
         return super.createEpic(newEpic);
+
+
     }
 
     @Override

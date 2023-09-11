@@ -22,8 +22,8 @@ public class HistoryManagerTest {
 
     @Test
     public void testAddHistory() {
-        Task task1 = new Task("Задача 1", "Описание задачи 1", 1, TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
-        Task task2 = new Task("Задача 2", "Описание задачи 2", 2, TaskStatus.IN_PROGRESS, Duration.ofHours(1), ZonedDateTime.now().plusHours(1));
+        Task task1 = new Task("Р—Р°РґР°С‡Р° 1", "РћРїРёСЃР°РЅРёРµ Р·Р°РґР°С‡Рё 1", 1, TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
+        Task task2 = new Task("Р—Р°РґР°С‡Р° 2", "РћРїРёСЃР°РЅРёРµ Р·Р°РґР°С‡Рё 2", 2, TaskStatus.IN_PROGRESS, Duration.ofHours(1), ZonedDateTime.now().plusHours(1));
 
         historyManager.add(task1);
         historyManager.add(task2);
@@ -36,7 +36,7 @@ public class HistoryManagerTest {
 
     @Test
     public void testAddDuplicate() {
-        Task task = new Task("Задача 1", "Описание задачи 1", 1, TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
+        Task task = new Task("Р—Р°РґР°С‡Р° 1", "РћРїРёСЃР°РЅРёРµ Р·Р°РґР°С‡Рё 1", 1, TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
 
         historyManager.add(task);
         historyManager.add(task);
@@ -48,8 +48,8 @@ public class HistoryManagerTest {
 
     @Test
     public void testRemoveFromHistoryAtBeginning() {
-        Task task1 = new Task("Задача 1", "Описание задачи 1", 1, TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
-        Task task2 = new Task("Задача 2", "Описание задачи 2", 2, TaskStatus.IN_PROGRESS, Duration.ofHours(1), ZonedDateTime.now().plusHours(1));
+        Task task1 = new Task("Р—Р°РґР°С‡Р° 1", "РћРїРёСЃР°РЅРёРµ Р·Р°РґР°С‡Рё 1", 1, TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
+        Task task2 = new Task("Р—Р°РґР°С‡Р° 2", "РћРїРёСЃР°РЅРёРµ Р·Р°РґР°С‡Рё 2", 2, TaskStatus.IN_PROGRESS, Duration.ofHours(1), ZonedDateTime.now().plusHours(1));
 
         historyManager.add(task1);
         historyManager.add(task2);
@@ -64,9 +64,9 @@ public class HistoryManagerTest {
 
     @Test
     public void testRemoveFromHistoryInMiddle() {
-        Task task1 = new Task("Задача 1", "Описание задачи 1", 1, TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
-        Task task2 = new Task("Задача 2", "Описание задачи 2", 2, TaskStatus.IN_PROGRESS, Duration.ofHours(1), ZonedDateTime.now().plusHours(1));
-        Task task3 = new Task("Задача 3", "Описание задачи 3", 3, TaskStatus.DONE, Duration.ofHours(3), ZonedDateTime.now().plusHours(2));
+        Task task1 = new Task("Р—Р°РґР°С‡Р° 1", "РћРїРёСЃР°РЅРёРµ Р·Р°РґР°С‡Рё 1", 1, TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
+        Task task2 = new Task("Р—Р°РґР°С‡Р° 2", "РћРїРёСЃР°РЅРёРµ Р·Р°РґР°С‡Рё 2", 2, TaskStatus.IN_PROGRESS, Duration.ofHours(1), ZonedDateTime.now().plusHours(1));
+        Task task3 = new Task("Р—Р°РґР°С‡Р° 3", "РћРїРёСЃР°РЅРёРµ Р·Р°РґР°С‡Рё 3", 3, TaskStatus.DONE, Duration.ofHours(3), ZonedDateTime.now().plusHours(2));
 
         historyManager.add(task1);
         historyManager.add(task2);
@@ -82,8 +82,8 @@ public class HistoryManagerTest {
     }
     @Test
     public void testRemoveFromHistoryAtEnd() {
-        Task task1 = new Task("Задача 1", "Описание задачи 1", 1, TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
-        Task task2 = new Task("Задача 2", "Описание задачи 2", 2, TaskStatus.IN_PROGRESS, Duration.ofHours(1), ZonedDateTime.now().plusHours(1));
+        Task task1 = new Task("Р—Р°РґР°С‡Р° 1", "РћРїРёСЃР°РЅРёРµ Р·Р°РґР°С‡Рё 1", 1, TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
+        Task task2 = new Task("Р—Р°РґР°С‡Р° 2", "РћРїРёСЃР°РЅРёРµ Р·Р°РґР°С‡Рё 2", 2, TaskStatus.IN_PROGRESS, Duration.ofHours(1), ZonedDateTime.now().plusHours(1));
 
         historyManager.add(task1);
         historyManager.add(task2);
@@ -98,8 +98,8 @@ public class HistoryManagerTest {
 
     @Test
     public void testRemoveNonExistentTaskFromHistory() {
-        Task task1 = new Task("Задача 1", "Описание задачи 1", 1, TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
-        Task task2 = new Task("Задача 2", "Описание задачи 2", 2, TaskStatus.IN_PROGRESS, Duration.ofHours(1), ZonedDateTime.now().plusHours(1));
+        Task task1 = new Task("Р—Р°РґР°С‡Р° 1", "РћРїРёСЃР°РЅРёРµ Р·Р°РґР°С‡Рё 1", 1, TaskStatus.NEW, Duration.ofHours(2), ZonedDateTime.now());
+        Task task2 = new Task("Р—Р°РґР°С‡Р° 2", "РћРїРёСЃР°РЅРёРµ Р·Р°РґР°С‡Рё 2", 2, TaskStatus.IN_PROGRESS, Duration.ofHours(1), ZonedDateTime.now().plusHours(1));
 
         historyManager.add(task1);
         historyManager.add(task2);

@@ -17,7 +17,7 @@ public class SubTask extends Task{
         this.epicId = epicId;
     }
 
-    //TODO: удалить deprecated классы
+    //TODO: СѓРґР°Р»РёС‚СЊ deprecated РєР»Р°СЃСЃС‹
     @Deprecated
     public SubTask(String taskName,
                    String taskDescription,
@@ -53,7 +53,7 @@ public class SubTask extends Task{
                 "}\n";
     }
 
-    // Переопределяем статический компаратор из класса Task
+    // РџРµСЂРµРѕРїСЂРµРґРµР»СЏРµРј СЃС‚Р°С‚РёС‡РµСЃРєРёР№ РєРѕРјРїР°СЂР°С‚РѕСЂ РёР· РєР»Р°СЃСЃР° Task
     public static final Comparator<SubTask> subTaskComparator = new Comparator<SubTask>() {
         @Override
         public int compare(SubTask subTask1, SubTask subTask2) {
@@ -61,7 +61,7 @@ public class SubTask extends Task{
             if (startTimeComparison != 0) {
                 return startTimeComparison;
             }
-            // Если startTime равны, то сравниваем по taskId
+            // Р•СЃР»Рё startTime СЂР°РІРЅС‹, С‚Рѕ СЃСЂР°РІРЅРёРІР°РµРј РїРѕ taskId
             return Integer.compare(subTask1.taskID, subTask2.taskID);
         }
     };

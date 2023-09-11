@@ -31,7 +31,7 @@ public class InMemoryHistoryManager implements HistoryManager{
                 nodeMap.remove(id);
             }
         } else {
-            throw new IllegalStateException("Задачи с таким ID не существует");
+            throw new IllegalStateException("Р—Р°РґР°С‡Рё СЃ С‚Р°РєРёРј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚");
         }
     }
 

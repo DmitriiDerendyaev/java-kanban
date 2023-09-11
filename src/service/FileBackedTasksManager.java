@@ -212,8 +212,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
             String[] numbers = input.split("\\s+");
             List<Integer> subTaskCollection = new ArrayList<>();
 
-            //TODO: выяснить, нужно ли считывать массив subTask для epic,
-            // т.к. выбрасывается NPE при обновлении Epic до инициализации SubTasks
+            //TODO: РІС‹СЏСЃРЅРёС‚СЊ, РЅСѓР¶РЅРѕ Р»Рё СЃС‡РёС‚С‹РІР°С‚СЊ РјР°СЃСЃРёРІ subTask РґР»СЏ epic,
+            // С‚.Рє. РІС‹Р±СЂР°СЃС‹РІР°РµС‚СЃСЏ NPE РїСЂРё РѕР±РЅРѕРІР»РµРЅРёРё Epic РґРѕ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё SubTasks
 //            for (String number : numbers) {
 //                subTaskCollection.add(Integer.parseInt(number));
 //            }

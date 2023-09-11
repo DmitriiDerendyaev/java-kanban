@@ -38,11 +38,11 @@ public class HttpTaskServerTest {
         try {
             kvServer = new KVServer();
         } catch (IOException e) {
-            throw new RuntimeException("Ошибка создания KVServer" + e);
+            throw new RuntimeException("РћС€РёР±РєР° СЃРѕР·РґР°РЅРёСЏ KVServer" + e);
         }
         kvServer.start();
 
-        //место для сервера
+        //РјРµСЃС‚Рѕ РґР»СЏ СЃРµСЂРІРµСЂР°
         gson = new Gson()
                 .newBuilder()
                 .registerTypeAdapter(Task.class, new TaskAdapter())
@@ -64,7 +64,7 @@ public class HttpTaskServerTest {
         try {
              httpTaskServer = new HttpTaskServer();
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException("Ошибка запуска сервера из теста" + e);
+            throw new RuntimeException("РћС€РёР±РєР° Р·Р°РїСѓСЃРєР° СЃРµСЂРІРµСЂР° РёР· С‚РµСЃС‚Р°" + e);
         }
     }
 
@@ -85,7 +85,7 @@ public class HttpTaskServerTest {
         try {
             response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
         } catch (InterruptedException | IOException e) {
-            throw new RuntimeException("Ошибка отправки POST-запроса " + e);
+            throw new RuntimeException("РћС€РёР±РєР° РѕС‚РїСЂР°РІРєРё POST-Р·Р°РїСЂРѕСЃР° " + e);
         }
 
         return response;
@@ -102,7 +102,7 @@ public class HttpTaskServerTest {
         try {
             response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
         } catch (InterruptedException | IOException e) {
-            throw new RuntimeException("Ошибка отправки GET-запроса " + e);
+            throw new RuntimeException("РћС€РёР±РєР° РѕС‚РїСЂР°РІРєРё GET-Р·Р°РїСЂРѕСЃР° " + e);
         }
 
         return response;
@@ -119,14 +119,14 @@ public class HttpTaskServerTest {
         try {
             response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
         } catch (InterruptedException | IOException e) {
-            throw new RuntimeException("Ошибка отправки DELETE-запроса " + e);
+            throw new RuntimeException("РћС€РёР±РєР° РѕС‚РїСЂР°РІРєРё DELETE-Р·Р°РїСЂРѕСЃР° " + e);
         }
 
         return response;
     }
     @Test
     public void testCreateTask() throws IOException {
-        String taskJson = "{\"taskName\":\"Просто отвертка НО ЕЩЕ ОДНА\",\"taskDescription\":\"Купить отвертку\",\"taskStatus\":\"NEW\",\"startTime\":\"2023-07-25T13:00:00+04:00[Europe/Samara]\",\"duration\":5400000}";
+        String taskJson = "{\"taskName\":\"РџСЂРѕСЃС‚Рѕ РѕС‚РІРµСЂС‚РєР° РќРћ Р•Р©Р• РћР”РќРђ\",\"taskDescription\":\"РљСѓРїРёС‚СЊ РѕС‚РІРµСЂС‚РєСѓ\",\"taskStatus\":\"NEW\",\"startTime\":\"2023-07-25T13:00:00+04:00[Europe/Samara]\",\"duration\":5400000}";
 
         HttpResponse<String> postResponse = doPostRequest("/tasks/task", taskJson);
 
@@ -139,8 +139,8 @@ public class HttpTaskServerTest {
 
         Task createdTask = gson.fromJson(taskFromServer, Task.class);
 
-        assertEquals("Просто отвертка НО ЕЩЕ ОДНА", createdTask.getTaskName());
-        assertEquals("Купить отвертку", createdTask.getTaskDescription());
+        assertEquals("РџСЂРѕСЃС‚Рѕ РѕС‚РІРµСЂС‚РєР° РќРћ Р•Р©Р• РћР”РќРђ", createdTask.getTaskName());
+        assertEquals("РљСѓРїРёС‚СЊ РѕС‚РІРµСЂС‚РєСѓ", createdTask.getTaskDescription());
         assertEquals(TaskStatus.NEW, createdTask.getTaskStatus());
 
         ZonedDateTime expectedStartTime = ZonedDateTime.parse("2023-07-25T13:00:00+04:00[Europe/Samara]");
@@ -149,8 +149,8 @@ public class HttpTaskServerTest {
 
     @Test
     public void testCreateSubTask(){
-        String epicJSON = "{\"taskName\":\"Купить дом\",\"taskDescription\":\"Купить пентхаус в Казани\",\"taskStatus\":\"NEW\",\"startTime\":\"2023-08-25T14:30:00+04:00[Europe/Samara]\",\"duration\":10800000,\"subTasksList\":[]}";
-        String subTaskJSON = "{\"epicID\":1,\"taskName\":\"Материал для пола\",\"taskDescription\":\"Покупка расходников для пола\",\"taskStatus\":\"NEW\",\"startTime\":\"2023-08-25T14:30:00+04:00[Europe/Samara]\",\"duration\":1000}\n";
+        String epicJSON = "{\"taskName\":\"РљСѓРїРёС‚СЊ РґРѕРј\",\"taskDescription\":\"РљСѓРїРёС‚СЊ РїРµРЅС‚С…Р°СѓСЃ РІ РљР°Р·Р°РЅРё\",\"taskStatus\":\"NEW\",\"startTime\":\"2023-08-25T14:30:00+04:00[Europe/Samara]\",\"duration\":10800000,\"subTasksList\":[]}";
+        String subTaskJSON = "{\"epicID\":1,\"taskName\":\"РњР°С‚РµСЂРёР°Р» РґР»СЏ РїРѕР»Р°\",\"taskDescription\":\"РџРѕРєСѓРїРєР° СЂР°СЃС…РѕРґРЅРёРєРѕРІ РґР»СЏ РїРѕР»Р°\",\"taskStatus\":\"NEW\",\"startTime\":\"2023-08-25T14:30:00+04:00[Europe/Samara]\",\"duration\":1000}\n";
 
         HttpResponse<String> httpResponse = doPostRequest("/tasks/epic", epicJSON);
 
@@ -164,15 +164,15 @@ public class HttpTaskServerTest {
 
         SubTask createdSubTask = gson.fromJson(subTaskJSON, SubTask.class);
 
-        assertEquals("Материал для пола", createdSubTask.getTaskName());
-        assertEquals("Покупка расходников для пола", createdSubTask.getTaskDescription());
+        assertEquals("РњР°С‚РµСЂРёР°Р» РґР»СЏ РїРѕР»Р°", createdSubTask.getTaskName());
+        assertEquals("РџРѕРєСѓРїРєР° СЂР°СЃС…РѕРґРЅРёРєРѕРІ РґР»СЏ РїРѕР»Р°", createdSubTask.getTaskDescription());
         assertEquals(TaskStatus.NEW, createdSubTask.getTaskStatus());
 
     }
 
     @Test
     public void testCreateEpic(){
-        String taskJson = "{\"taskName\":\"Купить дом\",\"taskDescription\":\"Купить пентхаус в Казани\",\"taskStatus\":\"NEW\",\"startTime\":\"2023-08-25T14:30:00+04:00[Europe/Samara]\",\"duration\":10800000,\"subTasksList\":[]}";
+        String taskJson = "{\"taskName\":\"РљСѓРїРёС‚СЊ РґРѕРј\",\"taskDescription\":\"РљСѓРїРёС‚СЊ РїРµРЅС‚С…Р°СѓСЃ РІ РљР°Р·Р°РЅРё\",\"taskStatus\":\"NEW\",\"startTime\":\"2023-08-25T14:30:00+04:00[Europe/Samara]\",\"duration\":10800000,\"subTasksList\":[]}";
 
         HttpResponse<String> httpResponse = doPostRequest("/tasks/epic", taskJson);
 
@@ -183,15 +183,15 @@ public class HttpTaskServerTest {
 
         Epic createdEpic = gson.fromJson(taskJson, Epic.class);
 
-        assertEquals("Купить дом", createdEpic.getTaskName());
-        assertEquals("Купить пентхаус в Казани", createdEpic.getTaskDescription());
+        assertEquals("РљСѓРїРёС‚СЊ РґРѕРј", createdEpic.getTaskName());
+        assertEquals("РљСѓРїРёС‚СЊ РїРµРЅС‚С…Р°СѓСЃ РІ РљР°Р·Р°РЅРё", createdEpic.getTaskDescription());
         assertEquals(TaskStatus.NEW, createdEpic.getTaskStatus());
 
     }
 
     @Test
     public void testDeleteTask(){
-        String taskJson = "{\"taskName\":\"Просто отвертка НО ЕЩЕ ОДНА\",\"taskDescription\":\"Купить отвертку\",\"taskStatus\":\"NEW\",\"startTime\":\"2023-07-25T13:00:00+04:00[Europe/Samara]\",\"duration\":5400000}";
+        String taskJson = "{\"taskName\":\"РџСЂРѕСЃС‚Рѕ РѕС‚РІРµСЂС‚РєР° РќРћ Р•Р©Р• РћР”РќРђ\",\"taskDescription\":\"РљСѓРїРёС‚СЊ РѕС‚РІРµСЂС‚РєСѓ\",\"taskStatus\":\"NEW\",\"startTime\":\"2023-07-25T13:00:00+04:00[Europe/Samara]\",\"duration\":5400000}";
 
         HttpResponse<String> postResponse = doPostRequest("/tasks/task", taskJson);
 
@@ -206,12 +206,12 @@ public class HttpTaskServerTest {
         assertEquals("{\"status\":\"All tasks cleared\"}", deleteResponse.body());
 
         String taskFromServer = doGetRequest("/tasks/task").body();
-        assertEquals("Пустой объект", taskFromServer);
+        assertEquals("РџСѓСЃС‚РѕР№ РѕР±СЉРµРєС‚", taskFromServer);
     }
 
     @Test
     public void testDeleteEpic(){
-        String taskJson = "{\"taskName\":\"Купить дом\",\"taskDescription\":\"Купить пентхаус в Казани\",\"taskStatus\":\"NEW\",\"startTime\":\"2023-08-25T14:30:00+04:00[Europe/Samara]\",\"duration\":10800000,\"subTasksList\":[]}";
+        String taskJson = "{\"taskName\":\"РљСѓРїРёС‚СЊ РґРѕРј\",\"taskDescription\":\"РљСѓРїРёС‚СЊ РїРµРЅС‚С…Р°СѓСЃ РІ РљР°Р·Р°РЅРё\",\"taskStatus\":\"NEW\",\"startTime\":\"2023-08-25T14:30:00+04:00[Europe/Samara]\",\"duration\":10800000,\"subTasksList\":[]}";
 
         HttpResponse<String> httpResponse = doPostRequest("/tasks/epic", taskJson);
 
@@ -225,13 +225,13 @@ public class HttpTaskServerTest {
         assertEquals("{\"status\":\"All epics cleared\"}", deleteResponse.body());
 
         String taskFromServer = doGetRequest("/tasks/epic").body();
-        assertEquals("Пустой объект", taskFromServer);
+        assertEquals("РџСѓСЃС‚РѕР№ РѕР±СЉРµРєС‚", taskFromServer);
     }
 
     @Test
     public void testDeleteSubTask(){
-        String epicJSON = "{\"taskName\":\"Купить дом\",\"taskDescription\":\"Купить пентхаус в Казани\",\"taskStatus\":\"NEW\",\"startTime\":\"2023-08-25T14:30:00+04:00[Europe/Samara]\",\"duration\":10800000,\"subTasksList\":[]}";
-        String subTaskJSON = "{\"epicID\":1,\"taskName\":\"Материал для пола\",\"taskDescription\":\"Покупка расходников для пола\",\"taskStatus\":\"NEW\",\"startTime\":\"2023-08-25T14:30:00+04:00[Europe/Samara]\",\"duration\":1000}\n";
+        String epicJSON = "{\"taskName\":\"РљСѓРїРёС‚СЊ РґРѕРј\",\"taskDescription\":\"РљСѓРїРёС‚СЊ РїРµРЅС‚С…Р°СѓСЃ РІ РљР°Р·Р°РЅРё\",\"taskStatus\":\"NEW\",\"startTime\":\"2023-08-25T14:30:00+04:00[Europe/Samara]\",\"duration\":10800000,\"subTasksList\":[]}";
+        String subTaskJSON = "{\"epicID\":1,\"taskName\":\"РњР°С‚РµСЂРёР°Р» РґР»СЏ РїРѕР»Р°\",\"taskDescription\":\"РџРѕРєСѓРїРєР° СЂР°СЃС…РѕРґРЅРёРєРѕРІ РґР»СЏ РїРѕР»Р°\",\"taskStatus\":\"NEW\",\"startTime\":\"2023-08-25T14:30:00+04:00[Europe/Samara]\",\"duration\":1000}\n";
 
         HttpResponse<String> httpResponse = doPostRequest("/tasks/epic", epicJSON);
 
@@ -249,7 +249,7 @@ public class HttpTaskServerTest {
         assertEquals("{\"status\":\"All subtasks cleared\"}", deleteResponse.body());
 
         String taskFromServer = doGetRequest("/tasks/subTask").body();
-        assertEquals("Пустой объект", taskFromServer);
+        assertEquals("РџСѓСЃС‚РѕР№ РѕР±СЉРµРєС‚", taskFromServer);
     }
 
 }
