@@ -22,10 +22,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
     }
 
     public FileBackedTasksManager(){
-//        loadTasksFromClient();
     }
 
-//    protected void loadTasksFromClient(){}
 
     @Override
     public int createEpic(Epic newEpic) {
@@ -214,9 +212,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
 
             //TODO: выяснить, нужно ли считывать массив subTask для epic,
             // т.к. выбрасывается NPE при обновлении Epic до инициализации SubTasks
-//            for (String number : numbers) {
-//                subTaskCollection.add(Integer.parseInt(number));
-//            }
+
             return new Epic(name,
                     description,
                     id,
