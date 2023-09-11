@@ -8,6 +8,7 @@ import deserializer.TaskAdapter;
 import models.Epic;
 import models.SubTask;
 import models.Task;
+import models.TaskType;
 
 import java.io.IOException;
 import java.util.List;
@@ -58,7 +59,8 @@ public class HttpTaskManager extends FileBackedTasksManager{
             if (tasksJson != null && !tasksJson.equals("[]")) {
                 Task[] loadedTasks = gson.fromJson(tasksJson, Task[].class);
                 for (Task task : loadedTasks) {
-                    tasks.put(task.getTaskID(), task);
+                    super.createTask(task);
+//                    tasks.put(task.getTaskID(), task);
                 }
             }
 
@@ -66,7 +68,8 @@ public class HttpTaskManager extends FileBackedTasksManager{
             if (subTasksJson != null && !tasksJson.equals("[]")) {
                 SubTask[] loadedSubTasks = gson.fromJson(subTasksJson, SubTask[].class);
                 for (SubTask subTask : loadedSubTasks) {
-                    subTasks.put(subTask.getTaskID(), subTask);
+                    super.createSubTask(subTask);
+//                    subTasks.put(subTask.getTaskID(), subTask);
                 }
             }
 
@@ -74,7 +77,8 @@ public class HttpTaskManager extends FileBackedTasksManager{
             if (epicsJson != null && !tasksJson.equals("[]")) {
                 Epic[] loadedEpics = gson.fromJson(epicsJson, Epic[].class);
                 for (Epic epic : loadedEpics) {
-                    epics.put(epic.getTaskID(), epic);
+                    super.createEpic(epic);
+//                    epics.put(epic.getTaskID(), epic);
                 }
             }
         } catch (IOException | InterruptedException e) {
@@ -82,8 +86,6 @@ public class HttpTaskManager extends FileBackedTasksManager{
         }
 
     }
-
-
 
 
     @Override
